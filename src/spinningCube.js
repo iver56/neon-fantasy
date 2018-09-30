@@ -18,7 +18,8 @@
       
       this.lights = [];
       this.spheres = [];
-    this.cubePosCheck = -800;
+      this.cubePosCheckX = 0;
+      this.cubePosCheckY = 0;
       
       for (let i = 0; i < 3; i++) 
       {
@@ -118,30 +119,24 @@
         }
       }
 
-      if(BEAN >= 54)
+      if(BEAN >= 48 && BEAN < 64)
       {
-        
-        this.cubePosCheck += this.scaler * 10;
+        const positionIncrease = 13;
+        this.cubePosCheckX += this.scaler * positionIncrease;
+        this.cubePosCheckY += this.scaler * positionIncrease;
         for(let i = 0; i < this.cubes.length; i++){
            
           var cube = this.cubes[i];
+          var checkX = Math.abs(cube.position.x) < this.cubePosCheckX;
+          var checkY = Math.abs(cube.position.y) < this.cubePosCheckY;
           
-          if(cube.position.x < this.cubePosCheck){
+          if(checkX && checkY)
+          {
             cube.rotation.x += this.scaler* 0.2;
             cube.rotation.y += this.scaler * 0.2;
             cube.rotation.z += this.scaler * 0.2;
           }            
         }
-
-
-
-        // // Rotate cube
-        // for(let i = 0; i < this.cubes.length; i++){
-        //   var cube = this.cubes[i];
-        //   cube.rotation.x += this.scaler * 0.02;
-        //   cube.rotation.y += this.scaler * 0.02;
-        //   cube.rotation.z += this.scaler * 0.02;
-        // }
       }
 
     }
