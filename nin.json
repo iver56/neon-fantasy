@@ -15,8 +15,24 @@
   "googleAnalyticsID": "Your GA ID",
   "labels": [
     {
-      "name": "Start",
+      "name": "Intro",
       "BEAN": 0
+    },
+    {
+      "name": "Verse 1",
+      "BEAN": 96
+    },
+    {
+      "name": "Pre-chorus",
+      "BEAN": 224
+    },
+    {
+      "name": "Synth solo",
+      "BEAN": 288
+    },
+    {
+      "name": "Outro",
+      "BEAN": 416
     }
   ]
 }
