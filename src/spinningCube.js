@@ -1,4 +1,7 @@
 (function(global) {
+
+  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
+  
   class spinningCube extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -7,23 +10,55 @@
           render: new NIN.TextureOutput()
         }
       });
+      
+      this.scaler = 0;
 
-      this.cube = new THREE.Mesh(new THREE.BoxGeometry(50, 5, 5),
-                                 new THREE.MeshBasicMaterial({ color: 0x000fff }));
-      this.scene.add(this.cube);
+      // Orbs
+      var light = new THREE.PointLight(0xffffff, 1, 1000);
+      
+      this.emissiveMaterial = new THREE.MeshBasicMaterial(
+        {color: 0xffffff}
+      );
 
-      var light = new THREE.PointLight(0xffffff, 1, 100);
-      light.position.set(50, 50, 50);
-      this.scene.add(light);
+      this.sphere = new THREE.Mesh(new THREE.SphereGeometry(30, 32, 32),
+        this.emissiveMaterial);
 
-      this.camera.position.z = 100;
+      // Cubes
+      var cubeGeometry = new THREE.BoxGeometry(30, 30, 30);
+      var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
+
+      this.cubes = [];
+      for (let i = 0; i < 800; i++) {
+        var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+        this.cubes.push(cube);
+        this.scene.add(cube);
+
+        cube.position.x = (Math.random() * 1200) - 600;
+        cube.position.y = (Math.random() * 1000) - 500;
+        cube.position.z = -10;
+        // cube.position.x = Math.random() * 500;
+        
+      }
+
+      this.sphere.add(light);
+      this.scene.add(this.sphere);
+      
+      this.camera.position.z = 1000;
     }
-
+    
     update(frame) {
       super.update(frame);
 
-      this.cube.rotation.x = Math.sin(frame / 10);
-      this.cube.rotation.y = Math.cos(frame / 10);
+      F(this.frame, 48 + 2112, 24)
+      if(BEAN % 4 == 0 && BEAT)
+        this.scaler = 1;
+      this.scaler *= 0.95;
+
+      this.sphere.position.x = Math.sin(this.scaler) * 1000;
+
+// 0
+// 12
+// 16
     }
   }
 
