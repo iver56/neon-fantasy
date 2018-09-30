@@ -15,14 +15,23 @@
       this.angle = 0;
       
       // Orbs
-      var sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
       
       this.lights = [];
       this.spheres = [];
-      for (let i = 0; i < 3; i++) {
-        var light = new THREE.PointLight(0xffffff, 1, 800);
+      
+      for (let i = 0; i < 3; i++) 
+      {
+        var color = new THREE.Color();
+        color.setHSL(
+          (.5 + 0.15 * i) % 1,
+          .5,
+          .5
+          );
+          
+        var light = new THREE.PointLight(color.getHex(), 1, 800);
         this.lights.push(light);
-
+        
+        var sphereMaterial = new THREE.MeshBasicMaterial({color: color.getHex()});
         var sphere = new THREE.Mesh(new THREE.SphereGeometry(50, 32, 32),
           sphereMaterial);
         sphere.add(light);
@@ -58,11 +67,20 @@
 
       this.angle += this.scaler * 0.15;
 
-      // this.spheres[0].position.x = 100;
+      // Update sphere positions
       for(let i = 0; i < 3; i++){
         var sphere = this.spheres[i];
         sphere.position.x = Math.sin(this.angle + i * (2/3) * Math.PI) * 300;
         sphere.position.y = Math.cos(this.angle + i * (2/3 * Math.PI)) * 300;
+      }
+
+      // Update cube scaling
+      for(let i = 0; i < this.cubes.length; i++){
+        var cube = this.cubes[i];
+        var scaleDelta = 0.15 * Math.sin(i) + 0.3;
+        cube.scale.x = scaleDelta + Math.atan(0.5 + this.scaler);
+        cube.scale.y = scaleDelta + Math.atan(0.5 + this.scaler);
+        cube.scale.z = scaleDelta + Math.atan(0.5 + this.scaler);
       }
 
 // 0
