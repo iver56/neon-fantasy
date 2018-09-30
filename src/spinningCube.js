@@ -11,13 +11,14 @@
         }
       });
       
-      this.scaler = 0;
+      this.scaler = 1;
       this.angle = 0;
       
       // Orbs
       
       this.lights = [];
       this.spheres = [];
+    this.cubePosCheck = -800;
       
       for (let i = 0; i < 3; i++) 
       {
@@ -57,8 +58,11 @@
       this.camera.position.z = 1000;
     }
     
+    
     update(frame) {
       super.update(frame);
+
+
 
       F(this.frame, 48 + 2112, 24)
       if(BEAN % 4 == 0 && BEAT
@@ -66,9 +70,11 @@
         && BEAN != 8)
         {
           this.scaler = 1;
+
         }
         
         this.scaler *= 0.95;
+
         this.angle += this.scaler * 0.15;
 
       // Update sphere positions
@@ -89,7 +95,54 @@
 
       this.spheres[1].visible = BEAN >= 12; // Reveal second sphere
       this.spheres[2].visible = BEAN >= 16; // Reveal third sphere
+      
+      // Scale up with guitar
+      if(BEAN >= 28 && BEAN < 32)
+      {
+        for(let i = 0; i < 3; i++){
+          var sphere = this.spheres[i];
+          sphere.scale.x = 1 + (1 - this.scaler) * 2;
+          sphere.scale.y = 1 + (1 - this.scaler) * 2;
+        }
+      }
 
+      // Scale down with guitar
+      if(BEAN >= 32 && BEAN < 54)
+      {
+        var less = 0.01;
+        less -= this.scaler * 0.01;
+        for(let i = 0; i < 3; i++){
+          var sphere = this.spheres[i];
+          sphere.scale.x -= less;
+          sphere.scale.y -= less;
+        }
+      }
+
+      if(BEAN >= 54)
+      {
+        
+        this.cubePosCheck += this.scaler * 10;
+        for(let i = 0; i < this.cubes.length; i++){
+           
+          var cube = this.cubes[i];
+          
+          if(cube.position.x < this.cubePosCheck){
+            cube.rotation.x += this.scaler* 0.2;
+            cube.rotation.y += this.scaler * 0.2;
+            cube.rotation.z += this.scaler * 0.2;
+          }            
+        }
+
+
+
+        // // Rotate cube
+        // for(let i = 0; i < this.cubes.length; i++){
+        //   var cube = this.cubes[i];
+        //   cube.rotation.x += this.scaler * 0.02;
+        //   cube.rotation.y += this.scaler * 0.02;
+        //   cube.rotation.z += this.scaler * 0.02;
+        // }
+      }
 
     }
   }
