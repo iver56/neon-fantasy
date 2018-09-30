@@ -76,3 +76,7 @@ typings/
 
 # IntelliJ IDEA
 .idea
+
+# Compiled demo
+bin/*
+gen/*
