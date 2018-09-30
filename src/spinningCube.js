@@ -12,17 +12,24 @@
       });
       
       this.scaler = 0;
-
-      // Orbs
-      var light = new THREE.PointLight(0xffffff, 1, 800);
+      this.angle = 0;
       
-      this.emissiveMaterial = new THREE.MeshBasicMaterial(
-        {color: 0xffffff}
-      );
+      // Orbs
+      var sphereMaterial = new THREE.MeshBasicMaterial({color: 0xffffff});
+      
+      this.lights = [];
+      this.spheres = [];
+      for (let i = 0; i < 3; i++) {
+        var light = new THREE.PointLight(0xffffff, 1, 800);
+        this.lights.push(light);
 
-      this.sphere = new THREE.Mesh(new THREE.SphereGeometry(30, 32, 32),
-        this.emissiveMaterial);
-
+        var sphere = new THREE.Mesh(new THREE.SphereGeometry(50, 32, 32),
+          sphereMaterial);
+        sphere.add(light);
+        this.spheres.push(sphere);
+        this.scene.add(sphere);
+      }
+      
       // Cubes
       var cubeGeometry = new THREE.BoxGeometry(30, 30, 30);
       var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
@@ -33,13 +40,10 @@
         this.cubes.push(cube);
         this.scene.add(cube);
 
-        cube.position.x = (Math.random() * 1500) - 750;
+        cube.position.x = (Math.random() * 1600) - 800;
         cube.position.y = (Math.random() * 1000) - 500;
         cube.position.z = (Math.random() * 100) -150 ;        
       }
-
-      this.sphere.add(light);
-      this.scene.add(this.sphere);
       
       this.camera.position.z = 1000;
     }
@@ -52,7 +56,14 @@
         this.scaler = 1;
       this.scaler *= 0.95;
 
-      this.sphere.position.x = Math.sin(this.scaler) * 1000;
+      this.angle += this.scaler * 0.15;
+
+      // this.spheres[0].position.x = 100;
+      for(let i = 0; i < 3; i++){
+        var sphere = this.spheres[i];
+        sphere.position.x = Math.sin(this.angle + i * (2/3) * Math.PI) * 300;
+        sphere.position.y = Math.cos(this.angle + i * (2/3 * Math.PI)) * 300;
+      }
 
 // 0
 // 12
