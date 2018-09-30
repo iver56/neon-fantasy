@@ -14,7 +14,7 @@
       this.scaler = 0;
 
       // Orbs
-      var light = new THREE.PointLight(0xffffff, 1, 1000);
+      var light = new THREE.PointLight(0xffffff, 1, 800);
       
       this.emissiveMaterial = new THREE.MeshBasicMaterial(
         {color: 0xffffff}
@@ -33,11 +33,9 @@
         this.cubes.push(cube);
         this.scene.add(cube);
 
-        cube.position.x = (Math.random() * 1200) - 600;
+        cube.position.x = (Math.random() * 1500) - 750;
         cube.position.y = (Math.random() * 1000) - 500;
-        cube.position.z = -10;
-        // cube.position.x = Math.random() * 500;
-        
+        cube.position.z = (Math.random() * 100) -150 ;        
       }
 
       this.sphere.add(light);
