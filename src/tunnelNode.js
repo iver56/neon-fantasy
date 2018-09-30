@@ -12,17 +12,17 @@
         }
       });
 
-      var geometry = new THREE.SphereGeometry(5, 32, 32);
-      var material = new THREE.MeshBasicMaterial({color: 0xffffff});
+      let geometry = new THREE.SphereGeometry(5, 32, 32);
+      let material = new THREE.MeshBasicMaterial({color: 0xffffff});
 
       this.spheres = [];
       for (let i = 0; i < 800; i++) {
-        var sphere = new THREE.Mesh(geometry, material);
+        let sphere = new THREE.Mesh(geometry, material);
         this.spheres.push(sphere);
         this.scene.add(sphere);
       }
 
-      var light = new THREE.PointLight(0xffffff, 1, 100);
+      let light = new THREE.PointLight(0xffffff, 1, 100);
       light.position.set(50, 50, 50);
       this.scene.add(light);
 
@@ -33,9 +33,13 @@
       super.update(frame);
 
       for (let i = 0; i < this.spheres.length; i++) {
-        var sphere = this.spheres[i];
-        sphere.position.x = 500 * Math.sin(i);
-        sphere.position.y = 50 * easeOut(0, 1, F(frame, 192, 4));
+        const sphere = this.spheres[i];
+        sphere.position.x = i * Math.cos(i + frame / 90);
+        sphere.position.y = i * Math.sin(i + frame / 90);
+        sphere.position.z = easeOut(0, -500 + i, F(frame, 192, 8));
+        sphere.scale.x = easeOut(1, 0.5 + 0.00004 * i ** 1.95, F(frame, 192, 4));
+        sphere.scale.y = sphere.scale.x;
+        sphere.scale.z = sphere.scale.x;
       }
     }
   }
