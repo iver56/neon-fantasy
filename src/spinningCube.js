@@ -61,11 +61,15 @@
       super.update(frame);
 
       F(this.frame, 48 + 2112, 24)
-      if(BEAN % 4 == 0 && BEAT)
-        this.scaler = 1;
-      this.scaler *= 0.95;
-
-      this.angle += this.scaler * 0.15;
+      if(BEAN % 4 == 0 && BEAT
+        && BEAN != 4
+        && BEAN != 8)
+        {
+          this.scaler = 1;
+        }
+        
+        this.scaler *= 0.95;
+        this.angle += this.scaler * 0.15;
 
       // Update sphere positions
       for(let i = 0; i < 3; i++){
@@ -78,14 +82,15 @@
       for(let i = 0; i < this.cubes.length; i++){
         var cube = this.cubes[i];
         var scaleDelta = 0.15 * Math.sin(i) + 0.3;
-        cube.scale.x = scaleDelta + Math.atan(0.5 + this.scaler);
+        cube.scale.x = scaleDelta + Math.atan(0.5 + this.scaler) ;
         cube.scale.y = scaleDelta + Math.atan(0.5 + this.scaler);
         cube.scale.z = scaleDelta + Math.atan(0.5 + this.scaler);
       }
 
-// 0
-// 12
-// 16
+      this.spheres[1].visible = BEAN >= 12; // Reveal second sphere
+      this.spheres[2].visible = BEAN >= 16; // Reveal third sphere
+
+
     }
   }
 
