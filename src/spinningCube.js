@@ -139,7 +139,41 @@
         }
       }
 
+      if(BEAN >= 64 && BEAN < 80)
+      {
+        for(let i = 0; i < this.cubes.length; i++){
+           
+          var cube = this.cubes[i];
+          var posX = Math.sin(this.angle + i * (2/3) * Math.PI) * 300;
+          var posY = Math.cos(this.angle + i * (2/3 * Math.PI)) * 300;
+          var a = new THREE.Vector3(posX, posY, cube.position.z);
+          cube.position.lerp(a, this.scaler* 0.01);
+          // cube.position.x = Math.lerp(cube.position.x, posX, this.scaler);
+          // cube.position.y = Math.lerp(cube.position.y, posY, this.scaler);
+        }
+
+        // const positionIncrease = 13;
+        // this.cubePosCheckX += this.scaler * positionIncrease;
+        // this.cubePosCheckY += this.scaler * positionIncrease;
+        // for(let i = 0; i < this.cubes.length; i++){
+           
+        //   var cube = this.cubes[i];
+        //   var checkX = Math.abs(cube.position.x) < this.cubePosCheckX;
+        //   var checkY = Math.abs(cube.position.y) < this.cubePosCheckY;
+          
+        //   if(checkX && checkY)
+        //   {
+        //     cube.rotation.x += this.scaler* 0.2;
+        //     cube.rotation.y += this.scaler * 0.2;
+        //     cube.rotation.z += this.scaler * 0.2;
+        //   }            
+        // }
+      }
+
     }
+
+
+    // end at 96 
   }
 
   global.spinningCube = spinningCube;
