@@ -144,32 +144,25 @@
         for(let i = 0; i < this.cubes.length; i++){
            
           var cube = this.cubes[i];
-          var posX = Math.sin(this.angle + i * (2/3) * Math.PI) * 300;
-          var posY = Math.cos(this.angle + i * (2/3 * Math.PI)) * 300;
-          var a = new THREE.Vector3(posX, posY, cube.position.z);
-          cube.position.lerp(a, this.scaler* 0.01);
-          // cube.position.x = Math.lerp(cube.position.x, posX, this.scaler);
-          // cube.position.y = Math.lerp(cube.position.y, posY, this.scaler);
-        }
-
-        // const positionIncrease = 13;
-        // this.cubePosCheckX += this.scaler * positionIncrease;
-        // this.cubePosCheckY += this.scaler * positionIncrease;
-        // for(let i = 0; i < this.cubes.length; i++){
-           
-        //   var cube = this.cubes[i];
-        //   var checkX = Math.abs(cube.position.x) < this.cubePosCheckX;
-        //   var checkY = Math.abs(cube.position.y) < this.cubePosCheckY;
+          var progress = this.scaler * 0.05;
           
-        //   if(checkX && checkY)
-        //   {
-        //     cube.rotation.x += this.scaler* 0.2;
-        //     cube.rotation.y += this.scaler * 0.2;
-        //     cube.rotation.z += this.scaler * 0.2;
-        //   }            
-        // }
+          if(i < 100)
+          {
+            cube.position.x = lerp(cube.position.x, 100 * Math.cos(i / 9), progress);
+            cube.position.y = lerp(cube.position.y, 100 * Math.sin(i / 9), progress);
+          }
+          else if(i < 350) 
+          {
+            cube.position.x = lerp(cube.position.x, 300 * Math.cos(i / 9), progress);
+            cube.position.y = lerp(cube.position.y, 300 * Math.sin(i / 9), progress);
+          }
+          else 
+          {
+            cube.position.x = lerp(cube.position.x, 500 * Math.cos(i / 9), progress);
+            cube.position.y = lerp(cube.position.y, 500 * Math.sin(i / 9), progress);
+          }          
+        }
       }
-
     }
 
 
