@@ -144,7 +144,7 @@
         for(let i = 0; i < this.cubes.length; i++){
            
           var cube = this.cubes[i];
-          var progress = this.scaler * 0.05;
+          var progress = this.scaler * 0.07;
           
           if(i < 100)
           {
@@ -163,9 +163,47 @@
           }          
         }
       }
+
+      
+      
+
+      if(BEAN >= 80)
+      {
+        this.camera.position.z -= this.scaler * 10;
+
+        var less = 0.01;
+        less += this.scaler * 0.03;
+        for(let i = 0; i < 3; i++){
+          var sphere = this.spheres[i];
+          sphere.scale.x = Math.max(0, sphere.scale.x - less);
+          sphere.scale.y = Math.max(0, sphere.scale.y - less);
+        }
+
+        for(let i = 0; i < this.cubes.length; i++){
+           
+          var cube = this.cubes[i];
+          var progress = this.scaler * 0.05;
+          
+          if(i < 100)
+          {
+            cube.position.x = Math.sin(-this.angle + i) * 100;
+            cube.position.y = Math.cos(-this.angle + i) * 100;
+            cube.position.z -= this.scaler * i % 8;
+          }
+          else if(i < 350)
+          {
+            cube.position.x = Math.sin(this.angle + i) * 300;
+            cube.position.y = Math.cos(this.angle + i) * 300;
+            cube.position.z -= this.scaler * i % 8;
+          }
+          else{
+            cube.position.x = Math.sin(-this.angle + i) * 500;
+            cube.position.y = Math.cos(-this.angle + i) * 500;
+            cube.position.z -= this.scaler * i % 8;
+          }
+        }
+      }
     }
-
-
     // end at 96 
   }
 
