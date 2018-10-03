@@ -119,6 +119,7 @@
         }
       }
 
+      // Start spinning cubes, moving from center to edge
       if(BEAN >= 48 && BEAN < 64)
       {
         const positionIncrease = 13;
@@ -139,6 +140,7 @@
         }
       }
 
+      // Lerp cubes to donut shapes
       if(BEAN >= 64 && BEAN < 80)
       {
         for(let i = 0; i < this.cubes.length; i++){
@@ -164,10 +166,8 @@
         }
       }
 
-      
-      
-
-      if(BEAN >= 80)
+      // Spin donuts, zoom in, spread cube z axis
+      if(BEAN >= 80 && BEAN < 96)
       {
         this.camera.position.z -= this.scaler * 10;
 
