@@ -51,6 +51,20 @@
 
       const workWorkTransitionProgress = F(frame, 96 + 8, 4);
 
+
+      const cameraZoomProgress = F(frame, 120, 4);
+      this.camera.position.x = easeOut(0, -22.38, cameraZoomProgress);
+      this.camera.position.y = easeOut(0, 28.62, cameraZoomProgress);
+      this.camera.position.z = easeOut(200, 3.28, cameraZoomProgress);
+      this.camera.lookAt(
+        new THREE.Vector3(
+          easeOut(0, -22.38, cameraZoomProgress),
+          easeOut(0, 28.62, cameraZoomProgress),
+          easeOut(0, 0.39, cameraZoomProgress)
+        )
+      );
+      this.camera.rotation.z = easeOut(0, -1.02, cameraZoomProgress);
+
       for (let i = 0; i < this.spheres.length; i++) {
         const sphere = this.spheres[i];
         const workWorkPosition = this.getWorkWorkLogoPosition(7 * i / this.spheres.length);
@@ -70,27 +84,18 @@
           workWorkTransitionProgress
         );
         sphere.scale.x = easeOut(
-          easeOut(1, 0.5 + 0.00004 * i ** 1.95, F(frame, 96, 4)),
-          0.1,
-          workWorkTransitionProgress
+          easeOut(
+            easeOut(1, 0.5 + 0.00004 * i ** 1.95, F(frame, 96, 4)),
+            0.5,
+            workWorkTransitionProgress
+          ),
+          0.08,
+          cameraZoomProgress
         );
         sphere.scale.y = sphere.scale.x;
         sphere.scale.z = sphere.scale.x;
       }
 
-      const cameraZoomProgress = F(frame, 120, 4);
-
-      this.camera.position.x = easeOut(0, -22.44, cameraZoomProgress);
-      this.camera.position.y = easeOut(0, 28.72, cameraZoomProgress);
-      this.camera.position.z = easeOut(200, 3.28, cameraZoomProgress);
-      this.camera.lookAt(
-        new THREE.Vector3(
-          easeOut(0, -22.44, cameraZoomProgress),
-          easeOut(0, 28.72, cameraZoomProgress),
-          easeOut(0, 0.2, cameraZoomProgress)
-        )
-      );
-      this.camera.rotation.z = easeOut(0, -1.02, cameraZoomProgress);
    }
 
 
