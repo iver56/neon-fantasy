@@ -18,8 +18,7 @@
       
       this.lights = [];
       this.spheres = [];
-      this.cubePosCheckX = 0;
-      this.cubePosCheckY = 0;
+
       
       for (let i = 0; i < 3; i++) 
       {
@@ -42,6 +41,9 @@
       }
       
       // Cubes
+      this.cubePosCheckX = 0;
+      this.cubePosCheckY = 0;
+
       var cubeGeometry = new THREE.BoxGeometry(30, 30, 30);
       var cubeMaterial = new THREE.MeshLambertMaterial({color: 0xffffff});
 
