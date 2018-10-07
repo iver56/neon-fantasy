@@ -3,7 +3,7 @@
     "id": "root",
     "type": "NIN.RootNode",
     "connected": {
-      "screen": "sceneSwitcherNode.render"
+      "screen": "bloom.render"
     }
   },
   {
@@ -26,5 +26,37 @@
   {
     "id": "AfterTunnelNode",
     "type": "afterTunnelNode"
+  },
+  {
+    "id": "blurX",
+    "type": "BlurPassNode",
+    "options": {
+      "direction": "x"
+    },
+    "connected": {
+      "tDiffuse": "blurY.render"
+    }
+  },
+  {
+    "id": "blurY",
+    "type": "BlurPassNode",
+    "options": {
+      "direction": "y"
+    },
+    "connected": {
+      "tDiffuse": "sceneSwitcherNode.render"
+    }
+  },
+  {
+    "id": "bloom",
+    "type": "AddNode",
+    "options": {
+      "opacity": 0.99,
+      "shader": "Add"
+    },
+    "connected": {
+      "A": "sceneSwitcherNode.render",
+      "B": "blurX.render"
+    }
   }
 ]
