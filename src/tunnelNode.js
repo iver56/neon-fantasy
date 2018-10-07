@@ -49,8 +49,6 @@
     update(frame) {
       super.update(frame);
 
-      //demo.nm.nodes.bloom.opacity = 0.8;
-
       const workWorkTransitionProgress = F(frame, 96 + 8, 4);
 
 
