@@ -71,13 +71,30 @@
         );
         sphere.scale.x = easeOut(
           easeOut(1, 0.5 + 0.00004 * i ** 1.95, F(frame, 96, 4)),
-          0.5,
+          0.1,
           workWorkTransitionProgress
         );
         sphere.scale.y = sphere.scale.x;
         sphere.scale.z = sphere.scale.x;
       }
-    }
+
+      const cameraZoomProgress = F(frame, 120, 4);
+
+      this.camera.position.x = easeOut(0, -22.44, cameraZoomProgress);
+      this.camera.position.y = easeOut(0, 28.72, cameraZoomProgress);
+      this.camera.position.z = easeOut(200, 3.28, cameraZoomProgress);
+      this.camera.lookAt(
+        new THREE.Vector3(
+          easeOut(0, -22.44, cameraZoomProgress),
+          easeOut(0, 28.72, cameraZoomProgress),
+          easeOut(0, 0.2, cameraZoomProgress)
+        )
+      );
+      this.camera.rotation.z = easeOut(0, -1.02, cameraZoomProgress);
+   }
+
+
+
   }
 
   global.tunnelNode = tunnelNode;
