@@ -19,7 +19,7 @@
       this.inputs.C.enabled = false;
 
       let selectedScene;
-      if (BEAN < 48 * 4) {
+      if (BEAN < 96) {
         selectedScene = this.inputs.A;
       } else if (BEAN < 224) {
         selectedScene = this.inputs.B;
