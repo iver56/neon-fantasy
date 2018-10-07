@@ -11,11 +11,31 @@
       this.scaler = 1;
       this.angle = 0;
 
+      var ballColor = new THREE.Color();
+      ballColor.setHSL(
+        (.5+ 0.64) % 1,
+        .5,
+        .5
+        );
+
+        this.ballTexture = Loader.loadTexture('res/ivertex2.png');
+        this.ballTexture.minFilter = THREE.LinearFilter;
+        this.ballTexture.magFilter = THREE.LinearFilter;
+        this.ballMaterial = new THREE.MeshStandardMaterial({
+          shading: THREE.FlatShading,
+          metalness: 1,
+          roughness: 0.5,
+          map: this.ballTexture,
+          emissive: 0xffffff,
+          emissiveMap: this.ballTexture,
+          emissiveIntensity:1,
+        });
 
       this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(100, 32, 32),
-        new THREE.MeshBasicMaterial({color: 0xffffff}))
-      
-      // this.bigSphere.position.z = -75;
+        this.ballMaterial)
+      var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 1, 850);
+      this.bigSphere.add(bigSphereLight);
+      // // this.bigSphere.position.z = -75;
 
       this.scene.add (this.bigSphere);
       // Orbs
@@ -104,14 +124,8 @@
 
         var distance = Math.sqrt((distanceX * distanceX)+(distanceY * distanceY));
 
-        cube.position.z = distance -500 //1 - 90000 / (distance + 200)
-        // cube.scale.y = cube.scale.x;
-        // cube.scale.z = cube.scale.x;
+        cube.position.z = distance -500
 
-        if(distance < 500){
-          
-
-        }
 
         const progress = 1 - this.scaler;
         var targetRotation = Math.PI * 0.5 * (Math.floor(BEAN / 4));
