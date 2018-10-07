@@ -11,6 +11,13 @@
       this.scaler = 1;
       this.angle = 0;
 
+
+      this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(100, 32, 32),
+        new THREE.MeshBasicMaterial({color: 0xffffff}))
+      
+      // this.bigSphere.position.z = -75;
+
+      this.scene.add (this.bigSphere);
       // Orbs
       
       this.lights = [];
@@ -26,7 +33,7 @@
           .5
           );
           
-        var light = new THREE.PointLight(color.getHex(), 1, 800);
+        var light = new THREE.PointLight(color.getHex(), 1, 850);
         this.lights.push(light);
         
         var sphereMaterial = new THREE.MeshBasicMaterial({color: color.getHex()});
@@ -49,7 +56,8 @@
       var cubeMaterialBlack = new THREE.MeshLambertMaterial({color: 0x222222});
 
       this.cubes = [];
-      for (let i = 0; i < 1200; i++) {
+      for (let i = 0; i < 1200; i++) 
+      {
 
         const x = i % 50;
         const y = Math.floor(i/50);
@@ -60,56 +68,56 @@
 
         cube.position.x = -900 + 100 * (x) + ((y % 2) * 50);
         cube.position.y = -600 + y * 50;
-        cube.position.z = -150;
-
       }
-
-      // var light = new THREE.PointLight(0xffffff, 1, 10000);
-      // light.position.set(0, 0, 100);
-      // this.scene.add(light);
 
       this.camera.position.z = 1000;
     }
 
-    update(frame) {
+    update(frame) 
+    {
       super.update(frame);
 
       if(BEAN % 4 == 0 && BEAT)
-        {
-          this.scaler = 1;
-        }
-        
-        this.scaler *= 0.95;
+      {
+        this.scaler = 1;
+      }
+      
+      this.scaler *= 0.95;
 
-        this.angle += this.scaler * 0.15;
-        const rotationSpeed = 0.05;
-        const rotationSpeedConstant = 0.005;
-
+      this.angle += this.scaler * 0.15;
+            
+      this.bigSphere.position.x = Math.sin(this.angle * 0.2* Math.PI) * 300;
+      this.bigSphere.position.y = Math.cos(this.angle * 0.2* Math.PI) * 300;
+      
+      const sphereX = this.bigSphere.position.x;
+      const sphereY = this.bigSphere.position.y;
+      
       for(let i = 0; i < this.cubes.length; i++){
            
         var cube = this.cubes[i];
-        // const x = i % 50;
-        // const y = Math.floor(i/50);
-        // var test = (x + y) % 3 == 0;
 
-        // if(test){
-        //   cube.scale.x = this.scaler;
-        //   cube.scale.y = this.scaler;
-        //   cube.scale.z = this.scaler;
-        // }
+        var cubeX = cube.position.x;
+        var cubeY = cube.position.y;
 
-        const progress = 1-this.scaler;
-        // var startRotation = Math.floor(BEAN / 4);
+        var distanceX = sphereX - cubeX;
+        var distanceY = sphereY - cubeY;
+
+        var distance = Math.sqrt((distanceX * distanceX)+(distanceY * distanceY));
+
+        cube.position.z = distance -500 //1 - 90000 / (distance + 200)
+        // cube.scale.y = cube.scale.x;
+        // cube.scale.z = cube.scale.x;
+
+        if(distance < 500){
+          
+
+        }
+
+        const progress = 1 - this.scaler;
         var targetRotation = Math.PI * 0.5 * (Math.floor(BEAN / 4));
         cube.rotation.x = lerp(targetRotation - Math.PI * 0.5, targetRotation, progress);
         cube.rotation.y = lerp(targetRotation - Math.PI * 0.5, targetRotation, progress);
-
-        // cube.rotation.x += this.scaler * rotationSpeed + Math.random() * rotationSpeedConstant;
-        // cube.rotation.y += this.scaler * rotationSpeed + Math.random() * rotationSpeedConstant;                    
-      }
-
-      
-
+      }     
     }
   }
 
