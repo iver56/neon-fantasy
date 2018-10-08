@@ -67,10 +67,9 @@
 
       demo.nm.nodes.bloom.opacity = this.scaler;
 
-      F(this.frame, 48 + 2112, 24)
-      if(BEAN % 4 == 0 && BEAT
-        && BEAN != 4
-        && BEAN != 8)
+      if(BEAN % 4 === 0 && BEAT
+        && BEAN !== 4
+        && BEAN !== 8)
         {
           this.scaler = 1;
 

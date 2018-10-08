@@ -10,8 +10,8 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render",
-      "B": "tunnelNode.render",
+      "A": "tunnelNode.render",
+      "B": "SpinningCube.render",
       "C": "AfterTunnelNode.render"
     }
   },
