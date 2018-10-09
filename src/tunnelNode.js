@@ -53,17 +53,17 @@
 
 
       const cameraZoomProgress = F(frame, 24, 4);
-      this.camera.position.x = easeOut(0, -22.38, cameraZoomProgress);
-      this.camera.position.y = easeOut(0, 28.62, cameraZoomProgress);
-      this.camera.position.z = easeOut(200, 3.28, cameraZoomProgress);
+      this.camera.position.x = easeOut(0, -22.35, cameraZoomProgress);
+      this.camera.position.y = easeOut(0, 28.63, cameraZoomProgress);
+      this.camera.position.z = easeOut(200, 3.29, cameraZoomProgress);
       this.camera.lookAt(
         new THREE.Vector3(
-          easeOut(0, -22.38, cameraZoomProgress),
-          easeOut(0, 28.62, cameraZoomProgress),
-          easeOut(0, 0.39, cameraZoomProgress)
+          easeOut(0, -22.32, cameraZoomProgress),
+          easeOut(0, 28.65, cameraZoomProgress),
+          easeOut(0, 0.4, cameraZoomProgress)
         )
       );
-      this.camera.rotation.z = easeOut(0, -1.02, cameraZoomProgress);
+      this.camera.rotation.z = easeOut(0, -1.03, cameraZoomProgress);
 
       for (let i = 0; i < this.spheres.length; i++) {
         const sphere = this.spheres[i];
