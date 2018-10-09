@@ -49,21 +49,21 @@
     update(frame) {
       super.update(frame);
 
-      const workWorkTransitionProgress = F(frame, 96 + 8, 4);
+      const workWorkTransitionProgress = F(frame, 8, 4);
 
 
-      const cameraZoomProgress = F(frame, 120, 4);
-      this.camera.position.x = easeOut(0, -22.38, cameraZoomProgress);
-      this.camera.position.y = easeOut(0, 28.62, cameraZoomProgress);
-      this.camera.position.z = easeOut(200, 3.28, cameraZoomProgress);
+      const cameraZoomProgress = F(frame, 24, 4);
+      this.camera.position.x = easeOut(0, -22.35, cameraZoomProgress);
+      this.camera.position.y = easeOut(0, 28.63, cameraZoomProgress);
+      this.camera.position.z = easeOut(200, 3.29, cameraZoomProgress);
       this.camera.lookAt(
         new THREE.Vector3(
-          easeOut(0, -22.38, cameraZoomProgress),
-          easeOut(0, 28.62, cameraZoomProgress),
-          easeOut(0, 0.39, cameraZoomProgress)
+          easeOut(0, -22.32, cameraZoomProgress),
+          easeOut(0, 28.65, cameraZoomProgress),
+          easeOut(0, 0.4, cameraZoomProgress)
         )
       );
-      this.camera.rotation.z = easeOut(0, -1.02, cameraZoomProgress);
+      this.camera.rotation.z = easeOut(0, -1.03, cameraZoomProgress);
 
       for (let i = 0; i < this.spheres.length; i++) {
         const sphere = this.spheres[i];
@@ -71,21 +71,21 @@
         sphere.position.x = easeOut(
           i * Math.cos(i + frame / 90),
           -130 + 0.666 * workWorkPosition[0],
-          workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i)
+          workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 0.4)
         );
         sphere.position.y = easeOut(
           i * Math.sin(i + frame / 90),
           75 - 0.666 * workWorkPosition[1],
-          workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i)
+          workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 0.4)
         );
         sphere.position.z = easeOut(
-          easeOut(0, -500 + i, F(frame, 96, 8)),
+          easeOut(0, -500 + i, F(frame, 0, 8)),
           0,
           workWorkTransitionProgress
         );
         sphere.scale.x = easeOut(
           easeOut(
-            easeOut(1, 0.5 + 0.00004 * i ** 1.95, F(frame, 96, 4)),
+            easeOut(1, 0.5 + 0.00004 * i ** 1.95, F(frame, 0, 4)),
             0.5,
             workWorkTransitionProgress
           ),

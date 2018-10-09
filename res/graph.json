@@ -10,9 +10,10 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "SpinningCube.render",
-      "B": "tunnelNode.render",
-      "C": "AfterTunnelNode.render"
+      "A": "tunnelNode.render",
+      "B": "NeonCityNode.render",
+      "C": "SpinningCube.render",
+      "D": "AfterTunnelNode.render"
     }
   },
   {
@@ -58,5 +59,9 @@
       "A": "sceneSwitcherNode.render",
       "B": "blurX.render"
     }
+  },
+  {
+    "id": "NeonCityNode",
+    "type": "neonCityNode"
   }
 ]
