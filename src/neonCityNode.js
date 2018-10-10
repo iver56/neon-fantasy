@@ -11,6 +11,7 @@
           render: new NIN.TextureOutput()
         }
       });
+      this.scaler = 1;
 
       // this.bigSphereTexture = Loader.loadTexture('res/ivertex2.png');
       // this.bigSphereTexture.minFilter = THREE.LinearFilter;
@@ -171,13 +172,19 @@
     update(frame) {
       super.update(frame);
 
+      if(BEAN % 4 == 0 && BEAT)
+      {
+        this.scaler = 1;
+      }
+      
+      this.scaler *= 0.95;
       // this.castles.forEach(castle => {
       //   castle.rotation.x += 0.01;
       //   castle.rotation.y += 0.01;
 
       // });
 
-      this.cylinderWrapper.rotation.x += 0.005 ;
+      this.cylinderWrapper.rotation.x += 0.01 * this.scaler ;
     }
   }
 
