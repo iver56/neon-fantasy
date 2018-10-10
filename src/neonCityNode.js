@@ -44,17 +44,15 @@
 	var materialCylinder = new THREE.MeshBasicMaterial({
 		wireframe: true,
 		color: 0xffffff,
-		side: THREE.DoubleSide,
-		side: THREE.FrontSide
-		
 	});
-	
+  
+  this.cylinderWrapper = new THREE.Object3D();
   this.cylinder = new THREE.Mesh(geometryCylinder, materialCylinder);
   
   this.cylinder.rotation.z = 1.57;
-  this.cylinder.position.y = 2800;
-  this.cylinder.position.z = 1000;
-  this.scene.add(this.cylinder);
+
+  this.cylinderWrapper.add(this.cylinder);
+  this.scene.add(this.cylinderWrapper);
   
   this.castleTexture = Loader.loadTexture('res/test.png');
   this.castleTexture.minFilter = THREE.LinearFilter;
@@ -70,7 +68,9 @@
       
       this.castles = [];
 
-      for(let i = 0; i < 1; i++)
+      var t = Date.now() / 1000; // The number of seconds elapsed since 1 January 1970 00:00:00 UTC
+
+      for(let i = 0; i < 10; i++)
       {
         var turretGeometry = new THREE.BoxGeometry(100, 300, 100);
         var wallGeometry = new THREE.BoxGeometry(200, 100, 50);
@@ -78,7 +78,8 @@
         var castle = new THREE.Group();
         
         let turretOffset = 150;
-        let turretHeightFromGround = 100;
+        let turretHeightFromGround = 0;
+        let wallHeightFromGround = 100;
 
         var turret1 = new THREE.Mesh(turretGeometry, this.castleMaterial);
         turret1.position.x = turretOffset;
@@ -106,34 +107,41 @@
 
         var wall1 = new THREE.Mesh(wallGeometry,this.castleMaterial);
         wall1.position.z = turretOffset;
+        wall1.position.y = -wallHeightFromGround;
         castle.add(wall1);
 
         var wall2 = new THREE.Mesh(wallGeometry,this.castleMaterial);
         wall2.position.z = -turretOffset;
+        wall2.position.y = -wallHeightFromGround;
+
         castle.add(wall2);
 
         var wall3 = new THREE.Mesh(wallGeometry,this.castleMaterial);
         wall3.position.x = turretOffset;
+        wall3.position.y = -wallHeightFromGround;
+
         wall3.rotation.y = Math.PI/2;
         castle.add(wall3);
 
         var wall4 = new THREE.Mesh(wallGeometry,this.castleMaterial);
         wall4.position.x = -turretOffset;
+        wall4.position.y = -wallHeightFromGround;
         wall4.rotation.y = Math.PI/2;
         castle.add(wall4);
 
-        this.castles.push(castle);
-        this.cylinder.add(castle);
-        castle.position.y = -2900;
-        // this.castle.position.
-        this.scene.add(castle);
-
+        this.castles.push(castle); 
+        this.cylinderWrapper.add(castle);
+        // castle.position.z = -1000;
+        castle.position.y = 3000 * Math.sin(t + Math.PI / 5 * i);
+        castle.position.z = 3000 * Math.cos(t + Math.PI / 5 * i);
 
       }
 
       this.camera.far = 10000;
-      this.camera.position.z = 1000;
+      this.camera.position.y = 3050;
       
+      
+
       // let light = new THREE.PointLight(0xffffff, 1, 10000);
       // light.position.set(50, 50, 50);
       // this.scene.add(light);
@@ -148,7 +156,7 @@
 
       // });
 
-      // this.cylinder.rotation.x -= 1 ;
+      this.cylinderWrapper.rotation.x += 0.001 ;
     }
   }
 
