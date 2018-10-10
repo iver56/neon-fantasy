@@ -21,14 +21,14 @@
       this.inputs.D.enabled = false;
 
       let selectedScene;
-      if (BEAN < 48) {
-        selectedScene = this.inputs.A;
-      } else if (BEAN < 96) {
-        selectedScene = this.inputs.B;
-      } else if (BEAN < 224) {
+      if (BEAN < 96) {
         selectedScene = this.inputs.C;
-      } else {
+      } else if (BEAN < 224) {
+        selectedScene = this.inputs.B;
+      } else if (BEAN < 288) {
         selectedScene = this.inputs.D;
+      } else {
+        selectedScene = this.inputs.A;
       }
 
       selectedScene.enabled = true;
