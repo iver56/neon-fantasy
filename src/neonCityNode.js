@@ -133,12 +133,11 @@
         this.cylinderWrapper.add(castle);
         // castle.position.z = -1000;
 
-        var mathThingy = Math.PI / 6;
+        var mathThingy = 2 * Math.PI / 10;
 
         castle.position.y = 3000 * Math.sin(mathThingy * i);
         castle.position.z = 3000 * Math.cos(mathThingy * i);
-        castle.rotation.x = Math.sin(mathThingy * i + Math.PI/2);			
-
+        castle.rotation.x = ((-2  * Math.PI) / (10) * i) + Math.PI/2;
       }
 
       this.camera.far = 10000;
@@ -161,7 +160,7 @@
 
       // });
 
-      this.cylinderWrapper.rotation.x += 0.001 ;
+      this.cylinderWrapper.rotation.x += 0.005 ;
     }
   }
 
