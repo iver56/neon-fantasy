@@ -12,18 +12,61 @@
         }
       });
 
-      this.castleTexture = Loader.loadTexture('res/test.png');
-      this.castleTexture.minFilter = THREE.LinearFilter;
-      this.castleTexture.magFilter = THREE.LinearFilter;
-      this.castleMaterial = new THREE.MeshStandardMaterial({
-        shading: THREE.FlatShading,
-        metalness: 1,
-        roughness: 0.5,
-        map: this.castleTexture,
-        emissive: 0xffffff,
-        emissiveMap: this.castleTexture,
-        emissiveIntensity:1,
-      });
+      // this.bigSphereTexture = Loader.loadTexture('res/ivertex2.png');
+      // this.bigSphereTexture.minFilter = THREE.LinearFilter;
+      // this.bigSphereTexture.magFilter = THREE.LinearFilter;
+      // this.bigSphereMaterial = new THREE.MeshStandardMaterial({
+      //   shading: THREE.FlatShading,
+      //   metalness: 1,
+      //   roughness: 0.5,
+      //   map: this.bigSphereTexture,
+      //   emissive: 0x111111,
+      //   emissiveMap: this.bigSphereTexture,
+      //   emissiveIntensity:1,
+      //   side: THREE.DoubleSide,
+      //   side: THREE.FrontSide
+      // });
+
+      // // Giant sphere
+      // this.bigSphereGeometry = new THREE.SphereGeometry(4000,1000,1000);
+      // this.bigSphere = new THREE.Mesh(this.bigSphereGeometry, this.bigSphereMaterial)
+      // this.bigSphere.scale.x = -1;
+      // this.bigSphere.scale.y = -1;
+      // this.bigSphere.scale.z = -1;
+      // this.bigSphere.rotation.z = -Math.PI /2;
+      // this.bigSphere.position.y = 3000;
+      // this.bigSphere.position.z = -1500;
+      // this.scene.add(this.bigSphere);
+
+
+	//bigass cylinder
+	var geometryCylinder = new THREE.CylinderGeometry(3000,3000,6000,64,12, true);
+	var materialCylinder = new THREE.MeshBasicMaterial({
+		wireframe: true,
+		color: 0xffffff,
+		side: THREE.DoubleSide,
+		side: THREE.FrontSide
+		
+	});
+	
+  this.cylinder = new THREE.Mesh(geometryCylinder, materialCylinder);
+  
+  this.cylinder.rotation.z = 1.57;
+  this.cylinder.position.y = 2800;
+  this.cylinder.position.z = 1000;
+  this.scene.add(this.cylinder);
+  
+  this.castleTexture = Loader.loadTexture('res/test.png');
+  this.castleTexture.minFilter = THREE.LinearFilter;
+  this.castleTexture.magFilter = THREE.LinearFilter;
+  this.castleMaterial = new THREE.MeshStandardMaterial({
+    metalness: 1,
+    roughness: 0.5,
+    map: this.castleTexture,
+    emissive: 0x00ffff,
+    emissiveMap: this.castleTexture,
+    emissiveIntensity:1,
+  });
       
       this.castles = [];
 
@@ -80,13 +123,17 @@
         castle.add(wall4);
 
         this.castles.push(castle);
-
+        this.cylinder.add(castle);
+        castle.position.y = -2900;
+        // this.castle.position.
         this.scene.add(castle);
+
 
       }
 
+      this.camera.far = 10000;
       this.camera.position.z = 1000;
-
+      
       // let light = new THREE.PointLight(0xffffff, 1, 10000);
       // light.position.set(50, 50, 50);
       // this.scene.add(light);
@@ -95,11 +142,13 @@
     update(frame) {
       super.update(frame);
 
-      this.castles.forEach(castle => {
-        castle.rotation.x += 0.01;
-        castle.rotation.y += 0.01;
+      // this.castles.forEach(castle => {
+      //   castle.rotation.x += 0.01;
+      //   castle.rotation.y += 0.01;
 
-      });
+      // });
+
+      // this.cylinder.rotation.x -= 1 ;
     }
   }
 
