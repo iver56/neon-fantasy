@@ -13,7 +13,8 @@
       "A": "tunnelNode.render",
       "B": "NeonCityNode.render",
       "C": "SpinningCube.render",
-      "D": "AfterTunnelNode.render"
+      "D": "AfterTunnelNode.render",
+      "E": "BlurryTunnelNode.render"
     }
   },
   {
@@ -63,5 +64,9 @@
   {
     "id": "NeonCityNode",
     "type": "neonCityNode"
+  },
+  {
+    "id": "BlurryTunnelNode",
+    "type": "blurryTunnelNode"
   }
 ]
