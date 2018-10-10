@@ -43,7 +43,7 @@
 	var geometryCylinder = new THREE.CylinderGeometry(3000,3000,6000,64,12, true);
 	var materialCylinder = new THREE.MeshBasicMaterial({
 		wireframe: true,
-		color: 0xffffff,
+    color: 0x881DF7,
 	});
   
   this.cylinderWrapper = new THREE.Object3D();
@@ -51,6 +51,16 @@
   
   this.cylinder.rotation.z = 1.57;
 
+  var geometryHackCylinder = new THREE.CylinderGeometry(2950,2950,6000,64,12, true);
+
+	var hackCylinderMaterial = new THREE.MeshBasicMaterial({
+    color: 0x000000,
+	});
+
+  this.goodHackCylinder = new THREE.Mesh(geometryHackCylinder,hackCylinderMaterial);
+  this.goodHackCylinder.rotation.z = 1.57;
+
+  this.cylinderWrapper.add(this.goodHackCylinder);
   this.cylinderWrapper.add(this.cylinder);
   this.scene.add(this.cylinderWrapper);
   
@@ -61,7 +71,7 @@
     metalness: 1,
     roughness: 0.5,
     map: this.castleTexture,
-    emissive: 0x00ffff,
+    emissive: 0x30F5E0,
     emissiveMap: this.castleTexture,
     emissiveIntensity:1,
   });
@@ -138,11 +148,19 @@
         castle.position.y = 3000 * Math.sin(mathThingy * i);
         castle.position.z = 3000 * Math.cos(mathThingy * i);
         castle.rotation.x = ((-2  * Math.PI) / (10) * i) + Math.PI/2;
+
+        if(i % 2 == 0){
+          castle.position.x = 200;
+        }
+        else {
+          castle.position.x = -200;
+        }
       }
 
       this.camera.far = 10000;
-      this.camera.position.y = 3050;
+      this.camera.position.y = 3500;
       this.camera.position.z = 1000;
+      this.camera.rotation.x = -0.3;
       
       
 
