@@ -78,8 +78,8 @@
         var castle = new THREE.Group();
         
         let turretOffset = 150;
-        let turretHeightFromGround = 0;
-        let wallHeightFromGround = 100;
+        let turretHeightFromGround = 150;
+        let wallHeightFromGround = -50;
 
         var turret1 = new THREE.Mesh(turretGeometry, this.castleMaterial);
         turret1.position.x = turretOffset;
@@ -132,13 +132,18 @@
         this.castles.push(castle); 
         this.cylinderWrapper.add(castle);
         // castle.position.z = -1000;
-        castle.position.y = 3000 * Math.sin(t + Math.PI / 5 * i);
-        castle.position.z = 3000 * Math.cos(t + Math.PI / 5 * i);
+
+        var mathThingy = Math.PI / 6;
+
+        castle.position.y = 3000 * Math.sin(mathThingy * i);
+        castle.position.z = 3000 * Math.cos(mathThingy * i);
+        castle.rotation.x = Math.sin(mathThingy * i + Math.PI/2);			
 
       }
 
       this.camera.far = 10000;
       this.camera.position.y = 3050;
+      this.camera.position.z = 1000;
       
       
 
