@@ -76,6 +76,9 @@
     emissiveIntensity:1,
   });
       
+  this.mathThingy = 2 * Math.PI / 10;
+
+
       this.castles = [];
 
       var t = Date.now() / 1000; // The number of seconds elapsed since 1 January 1970 00:00:00 UTC
@@ -143,10 +146,9 @@
         this.cylinderWrapper.add(castle);
         // castle.position.z = -1000;
 
-        var mathThingy = 2 * Math.PI / 10;
 
-        castle.position.y = 3000 * Math.sin(mathThingy * i);
-        castle.position.z = 3000 * Math.cos(mathThingy * i);
+        castle.position.y = 3000 * Math.sin(this.mathThingy * i);
+        castle.position.z = 3000 * Math.cos(this.mathThingy * i);
         castle.rotation.x = ((-2  * Math.PI) / (10) * i) + Math.PI/2;
 
         if(i % 2 == 0){
@@ -178,13 +180,24 @@
       }
       
       this.scaler *= 0.95;
-      // this.castles.forEach(castle => {
-      //   castle.rotation.x += 0.01;
-      //   castle.rotation.y += 0.01;
 
+      const progress = 1 - this.scaler;
+      var targetRotation = Math.PI * 0.5 * (Math.floor(BEAN / 4));
+      // castle.rotation.y = lerp(targetRotation - Math.PI * 0.5, targetRotation, progress);
+      
+      // this.castles.forEach(castle => {       
+      //   castle.rotation.y = lerp(targetRotation - Math.PI * 0.5, targetRotation, progress);
       // });
 
-      this.cylinderWrapper.rotation.x += 0.01 * this.scaler ;
+      this.castles[4].rotation.y = easeOut(0, Math.PI, F(frame, 100, 4));
+      this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, 108, 4));
+      this.castles[6].rotation.y = easeOut(0, Math.PI, F(frame, 116, 4));
+
+      this.cylinderWrapper.rotation.x = (
+        easeOut(0, this.mathThingy, F(frame, 96, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 104, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 112, 4))
+      ) + Math.PI / 20;      
     }
   }
 
