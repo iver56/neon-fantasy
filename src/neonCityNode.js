@@ -23,8 +23,7 @@
       //   emissive: 0x111111,
       //   emissiveMap: this.bigSphereTexture,
       //   emissiveIntensity:1,
-      //   side: THREE.DoubleSide,
-      //   side: THREE.FrontSide
+
       // });
 
       // // Giant sphere
@@ -54,7 +53,7 @@
   var geometryHackCylinder = new THREE.CylinderGeometry(2950,2950,6000,64,12, true);
 
 	var hackCylinderMaterial = new THREE.MeshBasicMaterial({
-    color: 0x000000,
+    color: 0x0E0011,
 	});
 
   this.goodHackCylinder = new THREE.Mesh(geometryHackCylinder,hackCylinderMaterial);
