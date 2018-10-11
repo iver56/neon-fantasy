@@ -88,8 +88,8 @@
 
       // Update cube scaling
       for(let i = 0; i < this.cubes.length; i++){
-        var cube = this.cubes[i];
-        var scaleDelta = 0.15 * Math.sin(i) + 0.3;
+        let cube = this.cubes[i];
+        let scaleDelta = 0.15 * Math.sin(i) + 0.3;
         cube.scale.x = scaleDelta + Math.atan(0.5 + this.scaler) ;
         cube.scale.y = scaleDelta + Math.atan(0.5 + this.scaler);
         cube.scale.z = scaleDelta + Math.atan(0.5 + this.scaler);
@@ -172,19 +172,17 @@
       {
         this.camera.position.z -= this.scaler * 10;
 
-        var less = 0.01;
+        let less = 0.01;
         less += this.scaler * 0.03;
         for(let i = 0; i < 3; i++){
-          var sphere = this.spheres[i];
+          let sphere = this.spheres[i];
           sphere.scale.x = Math.max(0, sphere.scale.x - less);
           sphere.scale.y = Math.max(0, sphere.scale.y - less);
         }
 
         for(let i = 0; i < this.cubes.length; i++){
-           
-          var cube = this.cubes[i];
-          var progress = this.scaler * 0.05;
-          
+          let cube = this.cubes[i];
+
           if(i < 100)
           {
             cube.position.x = Math.sin(-this.angle + i) * 100;
@@ -204,6 +202,9 @@
           }
         }
       }
+
+      this.camera.fov = easeOut(45, 1, F(frame, 92, 4));
+      this.camera.updateProjectionMatrix();
     }
     // end at 96 
   }
