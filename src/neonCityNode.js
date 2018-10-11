@@ -152,10 +152,10 @@
         castle.rotation.x = ((-2  * Math.PI) / (10) * i) + Math.PI/2;
 
         if(i % 2 == 0){
-          castle.position.x = 200;
+          castle.position.x = 300;
         }
         else {
-          castle.position.x = -200;
+          castle.position.x = -300;
         }
       }
 
@@ -189,13 +189,17 @@
       //   castle.rotation.y = lerp(targetRotation - Math.PI * 0.5, targetRotation, progress);
       // });
 
-      this.castles[4].rotation.y = easeOut(0, Math.PI, F(frame, 100, 4));
+      this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, 100, 4));
       this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, 108, 4));
-      this.castles[6].rotation.y = easeOut(0, Math.PI, F(frame, 116, 4));
+      this.castles[6].rotation.y = easeOut(0, -Math.PI, F(frame, 116, 4));
       this.castles[7].rotation.y = easeOut(0, Math.PI, F(frame, 124, 4));
-      this.castles[8].rotation.y = easeOut(0, Math.PI, F(frame, 132, 4));
+      this.castles[8].rotation.y = easeOut(0, -Math.PI, F(frame, 132, 4));
       this.castles[9].rotation.y = easeOut(0, Math.PI, F(frame, 140, 4));
-      this.castles[0].rotation.y = easeOut(0, Math.PI, F(frame, 148, 4));
+      this.castles[0].rotation.y = easeOut(0, -Math.PI, F(frame, 148, 4));
+      this.castles[1].rotation.y = easeOut(0, Math.PI, F(frame, 156, 4));
+      this.castles[2].rotation.y = easeOut(0, -Math.PI, F(frame, 164, 4));
+      this.castles[3].rotation.y = easeOut(0, Math.PI, F(frame, 172, 4));
+      //this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, 164, 4));
 
       // Move world into view in the start of the effect
       this.cylinderWrapper.position.y = easeOut(-3000, 0, F(frame, 96, 4));
@@ -207,7 +211,12 @@
         easeOut(0, this.mathThingy, F(frame, 120, 4)) +
         easeOut(0, this.mathThingy, F(frame, 128, 4)) +
         easeOut(0, this.mathThingy, F(frame, 136, 4)) +
-        easeOut(0, this.mathThingy, F(frame, 144, 4))
+        easeOut(0, this.mathThingy, F(frame, 144, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 152, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 160, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 168, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 176, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 184, 4))
       ) + Math.PI / 20;
     }
   }
