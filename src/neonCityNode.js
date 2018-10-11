@@ -278,7 +278,7 @@
       // Move world into view in the start of the effect
       this.cylinderWrapper.position.y = easeOut(-3000, 0, F(frame, 96, 4));
 
-      this.cylinderWrapper.rotation.x = (
+      this.cylinderWrapper.rotation.x = (this.scaler * 0.005 + 
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 0, 4)) +
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 1, 4)) +
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 2, 4)) +
