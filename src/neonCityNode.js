@@ -34,13 +34,13 @@
         .5
         );
 
-      this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(100, 32, 32),
+      this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(500, 32, 32),
         this.ballMaterial)
-      var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 2000, 850);
+      var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 4000, 3000);
       this.bigSphere.add(bigSphereLight);
 
       this.bigSphere.position.y = 3500
-      this.bigSphere.position.z = -300;
+      this.bigSphere.position.z = -3000;
       this.bigSphereOffsetX = 700;
       // this.bigSphere.position.x = -this.bigSphereOffsetX;
       this.scene.add(this.bigSphere);
@@ -201,7 +201,11 @@
       // this.scene.add(light);
       this.cylinderSpinBean = 96;
       this.castleSpinBean = 100;
-      this.sunMoveBean = 104;
+      
+      this.sunMoveBean = 96;
+      this.sunMoveY = 100;
+      this.sunMoveX = 150;
+
     }
 
 
@@ -215,15 +219,26 @@
       
       this.scaler *= 0.95;
 
-      this.bigSphere.position.x = (
-        easeOut(0, -this.bigSphereOffsetX, F(frame, this.sunMoveBean + 16 * 0, 4)) +
-        easeOut(0, 2 * this.bigSphereOffsetX, F(frame, this.sunMoveBean + 16 * 1, 4)) +
-        easeOut(0, -2 * this.bigSphereOffsetX, F(frame, this.sunMoveBean + 16 * 2, 4)) +
-        easeOut(0, 2 * this.bigSphereOffsetX, F(frame, this.sunMoveBean + 16 * 3, 4)) +
-        easeOut(0, -2 * this.bigSphereOffsetX, F(frame, this.sunMoveBean + 16 * 4, 4)) +
-        easeOut(0, 2 * this.bigSphereOffsetX, F(frame, this.sunMoveBean + 16 * 5, 4)) +
-        easeOut(0, -2 * this.bigSphereOffsetX, F(frame, this.sunMoveBean + 16 * 6, 4)) +
-        easeOut(0, 2 * this.bigSphereOffsetX, F(frame, this.sunMoveBean + 16 * 7, 4))
+      this.bigSphere.position.x = (2000 +
+        // easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 0, 4)) +
+        easeOut(0, -this.sunMoveX , F(frame, this.sunMoveBean + 16 * 1, 4)) +
+        easeOut(0, -this.sunMoveX , F(frame, this.sunMoveBean + 16 * 2, 4)) +
+        easeOut(0, -this.sunMoveX , F(frame, this.sunMoveBean + 16 * 3, 4)) +
+        easeOut(0, -this.sunMoveX , F(frame, this.sunMoveBean + 16 * 4, 4)) +
+        easeOut(0, -this.sunMoveX , F(frame, this.sunMoveBean + 16 * 5, 4)) +
+        easeOut(0, -this.sunMoveX , F(frame, this.sunMoveBean + 16 * 6, 4)) +
+        easeOut(0, -this.sunMoveX , F(frame, this.sunMoveBean + 16 * 7, 4))
+      );
+
+      this.bigSphere.position.y = (2700 + 
+        // easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 0, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 1, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 2, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 3, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 4, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 5, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 6, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 7, 4))
       );
 
       this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 16 * 0, 4));
