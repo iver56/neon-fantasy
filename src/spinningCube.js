@@ -87,12 +87,16 @@
       }
 
       // Update cube scaling
-      for(let i = 0; i < this.cubes.length; i++){
+      for (let i = 0; i < this.cubes.length; i++) {
         let cube = this.cubes[i];
         let scaleDelta = 0.15 * Math.sin(i) + 0.3;
-        cube.scale.x = scaleDelta + Math.atan(0.5 + this.scaler) ;
-        cube.scale.y = scaleDelta + Math.atan(0.5 + this.scaler);
-        cube.scale.z = scaleDelta + Math.atan(0.5 + this.scaler);
+        cube.scale.x = smoothstep(
+          0.0001,
+          scaleDelta + Math.atan(0.5 + this.scaler),
+          F(0 | (frame - i / 3), 0, 8)
+        );
+        cube.scale.y = cube.scale.x;
+        cube.scale.z = cube.scale.x;
       }
 
       this.spheres[1].visible = BEAN >= 12; // Reveal second sphere
@@ -128,9 +132,9 @@
         this.cubePosCheckY += this.scaler * positionIncrease;
         for(let i = 0; i < this.cubes.length; i++){
            
-          var cube = this.cubes[i];
-          var checkX = Math.abs(cube.position.x) < this.cubePosCheckX;
-          var checkY = Math.abs(cube.position.y) < this.cubePosCheckY;
+          let cube = this.cubes[i];
+          const checkX = Math.abs(cube.position.x) < this.cubePosCheckX;
+          const checkY = Math.abs(cube.position.y) < this.cubePosCheckY;
           
           if(checkX && checkY)
           {
