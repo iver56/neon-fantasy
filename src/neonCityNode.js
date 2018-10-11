@@ -36,13 +36,13 @@
 
       this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(100, 32, 32),
         this.ballMaterial)
-      var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 1000, 850);
+      var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 2000, 850);
       this.bigSphere.add(bigSphereLight);
 
       this.bigSphere.position.y = 3500
-      this.bigSphere.position.z = -500;
+      this.bigSphere.position.z = -300;
       this.bigSphereOffsetX = 700;
-      this.bigSphere.position.x = this.bigSphereOffsetX;
+      // this.bigSphere.position.x = -this.bigSphereOffsetX;
       this.scene.add(this.bigSphere);
       // this.bigSphereTexture = Loader.loadTexture('res/ivertex2.png');
       // this.bigSphereTexture.minFilter = THREE.LinearFilter;
