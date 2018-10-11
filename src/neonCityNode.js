@@ -13,17 +13,17 @@
       });
       this.scaler = 1;
 
-      this.ballTexture = Loader.loadTexture('res/ivertex2.png');
-      this.ballTexture.minFilter = THREE.LinearFilter;
-      this.ballTexture.magFilter = THREE.LinearFilter;
-      this.ballMaterial = new THREE.MeshStandardMaterial({
+      this.sunTexture = Loader.loadTexture('res/ivertex2.png');
+      this.sunTexture.minFilter = THREE.LinearFilter;
+      this.sunTexture.magFilter = THREE.LinearFilter;
+      this.sunMaterial = new THREE.MeshStandardMaterial({
         shading: THREE.FlatShading,
         metalness: 1,
         roughness: 0.5,
-        map: this.ballTexture,
+        map: this.sunTexture,
         emissive: 0xffffff,
-        emissiveMap: this.ballTexture,
-        emissiveIntensity:1,
+        emissiveMap: this.sunTexture,
+        emissiveIntensity:1
       });
 
 
@@ -35,7 +35,7 @@
         );
 
       this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(500, 32, 32),
-        this.ballMaterial)
+        this.sunMaterial)
       var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 4000, 3000);
       this.bigSphere.add(bigSphereLight);
 
@@ -83,9 +83,9 @@
           .5
           );
         
-        var sphereMaterial = new THREE.MeshBasicMaterial({emissiveColor: color.getHex()});
+        var starMaterial = new THREE.MeshBasicMaterial({emissiveColor: color.getHex()});
         var sphere = new THREE.Mesh(new THREE.SphereGeometry(10, 32, 32),
-          sphereMaterial);
+          starMaterial);
         
         sphere.position.y =  Math.random() * 4000;
         sphere.position.x = -4000 + Math.random() * 8000;
@@ -231,8 +231,8 @@
       this.castleSpinBean = 100;
       
       this.sunMoveBean = 96;
-      this.sunMoveY = 100;
-      this.sunMoveX = 150;
+      this.sunMoveY = 120;
+      this.sunMoveX = 280;
 
       this.cameraMoveBean = 108;
       this.cameraRotationY = 0.2;
@@ -259,6 +259,11 @@
         easeOut(0, -this.sunMoveX , F(frame, this.sunMoveBean + 16 * 6, 4)) +
         easeOut(0, -this.sunMoveX , F(frame, this.sunMoveBean + 16 * 7, 4))
       );
+
+      this.sunMaterial.emissiveIntensity = 1 + this.scaler * 0.15;
+      this.bigSphere.scale.x = 1 + this.scaler * 0.05;
+      this.bigSphere.scale.y = 1 + this.scaler * 0.05;
+      this.bigSphere.scale.z = 1 + this.scaler * 0.05;
 
       this.bigSphere.position.y = (2700 + 
         // easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 0, 4)) +
