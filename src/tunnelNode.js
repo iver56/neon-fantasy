@@ -71,12 +71,12 @@
         sphere.position.x = easeOut(
           i * Math.cos(i + frame / 90),
           -130 + 0.666 * workWorkPosition[0],
-          workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 0.4)
+          workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 3.1)
         );
         sphere.position.y = easeOut(
           i * Math.sin(i + frame / 90),
           75 - 0.666 * workWorkPosition[1],
-          workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 0.4)
+          workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 3.1)
         );
         sphere.position.z = easeOut(
           easeOut(0, -500 + i, F(frame, 320, 8)),
