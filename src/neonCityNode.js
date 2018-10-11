@@ -70,6 +70,29 @@
       // this.scene.add(this.bigSphere);
 
 
+      // STARS
+      this.spheres = [];
+
+      
+      for (let i = 0; i < 3; i++) 
+      {
+        var color = new THREE.Color();
+        color.setHSL(
+          (.5 + 0.15 * i) % 1,
+          .5,
+          .5
+          );
+        
+        var sphereMaterial = new THREE.MeshBasicMaterial({color: color.getHex()});
+        var sphere = new THREE.Mesh(new THREE.SphereGeometry(50, 32, 32),
+          sphereMaterial);
+        this.spheres.push(sphere);
+        this.scene.add(sphere);
+      }
+      // STARS END
+
+
+
       //bigass cylinder
       var geometryCylinder = new THREE.CylinderGeometry(3000,3000,6000,64,12, true);
       var materialCylinder = new THREE.MeshBasicMaterial({
