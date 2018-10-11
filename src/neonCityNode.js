@@ -192,12 +192,23 @@
       this.castles[4].rotation.y = easeOut(0, Math.PI, F(frame, 100, 4));
       this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, 108, 4));
       this.castles[6].rotation.y = easeOut(0, Math.PI, F(frame, 116, 4));
+      this.castles[7].rotation.y = easeOut(0, Math.PI, F(frame, 124, 4));
+      this.castles[8].rotation.y = easeOut(0, Math.PI, F(frame, 132, 4));
+      this.castles[9].rotation.y = easeOut(0, Math.PI, F(frame, 140, 4));
+      this.castles[0].rotation.y = easeOut(0, Math.PI, F(frame, 148, 4));
+
+      // Move world into view in the start of the effect
+      this.cylinderWrapper.position.y = easeOut(-3000, 0, F(frame, 96, 4));
 
       this.cylinderWrapper.rotation.x = (
         easeOut(0, this.mathThingy, F(frame, 96, 4)) +
         easeOut(0, this.mathThingy, F(frame, 104, 4)) +
-        easeOut(0, this.mathThingy, F(frame, 112, 4))
-      ) + Math.PI / 20;      
+        easeOut(0, this.mathThingy, F(frame, 112, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 120, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 128, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 136, 4)) +
+        easeOut(0, this.mathThingy, F(frame, 144, 4))
+      ) + Math.PI / 20;
     }
   }
 
