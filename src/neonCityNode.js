@@ -13,6 +13,37 @@
       });
       this.scaler = 1;
 
+      this.ballTexture = Loader.loadTexture('res/ivertex2.png');
+      this.ballTexture.minFilter = THREE.LinearFilter;
+      this.ballTexture.magFilter = THREE.LinearFilter;
+      this.ballMaterial = new THREE.MeshStandardMaterial({
+        shading: THREE.FlatShading,
+        metalness: 1,
+        roughness: 0.5,
+        map: this.ballTexture,
+        emissive: 0xffffff,
+        emissiveMap: this.ballTexture,
+        emissiveIntensity:1,
+      });
+
+
+      var ballColor = new THREE.Color();
+      ballColor.setHSL(
+        (.5+ 0.64) % 1,
+        .5,
+        .5
+        );
+
+      this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(100, 32, 32),
+        this.ballMaterial)
+      var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 1000, 850);
+      this.bigSphere.add(bigSphereLight);
+
+      this.bigSphere.position.y = 3500
+      this.bigSphere.position.z = -500;
+      this.bigSphereOffsetX = 700;
+      this.bigSphere.position.x = this.bigSphereOffsetX;
+      this.scene.add(this.bigSphere);
       // this.bigSphereTexture = Loader.loadTexture('res/ivertex2.png');
       // this.bigSphereTexture.minFilter = THREE.LinearFilter;
       // this.bigSphereTexture.magFilter = THREE.LinearFilter;
@@ -39,45 +70,44 @@
       // this.scene.add(this.bigSphere);
 
 
-	//bigass cylinder
-	var geometryCylinder = new THREE.CylinderGeometry(3000,3000,6000,64,12, true);
-	var materialCylinder = new THREE.MeshBasicMaterial({
-		wireframe: true,
-    color: 0x881DF7,
-	});
-  
-  this.cylinderWrapper = new THREE.Object3D();
-  this.cylinder = new THREE.Mesh(geometryCylinder, materialCylinder);
-  
-  this.cylinder.rotation.z = 1.57;
-
-  var geometryHackCylinder = new THREE.CylinderGeometry(2950,2950,6000,64,12, true);
-
-	var hackCylinderMaterial = new THREE.MeshBasicMaterial({
-    color: 0x0E0011,
-	});
-
-  this.goodHackCylinder = new THREE.Mesh(geometryHackCylinder,hackCylinderMaterial);
-  this.goodHackCylinder.rotation.z = 1.57;
-
-  this.cylinderWrapper.add(this.goodHackCylinder);
-  this.cylinderWrapper.add(this.cylinder);
-  this.scene.add(this.cylinderWrapper);
-  
-  this.castleTexture = Loader.loadTexture('res/test.png');
-  this.castleTexture.minFilter = THREE.LinearFilter;
-  this.castleTexture.magFilter = THREE.LinearFilter;
-  this.castleMaterial = new THREE.MeshStandardMaterial({
-    metalness: 1,
-    roughness: 0.5,
-    map: this.castleTexture,
-    emissive: 0x30F5E0,
-    emissiveMap: this.castleTexture,
-    emissiveIntensity:1,
-  });
+      //bigass cylinder
+      var geometryCylinder = new THREE.CylinderGeometry(3000,3000,6000,64,12, true);
+      var materialCylinder = new THREE.MeshBasicMaterial({
+        wireframe: true,
+        color: 0x881DF7,
+      });
       
-  this.mathThingy = 2 * Math.PI / 10;
+      this.cylinderWrapper = new THREE.Object3D();
+      this.cylinder = new THREE.Mesh(geometryCylinder, materialCylinder);
+      
+      this.cylinder.rotation.z = 1.57;
 
+      var geometryHackCylinder = new THREE.CylinderGeometry(2950,2950,6000,64,12, true);
+
+      var hackCylinderMaterial = new THREE.MeshBasicMaterial({
+        color: 0x0E0011,
+      });
+
+      this.goodHackCylinder = new THREE.Mesh(geometryHackCylinder,hackCylinderMaterial);
+      this.goodHackCylinder.rotation.z = 1.57;
+
+      this.cylinderWrapper.add(this.goodHackCylinder);
+      this.cylinderWrapper.add(this.cylinder);
+      this.scene.add(this.cylinderWrapper);
+      
+      this.castleTexture = Loader.loadTexture('res/test.png');
+      this.castleTexture.minFilter = THREE.LinearFilter;
+      this.castleTexture.magFilter = THREE.LinearFilter;
+      this.castleMaterial = new THREE.MeshStandardMaterial({
+        metalness: 1,
+        roughness: 0.5,
+        map: this.castleTexture,
+        emissive: 0x30F5E0,
+        emissiveMap: this.castleTexture,
+        emissiveIntensity:1,
+      });
+          
+      this.mathThingy = 2 * Math.PI / 10;
 
       this.castles = [];
 
@@ -189,6 +219,14 @@
       //   castle.rotation.y = lerp(targetRotation - Math.PI * 0.5, targetRotation, progress);
       // });
 
+      this.bigSphere.position.x = (
+        easeOut(0, -this.bigSphereOffsetX, F(frame, 100, 4)) +
+        easeOut(0, 2 * this.bigSphereOffsetX, F(frame, 108, 4)) +
+        easeOut(0, -2 * this.bigSphereOffsetX, F(frame, 116, 4)) +
+        easeOut(0, 2 * this.bigSphereOffsetX, F(frame, 124, 4)) +
+        easeOut(0, -2 * this.bigSphereOffsetX, F(frame, 132, 4)) +
+        easeOut(0, 2 * this.bigSphereOffsetX, F(frame, 140, 4))
+      );
       this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, 100, 4));
       this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, 108, 4));
       this.castles[6].rotation.y = easeOut(0, -Math.PI, F(frame, 116, 4));
