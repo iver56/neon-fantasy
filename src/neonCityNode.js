@@ -74,7 +74,7 @@
       this.spheres = [];
 
       
-      for (let i = 0; i < 3; i++) 
+      for (let i = 0; i < 600; i++) 
       {
         var color = new THREE.Color();
         color.setHSL(
@@ -83,10 +83,15 @@
           .5
           );
         
-        var sphereMaterial = new THREE.MeshBasicMaterial({color: color.getHex()});
-        var sphere = new THREE.Mesh(new THREE.SphereGeometry(50, 32, 32),
+        var sphereMaterial = new THREE.MeshBasicMaterial({emissiveColor: color.getHex()});
+        var sphere = new THREE.Mesh(new THREE.SphereGeometry(10, 32, 32),
           sphereMaterial);
+        
+        sphere.position.y =  Math.random() * 4000;
+        sphere.position.x = -4000 + Math.random() * 8000;
+        sphere.position.z = -3000;
         this.spheres.push(sphere);
+        
         this.scene.add(sphere);
       }
       // STARS END
@@ -229,6 +234,8 @@
       this.sunMoveY = 100;
       this.sunMoveX = 150;
 
+      this.cameraMoveBean = 108;
+      this.cameraRotationY = 0.2;
     }
 
 
@@ -287,6 +294,18 @@
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 5, 4)) +
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 6, 4)) +
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 7, 4))
+      ) + Math.PI / 20;
+
+
+      this.camera.rotation.y = (//this.scaler * 0.005 + 
+        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 0, 4)) +
+        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 1, 4)) +
+        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 2, 4)) +
+        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 3, 4)) +
+        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 4, 4)) +
+        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 5, 4)) +
+        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 6, 4)) +
+        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 7, 4))
       ) + Math.PI / 20;
     }
   }
