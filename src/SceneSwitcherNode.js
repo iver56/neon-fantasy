@@ -20,6 +20,7 @@
       this.inputs.B.enabled = false;
       this.inputs.C.enabled = false;
       this.inputs.D.enabled = false;
+      this.inputs.E.enabled = false;
 
       let selectedScene;
       if (BEAN < 96) {
