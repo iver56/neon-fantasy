@@ -11,9 +11,23 @@
       this.ctx = this.canvas.getContext('2d');
 
       this.resize();
+
+      this.ctx.font = '5px s';
+
       this.output = new THREE.VideoTexture(this.canvas);
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
+
+      this.colors = [
+        '#F7CC18',
+        '#F78B1E',
+        '#F72871',
+        '#EA21F7',
+        '#881DF7',
+        '#EA21F7',
+        '#F72871',
+        '#F78B1E',
+      ]
     }
 
     update(frame) {
@@ -21,19 +35,22 @@
 
       this.ctx.save();
       this.ctx.scale(GU, GU);
+      this.ctx.translate(8, 4.5);
 
       const t = frame / 60;
-      const scalingFactor = 0.1;
-      const rectWidth = 0.5;
+      const scalingFactor = 0.08;
+      const rectWidth = 0.2;
 
-      this.ctx.font = '5px s';
-      this.ctx.strokeStyle = `hsl(${Math.max(0, Math.sin(t * 8) * 180)},90%,${BEAN % 2 ? 70 : 0}%)`;
+      const color = this.colors[(0 | (BEAN / 4) + 5) % this.colors.length];
+      this.ctx.strokeStyle = BEAN % 4 < 2 ? color : 'black';
+      this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
 
-      this.ctx.strokeRect(8 - rectWidth / 2, 4.5 - rectWidth / 2, rectWidth, rectWidth);
+      this.ctx.rotate(0.005 * Math.sin(1.2 * t));
+
       this.ctx.drawImage(
         this.canvas,
-        -scalingFactor * 2,
-        -scalingFactor,
+        -8 - scalingFactor * 2,
+        -4.5 - scalingFactor,
         16 + 4 * scalingFactor,
         9 + 2 * scalingFactor
       );

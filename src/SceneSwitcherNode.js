@@ -20,7 +20,9 @@
       this.inputs.B.enabled = false;
       this.inputs.C.enabled = false;
       this.inputs.D.enabled = false;
-      this.inputs.E.enabled = false;
+
+      // enable blurryTunnelNode before it starts, to prepare the tunnel
+      this.inputs.E.enabled = BEAN >= 276 && BEAN < 320;
 
       let selectedScene;
       if (BEAN < 96) {
