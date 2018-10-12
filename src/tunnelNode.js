@@ -33,7 +33,7 @@
 
       this.camera.position.z = 200;
 
-      this.scaler = 1;
+      this.scaler = 0;
     }
 
     getWorkWorkLogoPosition(t) {
