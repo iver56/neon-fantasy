@@ -84,11 +84,6 @@
           75 - 0.666 * workWorkPosition[1],
           workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 3.1)
         );
-        /*sphere.position.z = easeOut(
-          easeOut(0, -500 + i, F(frame, 320, 8)),
-          0,
-          workWorkTransitionProgress
-        );*/
         sphere.scale.x = easeOut(
           easeOut(
             easeOut(0.0001, 0.5 + 0.00004 * i ** 1.95, F(frame, 320, 8) - i * 0.004),

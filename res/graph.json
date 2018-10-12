@@ -16,7 +16,8 @@
       "D": "AfterTunnelNode.render",
       "E": "BlurryTunnelNode.render",
       "F": "blurryParticleTunnelBlend.render",
-      "G": "boxPumperBlend.render"
+      "G": "boxPumperBlend.render",
+      "H": "BoxPumper.render"
     }
   },
   {
