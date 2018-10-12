@@ -36,7 +36,7 @@
         selectedScene = this.inputs.D;
       } else if (BEAN < 320) {
         selectedScene = this.inputs.E;
-      } else if (BEAN < 336) {
+      } else if (BEAN < 356) {
         selectedScene = this.inputs.F;
       } else {
         selectedScene = this.inputs.A;

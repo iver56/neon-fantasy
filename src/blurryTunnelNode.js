@@ -42,6 +42,8 @@
     update(frame) {
       super.update(frame);
 
+      demo.nm.nodes.bloom.opacity = 0.3;
+
       this.ctx.save();
       this.ctx.scale(GU, GU);
       this.ctx.translate(this.halfWidth, this.halfHeight);
@@ -64,7 +66,7 @@
       } else {
         this.ctx.save();
         const color = this.colors[(0 | (BEAN / 4) + 3) % this.colors.length];
-        this.ctx.globalAlpha = 0.1;
+        this.ctx.globalAlpha = 0.05;
         this.ctx.strokeStyle = color;
         this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
         this.ctx.restore();
@@ -85,7 +87,13 @@
         }
       }
 
-      this.ctx.rotate(smoothstep(0.005 * Math.sin(1.2 * t), 0, explodeProgress));
+      this.ctx.rotate(
+        smoothstep(
+          0.005 * Math.sin(1.2 * t),
+          0,
+          1 - Math.abs(1 - explodeProgress)
+        )
+      );
 
       this.ctx.drawImage(
         this.canvas,
