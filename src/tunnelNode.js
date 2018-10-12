@@ -12,7 +12,7 @@
         }
       });
 
-      let geometry = new THREE.SphereGeometry(5, 32, 32);
+      let geometry = new THREE.SphereGeometry(5, 12, 12);
       let material = new THREE.MeshBasicMaterial({color: 0xffffff});
 
       this.spheres = [];
@@ -51,7 +51,6 @@
 
       const workWorkTransitionProgress = F(frame, 328, 4);
 
-
       const cameraZoomProgress = F(frame, 344, 4);
       this.camera.position.x = easeOut(0, -22.35, cameraZoomProgress);
       this.camera.position.y = easeOut(0, 28.63, cameraZoomProgress);
@@ -78,14 +77,14 @@
           75 - 0.666 * workWorkPosition[1],
           workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 3.1)
         );
-        sphere.position.z = easeOut(
+        /*sphere.position.z = easeOut(
           easeOut(0, -500 + i, F(frame, 320, 8)),
           0,
           workWorkTransitionProgress
-        );
+        );*/
         sphere.scale.x = easeOut(
           easeOut(
-            easeOut(1, 0.5 + 0.00004 * i ** 1.95, F(frame, 320, 4)),
+            easeOut(0.0001, 0.5 + 0.00004 * i ** 1.95, F(frame, 320, 8) - i * 0.004),
             0.5,
             workWorkTransitionProgress
           ),

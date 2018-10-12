@@ -87,13 +87,24 @@
         }
       }
 
-      this.ctx.rotate(
-        smoothstep(
-          0.005 * Math.sin(1.2 * t),
-          0,
-          1 - Math.abs(1 - explodeProgress)
-        )
-      );
+      if (explodeProgress <= 1) {
+        this.ctx.rotate(
+          smoothstep(
+            0.005 * Math.sin(1.2 * t),
+            0,
+            explodeProgress
+          )
+        );
+      } else {
+        this.ctx.rotate(
+          smoothstep(
+            0,
+            0.009 * Math.sin(1.2 * t),
+            explodeProgress - 1
+          )
+        );
+      }
+
 
       this.ctx.drawImage(
         this.canvas,
