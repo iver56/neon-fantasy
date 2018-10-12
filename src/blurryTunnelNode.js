@@ -105,14 +105,20 @@
         );
       }
 
+      if (BEAN < 348) {
+        this.ctx.drawImage(
+          this.canvas,
+          -this.halfWidth - scalingFactor * 2,
+          -this.halfHeight - scalingFactor,
+          this.width + 4 * scalingFactor,
+          this.height + 2 * scalingFactor
+        );
+      } else {
+        this.ctx.fillStyle = '#000000';
+        this.ctx.fillRect(-8, -5, 8, easeOut(0, 10, F(frame, 350, 2)));
+        this.ctx.fillRect(0, -5, 8, easeOut(0, 10, F(frame, 352, 2)));
+      }
 
-      this.ctx.drawImage(
-        this.canvas,
-        -this.halfWidth - scalingFactor * 2,
-        -this.halfHeight - scalingFactor,
-        this.width + 4 * scalingFactor,
-        this.height + 2 * scalingFactor
-      );
       this.ctx.restore();
     }
 

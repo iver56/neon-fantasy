@@ -32,6 +32,8 @@
       ];
 
       this.camera.position.z = 200;
+
+      this.scaler = 1;
     }
 
     getWorkWorkLogoPosition(t) {
@@ -50,6 +52,11 @@
       super.update(frame);
 
       const workWorkTransitionProgress = F(frame, 328, 4);
+
+      if(BEAN >= 336 && BEAN % 4 === 0 && BEAT && BEAN < 348) {
+        this.scaler = 1;
+      }
+      this.scaler *= 0.95;
 
       const cameraZoomProgress = F(frame, 344, 4);
       this.camera.position.x = easeOut(0, -22.35, cameraZoomProgress);
@@ -90,7 +97,7 @@
           ),
           0.08,
           cameraZoomProgress
-        );
+        ) + lerp(0.5 * this.scaler, 0, F(frame, 344, 4));
         sphere.scale.y = sphere.scale.x;
         sphere.scale.z = sphere.scale.x;
       }

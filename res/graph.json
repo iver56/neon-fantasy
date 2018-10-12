@@ -15,7 +15,8 @@
       "C": "SpinningCube.render",
       "D": "AfterTunnelNode.render",
       "E": "BlurryTunnelNode.render",
-      "F": "blurryParticleTunnelBlend.render"
+      "F": "blurryParticleTunnelBlend.render",
+      "G": "boxPumperBlend.render"
     }
   },
   {
@@ -81,5 +82,21 @@
   {
     "id": "tunnelNode",
     "type": "tunnelNode"
+  },
+  {
+    "id": "boxPumperBlend",
+    "type": "AddNode",
+    "options": {
+      "shader": "Add",
+      "opacity": 0.99
+    },
+    "connected": {
+      "A": "BlurryTunnelNode.render",
+      "B": "BoxPumper.render"
+    }
+  },
+  {
+    "id": "BoxPumper",
+    "type": "boxPumper"
   }
 ]
