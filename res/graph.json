@@ -14,16 +14,13 @@
       "B": "NeonCityNode.render",
       "C": "SpinningCube.render",
       "D": "AfterTunnelNode.render",
-      "E": "BlurryTunnelNode.render"
+      "E": "BlurryTunnelNode.render",
+      "F": "blurryParticleTunnelBlend.render"
     }
   },
   {
     "id": "SpinningCube",
     "type": "spinningCube"
-  },
-  {
-    "id": "tunnelNode",
-    "type": "tunnelNode"
   },
   {
     "id": "AfterTunnelNode",
@@ -68,5 +65,21 @@
   {
     "id": "BlurryTunnelNode",
     "type": "blurryTunnelNode"
+  },
+  {
+    "id": "blurryParticleTunnelBlend",
+    "type": "AddNode",
+    "options": {
+      "shader": "Add",
+      "opacity": 0.99
+    },
+    "connected": {
+      "A": "BlurryTunnelNode.render",
+      "B": "tunnelNode.render"
+    }
+  },
+  {
+    "id": "tunnelNode",
+    "type": "tunnelNode"
   }
 ]
