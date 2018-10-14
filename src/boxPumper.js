@@ -58,17 +58,59 @@
 
       const t = frame / 60;
 
-      if (BEAN < 354) {
+      const colorizationProgress = F(frame, 354, 3);
+      const zoomToCityProgress = F(frame, 356, 4);
+
+      this.camera.position.x = smoothstep(
+        -10.64,
+        0,
+        zoomToCityProgress
+      );
+      this.camera.position.y = smoothstep(
+        17.04,
+        0,
+        zoomToCityProgress
+      );
+      this.camera.position.z = smoothstep(
+        10.08,
+        100,
+        zoomToCityProgress
+      );
+      this.camera.lookAt(
+        new THREE.Vector3(
+          smoothstep(-9.96, 0, zoomToCityProgress),
+          smoothstep(16.96, 0, zoomToCityProgress),
+          smoothstep(0, 0, zoomToCityProgress)
+        )
+      );
+
+      for (let i = 0; i < this.cityCols.length; i++) {
+        let cityCol = this.cityCols[i];
+
+        const height = 9 + 30 * Math.pow(0.5 + 0.5 * Math.sin(i * 1337), 2);
+
+        cityCol.position.x = smoothstep(
+          -100 + i * 5,
+          -100 + i * 4 + Math.sin(i * 997) - 20 * Math.sin(t),
+          zoomToCityProgress
+        );
+        cityCol.scale.y = height;
+        cityCol.position.y = cityCol.scale.y / 2 + 9;
+        cityCol.scale.x = 3;
+
+        cityCol.material.color.setHSL(
+          (.5 + 0.1 * Math.sin(i *997)) % 1,
+          .5,
+          .5
+        );
+      }
+
+      if (BEAN < 356) {
         const scaleProgress = F(frame, 348, 4);
         for (let i = 0; i < this.spheres.length; i++) {
           let sphere = this.spheres[i];
-          sphere.scale.y = smoothstep(1, 48, scaleProgress);
+          sphere.scale.y = smoothstep(1, 55, scaleProgress);
           sphere.visible = true;
-        }
-
-        for (let i = 0; i < this.cityCols.length; i++) {
-          let cityCol = this.cityCols[i];
-          cityCol.visible = false;
         }
 
         for (let i = 0; i < this.roadSegments.length; i++) {
@@ -79,24 +121,6 @@
         for (let i = 0; i < this.spheres.length; i++) {
           let sphere = this.spheres[i];
           sphere.visible = false;
-        }
-
-        for (let i = 0; i < this.cityCols.length; i++) {
-          let cityCol = this.cityCols[i];
-
-          const height = 9 + 30 * Math.pow(0.5 + 0.5 * Math.sin(i * 1337), 2);
-
-          cityCol.position.x = -100 + i * 4 + Math.sin(i * 997) - 20 * Math.sin(t);
-          cityCol.scale.y = height;
-          cityCol.position.y = cityCol.scale.y / 2 + 9;
-          cityCol.scale.x = 3;
-          cityCol.visible = true;
-
-          cityCol.material.color.setHSL(
-            (.5 + 0.1 * Math.sin(i *997)) % 1,
-            .5,
-            .5
-          );
         }
 
         for (let i = 0; i < this.roadSegments.length; i++) {
