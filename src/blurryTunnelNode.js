@@ -1,4 +1,8 @@
 (function(global) {
+  const F = (frame, from, delta) => (
+    frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from)
+  );
+
   class blurryTunnelNode extends NIN.THREENode {
     constructor(id) {
       super(id, {
@@ -27,39 +31,102 @@
         '#EA21F7',
         '#F72871',
         '#F78B1E',
-      ]
+      ];
+
+      this.width = 16;
+      this.halfWidth = this.width / 2;
+      this.height = 0 | (this.width * 9 / 16);
+      this.halfHeight = this.height / 2;
     }
 
     update(frame) {
       super.update(frame);
 
+      demo.nm.nodes.bloom.opacity = 0.3;
+
       this.ctx.save();
       this.ctx.scale(GU, GU);
-      this.ctx.translate(8, 4.5);
+      this.ctx.translate(this.halfWidth, this.halfHeight);
 
       const t = frame / 60;
       const scalingFactor = 0.08;
       const rectWidth = 0.2;
 
-      const color = this.colors[(0 | (BEAN / 4) + 5) % this.colors.length];
-      this.ctx.strokeStyle = BEAN % 4 < 2 ? color : 'black';
-      this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
+      const explodeStartBean = 316;
+      const explodeDuration = 8;
+      const explodeProgress = F(frame, explodeStartBean, explodeDuration);
+      if (BEAN < explodeStartBean) {
+        const color = this.colors[(0 | (BEAN / 4) + 5) % this.colors.length];
+        this.ctx.strokeStyle = BEAN % 4 < 2 ? color : 'black';
+        this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
+      } else if (BEAN < explodeStartBean + explodeDuration) {
+        this.ctx.save();
+        this.ctx.globalAlpha = 0.07 - explodeProgress * 0.07;
+        this.ctx.strokeStyle = this.colors[4];
+        this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
+        this.ctx.restore();
+      } else {
+        this.ctx.save();
+        const color = this.colors[(0 | (BEAN / 4) + 3) % this.colors.length];
+        this.ctx.globalAlpha = 0.05;
+        this.ctx.strokeStyle = color;
+        this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
+        this.ctx.restore();
+      }
 
-      this.ctx.rotate(0.005 * Math.sin(1.2 * t));
+      if (BEAN >= explodeStartBean && BEAN < explodeStartBean + explodeDuration) {
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${explodeProgress})`;
+        const particleSize = 0.03 + 0.05 * explodeProgress;
+        const radius = 0.5 + (1.77 * explodeProgress) ** 2;
 
-      this.ctx.drawImage(
-        this.canvas,
-        -8 - scalingFactor * 2,
-        -4.5 - scalingFactor,
-        16 + 4 * scalingFactor,
-        9 + 2 * scalingFactor
-      );
+        for (let i = 0; i < explodeProgress * 40; i++) {
+          this.ctx.fillRect(
+            radius * (-0.5 + Math.random()) - particleSize / 2,
+            radius * (-0.5 + Math.random()) - particleSize / 2,
+            particleSize,
+            particleSize
+          );
+        }
+      }
+
+      if (explodeProgress <= 1) {
+        this.ctx.rotate(
+          smoothstep(
+            0.005 * Math.sin(1.2 * t),
+            0,
+            explodeProgress
+          )
+        );
+      } else {
+        this.ctx.rotate(
+          smoothstep(
+            0,
+            0.009 * Math.sin(1.2 * t),
+            explodeProgress - 1
+          )
+        );
+      }
+
+      if (BEAN < 348) {
+        this.ctx.drawImage(
+          this.canvas,
+          -this.halfWidth - scalingFactor * 2,
+          -this.halfHeight - scalingFactor,
+          this.width + 4 * scalingFactor,
+          this.height + 2 * scalingFactor
+        );
+      } else {
+        this.ctx.fillStyle = '#000000';
+        this.ctx.fillRect(-8, -5, 8, easeOut(0, 10, F(frame, 350, 2)));
+        this.ctx.fillRect(0, -5, 8, easeOut(0, 10, F(frame, 352, 2)));
+      }
+
       this.ctx.restore();
     }
 
     resize() {
-      this.canvas.width = 16 * GU;
-      this.canvas.height = 9 * GU;
+      this.canvas.width = this.width * GU;
+      this.canvas.height = this.height * GU;
     }
 
     render() {

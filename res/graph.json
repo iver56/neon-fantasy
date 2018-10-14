@@ -14,16 +14,16 @@
       "B": "NeonCityNode.render",
       "C": "SpinningCube.render",
       "D": "AfterTunnelNode.render",
-      "E": "BlurryTunnelNode.render"
+      "E": "BlurryTunnelNode.render",
+      "F": "blurryParticleTunnelBlend.render",
+      "G": "boxPumperBlend.render",
+      "H": "BoxPumper.render",
+      "I": "OutroNode.render"
     }
   },
   {
     "id": "SpinningCube",
     "type": "spinningCube"
-  },
-  {
-    "id": "tunnelNode",
-    "type": "tunnelNode"
   },
   {
     "id": "AfterTunnelNode",
@@ -68,5 +68,45 @@
   {
     "id": "BlurryTunnelNode",
     "type": "blurryTunnelNode"
+  },
+  {
+    "id": "blurryParticleTunnelBlend",
+    "type": "AddNode",
+    "options": {
+      "shader": "Add",
+      "opacity": 0.99
+    },
+    "connected": {
+      "A": "BlurryTunnelNode.render",
+      "B": "tunnelNode.render"
+    }
+  },
+  {
+    "id": "tunnelNode",
+    "type": "tunnelNode"
+  },
+  {
+    "id": "boxPumperBlend",
+    "type": "AddNode",
+    "options": {
+      "shader": "Add",
+      "opacity": 0.99
+    },
+    "connected": {
+      "A": "BlurryTunnelNode.render",
+      "B": "CityTransitionNode.render"
+    }
+  },
+  {
+    "id": "BoxPumper",
+    "type": "boxPumper"
+  },
+  {
+    "id": "CityTransitionNode",
+    "type": "cityTransitionNode"
+  },
+  {
+    "id": "OutroNode",
+    "type": "outroNode"
   }
 ]

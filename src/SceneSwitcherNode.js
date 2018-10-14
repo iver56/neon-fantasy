@@ -8,6 +8,10 @@
           C: new NIN.TextureInput(),
           D: new NIN.TextureInput(),
           E: new NIN.TextureInput(),
+          F: new NIN.TextureInput(),
+          G: new NIN.TextureInput(),
+          H: new NIN.TextureInput(),
+          I: new NIN.TextureInput(),
         },
         outputs: {
           render: new NIN.TextureOutput(),
@@ -22,7 +26,12 @@
       this.inputs.D.enabled = false;
 
       // enable blurryTunnelNode before it starts, to prepare the tunnel
-      this.inputs.E.enabled = BEAN >= 276 && BEAN < 320;
+      this.inputs.E.enabled = BEAN >= 276 && BEAN < 336;
+
+      this.inputs.F.enabled = false;
+      this.inputs.G.enabled = false;
+      this.inputs.H.enabled = false;
+      this.inputs.I.enabled = false;
 
       let selectedScene;
       if (BEAN < 96) {
@@ -33,8 +42,14 @@
         selectedScene = this.inputs.D;
       } else if (BEAN < 320) {
         selectedScene = this.inputs.E;
+      } else if (BEAN < 348) {
+        selectedScene = this.inputs.F;
+      } else if (BEAN < 354) {
+        selectedScene = this.inputs.G;
+      } else if (BEAN < 416) {
+        selectedScene = this.inputs.H;
       } else {
-        selectedScene = this.inputs.A;
+        selectedScene = this.inputs.I;
       }
 
       selectedScene.enabled = true;

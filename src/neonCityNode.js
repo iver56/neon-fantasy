@@ -72,20 +72,11 @@
 
       // STARS
       this.spheres = [];
+      var starGeometry = new THREE.SphereGeometry(10, 10, 10);
+      var starMaterial = new THREE.MeshBasicMaterial();
 
-      
-      for (let i = 0; i < 600; i++) 
-      {
-        var color = new THREE.Color();
-        color.setHSL(
-          (.5 + 0.15 * i) % 1,
-          .5,
-          .5
-          );
-        
-        var starMaterial = new THREE.MeshBasicMaterial({emissiveColor: color.getHex()});
-        var sphere = new THREE.Mesh(new THREE.SphereGeometry(10, 32, 32),
-          starMaterial);
+      for (let i = 0; i < 600; i++) {
+        var sphere = new THREE.Mesh(starGeometry, starMaterial);
         
         sphere.position.y =  Math.random() * 4000;
         sphere.position.x = -4000 + Math.random() * 8000;
