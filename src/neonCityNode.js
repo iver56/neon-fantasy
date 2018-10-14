@@ -110,7 +110,7 @@
 
       this.sunMoveBean = 96;
       this.sunMoveY = 60;
-      this.sunMoveX = 140;
+      this.sunMoveX = 120;
 
       this.cameraMoveBean = 108;
       this.cameraRotationY = 0.3;
@@ -374,11 +374,6 @@
           star.position.y = smoothstep(heartY, starY, starProgress);
 
         }
-
-
-        let newProgress = F(frame, 160, 4);
-
-
       }
 
       const starQuarter = this.stars.length /4;
@@ -387,7 +382,6 @@
       if (BEAN >= 176 && BEAN < 184) {
         let bubbleProgress = F(frame, 176, 6);
 
-        
         for (let i = 0; i < this.stars.length; i++) {
           const starT = 10 * i / this.stars.length;
 
