@@ -13,6 +13,8 @@
       });
       this.scaler = 1;
 
+      demo.nm.nodes.bloom.opacity = 0.3;
+
       this.sunTexture = Loader.loadTexture('res/ivertex2.png');
       this.sunTexture.minFilter = THREE.LinearFilter;
       this.sunTexture.magFilter = THREE.LinearFilter;
@@ -114,7 +116,7 @@
       this.cylinderWrapper.add(this.cylinder);
       this.scene.add(this.cylinderWrapper);
       
-      this.castleTexture = Loader.loadTexture('res/test.png');
+      this.castleTexture = Loader.loadTexture('res/castle.png');
       this.castleTexture.minFilter = THREE.LinearFilter;
       this.castleTexture.magFilter = THREE.LinearFilter;
       this.castleMaterial = new THREE.MeshStandardMaterial({
