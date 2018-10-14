@@ -18,12 +18,8 @@
       this.createSun();
       this.createStars();
       this.createCylinder();
-      // BIGASS CYLINDER END
 
       // CASTLE PROPERTIES
-      this.castles = [];
-      this.emblems = [];
-
       const castleTexture = Loader.loadTexture('res/castle.png');
       castleTexture.minFilter = THREE.LinearFilter;
       castleTexture.magFilter = THREE.LinearFilter;
@@ -33,7 +29,7 @@
         map: castleTexture,
         emissive: 0x30F5E0,
         emissiveMap: castleTexture,
-        emissiveIntensity: 1,
+        emissiveIntensity: 1
       });
 
       this.mathThingy = 2 * Math.PI / 10;
@@ -41,75 +37,51 @@
       const turretGeometry = new THREE.BoxGeometry(100, 300, 100);
       const wallGeometry = new THREE.BoxGeometry(200, 100, 50);
 
+      this.castles = [];
+      this.emblems = [];
+      const turretOffset = 150;
+      const turretHeightFromGround = 150;
+      const wallHeightFromGround = -50;
+
+      const createTurret = (offsetX, offsetZ) => {
+        var turret = new THREE.Mesh(turretGeometry, castleMaterial);
+        turret.position.x = offsetX;
+        turret.position.z = offsetZ;
+        turret.position.y = turretHeightFromGround;
+        return turret;
+      }
+
+      const createWall = (offsetX, offsetZ, rotation) => {
+        var wall = new THREE.Mesh(wallGeometry, castleMaterial);
+        wall.position.x = offsetX;
+        wall.position.z = offsetZ;
+        wall.position.y = -wallHeightFromGround;
+        wall.rotation.y = rotation;
+        return wall;
+      }
+
       for (let i = 0; i < 10; i++) {
 
         var castle = new THREE.Group();
 
-        let turretOffset = 150;
-        let turretHeightFromGround = 150;
-        let wallHeightFromGround = -50;
+        castle.add(createTurret(turretOffset, turretOffset));
+        castle.add(createTurret(-turretOffset, turretOffset));
+        castle.add(createTurret(turretOffset, -turretOffset));
+        castle.add(createTurret(-turretOffset, -turretOffset));
 
-        var turret1 = new THREE.Mesh(turretGeometry, castleMaterial);
-        turret1.position.x = turretOffset;
-        turret1.position.z = turretOffset;
-        turret1.position.y = turretHeightFromGround;
-        castle.add(turret1);
+        castle.add(createWall(0, turretOffset, 0));
+        castle.add(createWall(0, -turretOffset, 0));
+        castle.add(createWall(turretOffset, 0, Math.PI/2));
+        castle.add(createWall(-turretOffset, 0, Math.PI/2));
 
-        var turret2 = new THREE.Mesh(turretGeometry, castleMaterial);
-        turret2.position.x = -turretOffset;
-        turret2.position.z = -turretOffset;
-        turret2.position.y = turretHeightFromGround;
-        castle.add(turret2);
-
-        var turret3 = new THREE.Mesh(turretGeometry, castleMaterial);
-        turret3.position.x = -turretOffset;
-        turret3.position.z = turretOffset;
-        turret3.position.y = turretHeightFromGround;
-        castle.add(turret3);
-
-        var turret4 = new THREE.Mesh(turretGeometry, castleMaterial);
-        turret4.position.x = turretOffset;
-        turret4.position.z = -turretOffset;
-        turret4.position.y = turretHeightFromGround;
-        castle.add(turret4);
-
-        var wall1 = new THREE.Mesh(wallGeometry, castleMaterial);
-        wall1.position.z = turretOffset;
-        wall1.position.y = -wallHeightFromGround;
-        castle.add(wall1);
-
-        var wall2 = new THREE.Mesh(wallGeometry, castleMaterial);
-        wall2.position.z = -turretOffset;
-        wall2.position.y = -wallHeightFromGround;
-
-        castle.add(wall2);
-
-        var wall3 = new THREE.Mesh(wallGeometry, castleMaterial);
-        wall3.position.x = turretOffset;
-        wall3.position.y = -wallHeightFromGround;
-
-        wall3.rotation.y = Math.PI / 2;
-        castle.add(wall3);
-
-        var wall4 = new THREE.Mesh(wallGeometry, castleMaterial);
-        wall4.position.x = -turretOffset;
-        wall4.position.y = -wallHeightFromGround;
-        wall4.rotation.y = Math.PI / 2;
-        castle.add(wall4);
-
-        this.castles.push(castle);
-        this.cylinderWrapper.add(castle);
-
+        castle.position.x = i % 2 == 0 ? 300 : -300;
         castle.position.y = 3000 * Math.sin(this.mathThingy * i);
         castle.position.z = 3000 * Math.cos(this.mathThingy * i);
+        
         castle.rotation.x = ((-2 * Math.PI) / (10) * i) + Math.PI / 2;
-
-        if (i % 2 == 0) {
-          castle.position.x = 300;
-        }
-        else {
-          castle.position.x = -300;
-        }
+        
+        this.castles.push(castle);
+        this.cylinderWrapper.add(castle);
       }
 
       this.camera.far = 10000;
@@ -127,6 +99,7 @@
       this.cameraMoveBean = 108;
       this.cameraRotationY = 0.2;
     }
+
 
     createSun() {
       this.sunTexture = Loader.loadTexture('res/ivertex2.png');
@@ -208,6 +181,7 @@
 
       this.scaler *= 0.95;
 
+      // Update sun
       this.bigSphere.position.x = (2000 +
         // easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 0, 4)) +
         easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 1, 4)) +
@@ -220,10 +194,9 @@
       );
 
       this.sunMaterial.emissiveIntensity = 1 + this.scaler * 0.15;
-      this.bigSphere.scale.x = 1 + this.scaler * 0.05;
-      this.bigSphere.scale.y = 1 + this.scaler * 0.05;
-      this.bigSphere.scale.z = 1 + this.scaler * 0.05;
-
+      var sunScale = 1 + this.scaler * 0.05
+      this.bigSphere.scale.set(sunScale, sunScale, sunScale);
+      
       this.bigSphere.position.y = (2700 +
         // easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 0, 4)) +
         easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 1, 4)) +
@@ -233,8 +206,9 @@
         easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 5, 4)) +
         easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 6, 4)) +
         easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 7, 4))
-      );
-
+        );
+      // Update sun end
+        
       this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 16 * 0, 4));
       this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 16 * 1, 4));
       this.castles[6].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 16 * 2, 4));
