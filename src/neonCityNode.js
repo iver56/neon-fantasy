@@ -85,9 +85,6 @@
       }
 
       this.camera.far = 10000;
-      this.camera.position.y = 3500;
-      this.camera.position.z = 1000;
-      this.camera.rotation.x = -0.3;
 
       this.cylinderSpinBean = 96;
       this.castleSpinBean = 100;
@@ -234,8 +231,21 @@
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 7, 4))
       ) + Math.PI / 20;
 
+      const cameraZoomProgress = F(frame, 220, 4);
+      this.camera.position.x = easeOut(
+        0,
+        180.27,
+        cameraZoomProgress
+      );
+      this.camera.position.y = easeOut(
+        3500,
+        3773.14,
+        cameraZoomProgress
+      );
+      this.camera.position.z = easeOut(1000, -2252.4, cameraZoomProgress);
 
-      this.camera.rotation.y = (//this.scaler * 0.005 + 
+      this.camera.rotation.x = -0.3;
+      this.camera.rotation.y = (
         easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 0, 4)) +
         easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 1, 4)) +
         easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 2, 4)) +
