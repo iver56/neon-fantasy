@@ -71,28 +71,31 @@
       );
       this.camera.rotation.z = easeOut(0, -1.03, cameraZoomProgress);
 
+      const sizeInProgress = F(frame, 320, 8);
+
       for (let i = 0; i < this.spheres.length; i++) {
         const sphere = this.spheres[i];
+
         const workWorkPosition = this.getWorkWorkLogoPosition(7 * i / this.spheres.length);
         sphere.position.x = easeOut(
-          i * Math.cos(i + frame / 90),
+          i * Math.cos(i + frame / 90) * easeOut(0, 1, sizeInProgress),
           -130 + 0.666 * workWorkPosition[0],
           workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 3.1)
         );
         sphere.position.y = easeOut(
-          i * Math.sin(i + frame / 90),
+          i * Math.sin(i + frame / 90) * easeOut(0, 1, sizeInProgress),
           75 - 0.666 * workWorkPosition[1],
           workWorkTransitionProgress - i * 0.0009 + Math.cos(frame / 90 + 0.0009 * i + 3.1)
         );
         sphere.scale.x = easeOut(
           easeOut(
-            easeOut(0.0001, 0.5 + 0.00004 * i ** 1.95, F(frame, 320, 8) - i * 0.004),
+            easeOut(0.0001, 0.5 + 0.00004 * i ** 1.95, sizeInProgress - i * 0.004),
             0.5,
             workWorkTransitionProgress
           ),
           0.08,
           cameraZoomProgress
-        ) + lerp(0.5 * this.scaler, 0, F(frame, 344, 4));
+        ) + lerp(0, lerp(0.5 * this.scaler, 0, F(frame, 344, 4)), F(frame, 334, 1));
         sphere.scale.y = sphere.scale.x;
         sphere.scale.z = sphere.scale.x;
       }
