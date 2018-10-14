@@ -74,7 +74,7 @@
 
       // STARS
       this.spheres = [];
-      var starGeometry = new THREE.SphereGeometry(10, 10, 10);
+      const starGeometry = new THREE.SphereGeometry(10, 10, 10);
       var starMaterial = new THREE.MeshBasicMaterial();
 
       for (let i = 0; i < 600; i++) {
@@ -89,9 +89,7 @@
       }
       // STARS END
 
-
-
-      //bigass cylinder
+      // BIGASS CYLINDER
       var geometryCylinder = new THREE.CylinderGeometry(3000,3000,6000,64,12, true);
       var materialCylinder = new THREE.MeshBasicMaterial({
         wireframe: true,
@@ -115,29 +113,32 @@
       this.cylinderWrapper.add(this.goodHackCylinder);
       this.cylinderWrapper.add(this.cylinder);
       this.scene.add(this.cylinderWrapper);
+      // BIGASS CYLINDER END
+
+      // CASTLE PROPERTIES
+      this.castles = [];
+      this.emblems = [];
       
-      this.castleTexture = Loader.loadTexture('res/castle.png');
-      this.castleTexture.minFilter = THREE.LinearFilter;
-      this.castleTexture.magFilter = THREE.LinearFilter;
-      this.castleMaterial = new THREE.MeshStandardMaterial({
+      const castleTexture = Loader.loadTexture('res/castle.png');
+      castleTexture.minFilter = THREE.LinearFilter;
+      castleTexture.magFilter = THREE.LinearFilter;
+      const castleMaterial = new THREE.MeshStandardMaterial({
         metalness: 1,
         roughness: 0.5,
-        map: this.castleTexture,
+        map: castleTexture,
         emissive: 0x30F5E0,
-        emissiveMap: this.castleTexture,
+        emissiveMap: castleTexture,
         emissiveIntensity:1,
       });
           
       this.mathThingy = 2 * Math.PI / 10;
 
-      this.castles = [];
-
-      var t = Date.now() / 1000; // The number of seconds elapsed since 1 January 1970 00:00:00 UTC
-
+      
+      const turretGeometry = new THREE.BoxGeometry(100, 300, 100);
+      const wallGeometry = new THREE.BoxGeometry(200, 100, 50);
+      
       for(let i = 0; i < 10; i++)
       {
-        var turretGeometry = new THREE.BoxGeometry(100, 300, 100);
-        var wallGeometry = new THREE.BoxGeometry(200, 100, 50);
 
         var castle = new THREE.Group();
         
@@ -145,49 +146,49 @@
         let turretHeightFromGround = 150;
         let wallHeightFromGround = -50;
 
-        var turret1 = new THREE.Mesh(turretGeometry, this.castleMaterial);
+        var turret1 = new THREE.Mesh(turretGeometry,  castleMaterial);
         turret1.position.x = turretOffset;
         turret1.position.z = turretOffset;
         turret1.position.y = turretHeightFromGround;
         castle.add(turret1);
 
-        var turret2 = new THREE.Mesh(turretGeometry, this.castleMaterial);
+        var turret2 = new THREE.Mesh(turretGeometry,  castleMaterial);
         turret2.position.x = -turretOffset;
         turret2.position.z = -turretOffset;
         turret2.position.y = turretHeightFromGround;
         castle.add(turret2);
 
-        var turret3 = new THREE.Mesh(turretGeometry, this.castleMaterial);
+        var turret3 = new THREE.Mesh(turretGeometry,  castleMaterial);
         turret3.position.x = -turretOffset;
         turret3.position.z = turretOffset;
         turret3.position.y = turretHeightFromGround;
         castle.add(turret3);
 
-        var turret4 = new THREE.Mesh(turretGeometry, this.castleMaterial);
+        var turret4 = new THREE.Mesh(turretGeometry,  castleMaterial);
         turret4.position.x = turretOffset;
         turret4.position.z = -turretOffset;
         turret4.position.y = turretHeightFromGround;
         castle.add(turret4);
 
-        var wall1 = new THREE.Mesh(wallGeometry,this.castleMaterial);
+        var wall1 = new THREE.Mesh(wallGeometry, castleMaterial);
         wall1.position.z = turretOffset;
         wall1.position.y = -wallHeightFromGround;
         castle.add(wall1);
 
-        var wall2 = new THREE.Mesh(wallGeometry,this.castleMaterial);
+        var wall2 = new THREE.Mesh(wallGeometry, castleMaterial);
         wall2.position.z = -turretOffset;
         wall2.position.y = -wallHeightFromGround;
 
         castle.add(wall2);
 
-        var wall3 = new THREE.Mesh(wallGeometry,this.castleMaterial);
+        var wall3 = new THREE.Mesh(wallGeometry, castleMaterial);
         wall3.position.x = turretOffset;
         wall3.position.y = -wallHeightFromGround;
 
         wall3.rotation.y = Math.PI/2;
         castle.add(wall3);
 
-        var wall4 = new THREE.Mesh(wallGeometry,this.castleMaterial);
+        var wall4 = new THREE.Mesh(wallGeometry, castleMaterial);
         wall4.position.x = -turretOffset;
         wall4.position.y = -wallHeightFromGround;
         wall4.rotation.y = Math.PI/2;
@@ -195,8 +196,6 @@
 
         this.castles.push(castle); 
         this.cylinderWrapper.add(castle);
-        // castle.position.z = -1000;
-
 
         castle.position.y = 3000 * Math.sin(this.mathThingy * i);
         castle.position.z = 3000 * Math.cos(this.mathThingy * i);
