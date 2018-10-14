@@ -46,7 +46,7 @@
       this.castles = [];
       this.emblems = [];
       const turretOffset = 150;
-      
+
       const turretGeometry = new THREE.BoxGeometry(100, 300, 100);
       const turretHeightFromGround = 150;
       const createTurret = (offsetX, offsetZ) => {
@@ -56,7 +56,7 @@
         turret.position.y = turretHeightFromGround;
         return turret;
       }
-      
+
       const wallGeometry = new THREE.BoxGeometry(200, 100, 1);
       const wallHeightFromGround = -50;
       const createWall = (offsetX, offsetZ, rotation) => {
@@ -79,20 +79,20 @@
 
         castle.add(createWall(0, turretOffset, 0));
         castle.add(createWall(0, -turretOffset, 0));
-        castle.add(createWall(turretOffset, 0, Math.PI/2));
-        castle.add(createWall(-turretOffset, 0, Math.PI/2));
+        castle.add(createWall(turretOffset, 0, Math.PI / 2));
+        castle.add(createWall(-turretOffset, 0, Math.PI / 2));
 
         var emblem = new THREE.Mesh(emblemGeometry, emblemMaterial);
-        emblem.position.y = -200 ;
+        emblem.position.y = -200;
         this.emblems.push(emblem);
         castle.add(emblem);
 
         castle.position.x = i % 2 == 0 ? 300 : -300;
         castle.position.y = 3000 * Math.sin(this.mathThingy * i);
         castle.position.z = 3000 * Math.cos(this.mathThingy * i);
-        
+
         castle.rotation.x = ((-2 * Math.PI) / (10) * i) + Math.PI / 2;
-        
+
         this.castles.push(castle);
         this.cylinderWrapper.add(castle);
       }
@@ -103,8 +103,8 @@
       this.castleSpinBean = 100;
 
       this.sunMoveBean = 96;
-      this.sunMoveY = 120;
-      this.sunMoveX = 280;
+      this.sunMoveY = 60;
+      this.sunMoveX = 140;
 
       this.cameraMoveBean = 108;
       this.cameraRotationY = 0.3;
@@ -150,11 +150,11 @@
       const starGeometry = new THREE.SphereGeometry(10, 10, 10);
       var starMaterial = new THREE.MeshBasicMaterial();
 
-      for (let i = 0; i < 600; i++) {
+      for (let i = 0; i < 800; i++) {
         var sphere = new THREE.Mesh(starGeometry, starMaterial);
 
         sphere.position.y = this.random() * 4000;
-        sphere.position.x = -4000 + this.random() * 8000;
+        sphere.position.x = -5000 + this.random() * 10000;
         sphere.position.z = -3000;
         this.spheres.push(sphere);
 
@@ -184,7 +184,7 @@
       this.scene.add(this.cylinderWrapper);
     }
 
-    animateEmblemIn(emblem, bean, frame){
+    animateEmblemIn(emblem, bean, frame) {
       let scale = easeOut(0, 1.5, F(frame, bean, 4));
       emblem.scale.set(scale, scale, scale);
       emblem.position.y = this.emblemPositionStart + easeOut(0, this.emblemPositionEnd, F(frame, bean, 4));
@@ -203,28 +203,17 @@
       this.sunMaterial.emissiveIntensity = 1 + this.scaler * 0.15;
       var sunScale = 1 + this.scaler * 0.05
       this.bigSphere.scale.set(sunScale, sunScale, sunScale);
-      
-      this.bigSphere.position.x = (2000 +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 1, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 2, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 3, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 4, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 5, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 6, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 7, 4))
-      );
 
-      this.bigSphere.position.y = (2700 +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 1, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 2, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 3, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 4, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 5, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 6, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 7, 4))
-        );
+      let posX = 2000;
+      let posY = 2700;
+      for (let i = 0; i <= 17; i++) {
+        posX += easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * i, 4));
+        posY += easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * i, 4));
+      }
+      this.bigSphere.position.x = posX;
+      this.bigSphere.position.y = posY;
       // Update sun end
-        
+
       this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 0, 4));
       this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 8 * 1, 4));
       this.castles[6].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 2, 4));
@@ -248,8 +237,13 @@
       this.animateEmblemIn(this.emblems[3], this.castleSpinBean + 8 * 9, frame);
 
       // Move world into view in the start of the effect
-      this.cylinderWrapper.position.y = easeOut(-3000, 0, F(frame, 96, 4));
-
+      if (BEAN < 160) { 
+        this.cylinderWrapper.position.y = easeOut(-3000, 0, F(frame, 96, 4));
+      }
+      else {
+        this.cylinderWrapper.position.y = easeOut(0, -2000, F(frame, 160, 8));
+      }
+      
       this.cylinderWrapper.rotation.x = (this.scaler * 0.005 +
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 0, 4)) +
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 1, 4)) +
@@ -304,16 +298,28 @@
       this.camera.position.z = easeOut(1000, -2252.4, escapeProgress);
 
       this.camera.rotation.x = -0.3;
-      this.camera.rotation.y = (
-        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 0, 4)) +
-        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 1, 4)) +
-        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 2, 4)) +
-        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 3, 4)) +
-        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 4, 4)) +
-        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 5, 4)) +
-        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 6, 4)) +
-        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 7, 4))
-      ) + Math.PI / 20;
+      
+      if (BEAN < 160) {
+
+        this.camera.rotation.y = (
+          easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 0, 4)) +
+          easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 1, 4)) +
+          easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 2, 4)) +
+          easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 3, 4)) +
+          easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 4, 4)) +
+          easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 5, 4)) +
+          easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 6, 4)) +
+          easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 7, 4))
+        ) + Math.PI / 20;
+      }
+      else {
+        this.camera.rotation.y = easeOut(this.cameraRotationY, 0, F(frame, 160, 8));
+
+      }
+
+      // Star stuff
+
+
     }
   }
 
