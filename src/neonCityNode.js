@@ -255,11 +255,6 @@
         easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 6, 4)) +
         easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 7, 4))
       ) + Math.PI / 20;
-
-      /*
-      Position: [12.27,3633.14,-2252.4],
-        LookAt: [27.65,3566.44,-2796.49],
-        */
     }
   }
 
