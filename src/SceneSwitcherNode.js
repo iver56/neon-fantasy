@@ -38,10 +38,10 @@
       let selectedScene;
       if (BEAN < 96) {
         selectedScene = this.inputs.C;
-      } else if (BEAN < 160) {
-        selectedScene = this.inputs.B;      
       } else if (BEAN < 224) {
-          selectedScene = this.inputs.J;
+        selectedScene = this.inputs.B;      
+      // } else if (BEAN < 224) {
+      //     selectedScene = this.inputs.J;
       } else if (BEAN < 288) {
         selectedScene = this.inputs.D;
       } else if (BEAN < 320) {
