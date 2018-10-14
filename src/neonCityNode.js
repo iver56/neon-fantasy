@@ -12,6 +12,7 @@
         }
       });
       this.scaler = 1;
+      this.random = new global.Random(666);
 
       demo.nm.nodes.bloom.opacity = 0.99;
 
@@ -138,8 +139,8 @@
       for (let i = 0; i < 600; i++) {
         var sphere = new THREE.Mesh(starGeometry, starMaterial);
 
-        sphere.position.y = Math.random() * 4000;
-        sphere.position.x = -4000 + Math.random() * 8000;
+        sphere.position.y = this.random() * 4000;
+        sphere.position.x = -4000 + this.random() * 8000;
         sphere.position.z = -3000;
         this.spheres.push(sphere);
 
@@ -231,18 +232,47 @@
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 7, 4))
       ) + Math.PI / 20;
 
-      const cameraZoomProgress = F(frame, 220, 4);
+
+      const enterProgress = F(frame, 96, 4);
+      const escapeProgress = F(frame, 220, 4);
+
+      // STARS
+      if (BEAN <= 100) {
+        const scale = easeOut(0.00000001, 1, enterProgress);
+
+        // All spheres use the same material, so we can access from e.g. the 1st sphere
+        this.spheres[0].material.color.setRGB(scale, scale, scale);
+
+        for (let i = 0; i < this.spheres.length; i++) {
+          const sphere = this.spheres[i];
+          sphere.scale.x = scale;
+          sphere.scale.y = scale;
+        }
+      } else if (BEAN >= 220) {
+        const scale = easeOut(1, 0.00001, escapeProgress);
+
+        // All spheres use the same material, so we can access from e.g. the 1st sphere
+        this.spheres[0].material.color.setRGB(scale, scale, scale);
+
+        for (let i = 0; i < this.spheres.length; i++) {
+          const sphere = this.spheres[i];
+          sphere.scale.x = scale;
+          sphere.scale.y = scale;
+        }
+      }
+
+      // CAMERA
       this.camera.position.x = easeOut(
         0,
         180.27,
-        cameraZoomProgress
+        escapeProgress
       );
       this.camera.position.y = easeOut(
         3500,
         3773.14,
-        cameraZoomProgress
+        escapeProgress
       );
-      this.camera.position.z = easeOut(1000, -2252.4, cameraZoomProgress);
+      this.camera.position.z = easeOut(1000, -2252.4, escapeProgress);
 
       this.camera.rotation.x = -0.3;
       this.camera.rotation.y = (
