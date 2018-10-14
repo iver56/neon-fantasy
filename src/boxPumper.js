@@ -12,17 +12,6 @@
         }
       });
 
-      let geometry = new THREE.SphereGeometry(12.2, 12, 12);
-      let material = new THREE.MeshBasicMaterial({color: 0xFFFFFF});
-
-      this.spheres = [];
-      for (let i = 0; i < 3; i++) {
-        let sphere = new THREE.Mesh(geometry, material);
-        sphere.position.x = -50 + i * 50;
-        this.spheres.push(sphere);
-        this.scene.add(sphere);
-      }
-
       // city columns
       const planeGeometry = new THREE.PlaneGeometry(1, 1, 1);
       this.cityCols = [];
@@ -99,50 +88,31 @@
         cityCol.scale.x = 3;
 
         cityCol.material.color.setHSL(
-          (.5 + 0.1 * Math.sin(i *997)) % 1,
+          (.5 + 0.1 * Math.sin(i * 997)) % 1,
           .5,
           .5
         );
       }
 
-      if (BEAN < 356) {
-        const scaleProgress = F(frame, 348, 4);
-        for (let i = 0; i < this.spheres.length; i++) {
-          let sphere = this.spheres[i];
-          sphere.scale.y = smoothstep(1, 55, scaleProgress);
-          sphere.visible = true;
-        }
+      for (let i = 0; i < this.roadSegments.length; i++) {
+        let roadSeg = this.roadSegments[i];
 
-        for (let i = 0; i < this.roadSegments.length; i++) {
-          let roadSeg = this.roadSegments[i];
-          roadSeg.visible = false;
-        }
-      } else {
-        for (let i = 0; i < this.spheres.length; i++) {
-          let sphere = this.spheres[i];
-          sphere.visible = false;
-        }
+        const depth = (10000 + i - t * 5) % this.roadSegments.length;
 
-        for (let i = 0; i < this.roadSegments.length; i++) {
-          let roadSeg = this.roadSegments[i];
+        roadSeg.position.z = 110 - 40 * depth;
+        roadSeg.position.y = -5;
+        roadSeg.position.x = 2 * Math.sin(t + Math.PI / 2) * Math.pow(depth, 1.337);
+        roadSeg.scale.x = 1000 / (depth + 50);
+        roadSeg.scale.y = 25;
+        roadSeg.visible = true;
+        roadSeg.rotation.x = 0.5 * Math.PI;
+        roadSeg.rotation.z = 0.02 * Math.sin(t + Math.PI / 2) * Math.pow(depth, 1.337);
 
-          const depth = (10000 + i - t * 5) % this.roadSegments.length;
-
-          roadSeg.position.z = 110 - 40 * depth;
-          roadSeg.position.y = -5;
-          roadSeg.position.x = 2 * Math.sin(t + Math.PI / 2) * Math.pow(depth, 1.337);
-          roadSeg.scale.x = 1000 / (depth + 50);
-          roadSeg.scale.y = 25;
-          roadSeg.visible = true;
-          roadSeg.rotation.x = 0.5 * Math.PI;
-          roadSeg.rotation.z = 0.02 * Math.sin(t + Math.PI / 2) * Math.pow(depth, 1.337);
-
-          roadSeg.material.color.setHSL(
-            .61 + 0.1 * Math.sin(i * 997),
-            .5 + 0.1 * Math.sin(i * 16),
-            .5
-          );
-        }
+        roadSeg.material.color.setHSL(
+          .61 + 0.1 * Math.sin(i * 997),
+          .5 + 0.1 * Math.sin(i * 16),
+          .5
+        );
       }
     }
   }

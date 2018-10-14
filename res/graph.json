@@ -93,11 +93,15 @@
     },
     "connected": {
       "A": "BlurryTunnelNode.render",
-      "B": "BoxPumper.render"
+      "B": "CityTransitionNode.render"
     }
   },
   {
     "id": "BoxPumper",
     "type": "boxPumper"
+  },
+  {
+    "id": "CityTransitionNode",
+    "type": "cityTransitionNode"
   }
 ]
