@@ -107,7 +107,7 @@
       this.sunMoveX = 280;
 
       this.cameraMoveBean = 108;
-      this.cameraRotationY = 0.2;
+      this.cameraRotationY = 0.3;
 
       this.emblemPositionStart = 0;
       this.emblemPositionEnd = 500;
@@ -200,66 +200,66 @@
       this.scaler *= 0.95;
 
       // Update sun
-      this.bigSphere.position.x = (2000 +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 1, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 2, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 3, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 4, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 5, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 6, 4)) +
-        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 7, 4))
-      );
-
       this.sunMaterial.emissiveIntensity = 1 + this.scaler * 0.15;
       var sunScale = 1 + this.scaler * 0.05
       this.bigSphere.scale.set(sunScale, sunScale, sunScale);
       
+      this.bigSphere.position.x = (2000 +
+        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 1, 4)) +
+        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 2, 4)) +
+        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 3, 4)) +
+        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 4, 4)) +
+        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 5, 4)) +
+        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 6, 4)) +
+        easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * 7, 4))
+      );
+
       this.bigSphere.position.y = (2700 +
         // easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 0, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 1, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 2, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 3, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 4, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 5, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 6, 4)) +
-        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 7, 4))
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 1, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 2, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 3, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 4, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 5, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 6, 4)) +
+        easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 7, 4))
         );
-      // Update sun end
+        // Update sun end
         
-      this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 16 * 0, 4));
-      this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 16 * 1, 4));
-      this.castles[6].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 16 * 2, 4));
-      this.castles[7].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 16 * 3, 4));
-      this.castles[8].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 16 * 4, 4));
-      this.castles[9].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 16 * 5, 4));
-      this.castles[0].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 16 * 6, 4));
-      this.castles[1].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 16 * 7, 4));
-      this.castles[2].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 16 * 8, 4));
-      this.castles[3].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 16 * 9, 4));
+      this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 0, 4));
+      this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 8 * 1, 4));
+      this.castles[6].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 2, 4));
+      this.castles[7].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 8 * 3, 4));
+      this.castles[8].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 4, 4));
+      this.castles[9].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 8 * 5, 4));
+      this.castles[0].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 6, 4));
+      this.castles[1].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 8 * 7, 4));
+      this.castles[2].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 8, 4));
+      this.castles[3].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 8 * 9, 4));
 
-      this.animateEmblemIn(this.emblems[4], this.castleSpinBean + 4 + 16 * 0, frame);
-      this.animateEmblemIn(this.emblems[5], this.castleSpinBean + 4 + 16 * 1, frame);
-      this.animateEmblemIn(this.emblems[6], this.castleSpinBean + 4 + 16 * 2, frame);
-      this.animateEmblemIn(this.emblems[7], this.castleSpinBean + 4 + 16 * 3, frame);
-      this.animateEmblemIn(this.emblems[8], this.castleSpinBean + 4 + 16 * 4, frame);
-      this.animateEmblemIn(this.emblems[9], this.castleSpinBean + 4 + 16 * 5, frame);
-      this.animateEmblemIn(this.emblems[0], this.castleSpinBean + 4 + 16 * 6, frame);
-      this.animateEmblemIn(this.emblems[1], this.castleSpinBean + 4 + 16 * 7, frame);
-      this.animateEmblemIn(this.emblems[2], this.castleSpinBean + 4 + 16 * 8, frame);
-      this.animateEmblemIn(this.emblems[3], this.castleSpinBean + 4 + 16 * 9, frame);
+      this.animateEmblemIn(this.emblems[4], this.castleSpinBean + 8 * 0, frame);
+      this.animateEmblemIn(this.emblems[5], this.castleSpinBean + 8 * 1, frame);
+      this.animateEmblemIn(this.emblems[6], this.castleSpinBean + 8 * 2, frame);
+      this.animateEmblemIn(this.emblems[7], this.castleSpinBean + 8 * 3, frame);
+      this.animateEmblemIn(this.emblems[8], this.castleSpinBean + 8 * 4, frame);
+      this.animateEmblemIn(this.emblems[9], this.castleSpinBean + 8 * 5, frame);
+      this.animateEmblemIn(this.emblems[0], this.castleSpinBean + 8 * 6, frame);
+      this.animateEmblemIn(this.emblems[1], this.castleSpinBean + 8 * 7, frame);
+      this.animateEmblemIn(this.emblems[2], this.castleSpinBean + 8 * 8, frame);
+      this.animateEmblemIn(this.emblems[3], this.castleSpinBean + 8 * 9, frame);
 
       // Move world into view in the start of the effect
       this.cylinderWrapper.position.y = easeOut(-3000, 0, F(frame, 96, 4));
 
       this.cylinderWrapper.rotation.x = (this.scaler * 0.005 +
-        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 0, 4)) +
-        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 1, 4)) +
-        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 2, 4)) +
-        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 3, 4)) +
-        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 4, 4)) +
-        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 5, 4)) +
-        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 6, 4)) +
-        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 16 * 7, 4))
+        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 0, 4)) +
+        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 1, 4)) +
+        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 2, 4)) +
+        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 3, 4)) +
+        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 4, 4)) +
+        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 5, 4)) +
+        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 6, 4)) +
+        easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 7, 4))
       ) + Math.PI / 20;
 
 
@@ -306,14 +306,14 @@
 
       this.camera.rotation.x = -0.3;
       this.camera.rotation.y = (
-        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 0, 4)) +
-        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 1, 4)) +
-        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 2, 4)) +
-        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 3, 4)) +
-        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 4, 4)) +
-        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 5, 4)) +
-        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 6, 4)) +
-        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 16 * 7, 4))
+        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 0, 4)) +
+        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 1, 4)) +
+        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 2, 4)) +
+        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 3, 4)) +
+        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 4, 4)) +
+        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 5, 4)) +
+        easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 6, 4)) +
+        easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 7, 4))
       ) + Math.PI / 20;
     }
   }
