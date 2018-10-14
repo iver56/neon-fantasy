@@ -14,6 +14,8 @@
 
       this.camera.near = 0.1;
 
+      this.snarePumper = 0;
+
       // city columns
       const planeGeometry = new THREE.PlaneGeometry(1, 1, 1);
       this.cityCols = [];
@@ -49,6 +51,11 @@
 
       const t = frame / 60;
 
+      if((BEAN + 4) % 8 === 0 && BEAT) {
+        this.snarePumper = 1;
+      }
+      this.snarePumper *= 0.96;
+
       const colorizationProgress = F(frame, 354, 3);
       const zoomToCityProgress = F(frame, 354, 8);
 
@@ -80,7 +87,15 @@
       for (let i = 0; i < this.cityCols.length; i++) {
         let cityCol = this.cityCols[i];
 
-        const height = 9 + 30 * Math.pow(0.5 + 0.5 * Math.sin(i * 1337), 2);
+        const bassPumper = easeOut(
+          1,
+          0,
+          F(frame, 8 * (0 | (BEAN / 8)), 5)
+        );
+
+        const height = 9 + (0.9 + 0.2 * bassPumper) * (
+          30 * Math.pow(0.5 + 0.5 * Math.sin(i * 1337), 2)
+        ) + 2 * bassPumper;
 
         cityCol.position.x = smoothstep(
           -100 + i * 5,
@@ -89,7 +104,7 @@
         );
         cityCol.scale.y = height;
         cityCol.position.y = cityCol.scale.y / 2 + 9;
-        cityCol.scale.x = smoothstep(2.66, 3, zoomToCityProgress);
+        cityCol.scale.x = smoothstep(2.66, 3 + 1.7 * this.snarePumper, zoomToCityProgress);
 
         cityCol.material.color.setHSL(
           (.5 + 0.1 * Math.sin(i * 997)) % 1,
