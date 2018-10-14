@@ -17,7 +17,13 @@
       demo.nm.nodes.bloom.opacity = 0.99;
 
       this.createSun();
+
+      this.stars = [];
+      this.starPositionsX = [];
+      this.starPositionsY = [];
+
       this.createStars();
+
       this.createCylinder();
 
       const castleTexture = Loader.loadTexture('res/castle.png');
@@ -111,6 +117,24 @@
 
       this.emblemPositionStart = 0;
       this.emblemPositionEnd = 500;
+
+      this.starPoints = [
+        [977, 41], [1217, 698], [1915, 700], [1377, 1130],
+        [1565, 1779], [975, 1409], [398, 1784], [581, 1135],
+        [48, 702], [738, 690], [977, 41]
+      ];
+    }
+
+    getStarPosition(t) {
+      // t between 0 and this.starPoints.length - 1
+      const segmentIndex = t | 0;
+      const progress = t % 1;
+      const nextIndex = segmentIndex + 1;
+      const position = this.starPoints[segmentIndex];
+      const diffX = this.starPoints[nextIndex][0] - position[0];
+      const diffY = this.starPoints[nextIndex][1] - position[1];
+
+      return [position[0] + progress * diffX, position[1] + progress * diffY]
     }
 
     createSun() {
@@ -146,7 +170,6 @@
     }
 
     createStars() {
-      this.spheres = [];
       const starGeometry = new THREE.SphereGeometry(10, 10, 10);
       var starMaterial = new THREE.MeshBasicMaterial();
 
@@ -156,7 +179,9 @@
         sphere.position.y = this.random() * 4000;
         sphere.position.x = -5000 + this.random() * 10000;
         sphere.position.z = -3000;
-        this.spheres.push(sphere);
+        this.stars.push(sphere);
+        this.starPositionsX.push(sphere.position.x);
+        this.starPositionsY.push(sphere.position.y);
 
         this.scene.add(sphere);
       }
@@ -237,13 +262,13 @@
       this.animateEmblemIn(this.emblems[3], this.castleSpinBean + 8 * 9, frame);
 
       // Move world into view in the start of the effect
-      if (BEAN < 160) { 
+      if (BEAN < 160) {
         this.cylinderWrapper.position.y = easeOut(-3000, 0, F(frame, 96, 4));
       }
       else {
-        this.cylinderWrapper.position.y = easeOut(0, -2000, F(frame, 160, 8));
+        this.cylinderWrapper.position.y = easeOut(0, -3000, F(frame, 160, 8));
       }
-      
+
       this.cylinderWrapper.rotation.x = (this.scaler * 0.005 +
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 0, 4)) +
         easeOut(0, this.mathThingy, F(frame, this.cylinderSpinBean + 8 * 1, 4)) +
@@ -264,10 +289,10 @@
         const scale = easeOut(0.00000001, 1, enterProgress);
 
         // All spheres use the same material, so we can access from e.g. the 1st sphere
-        this.spheres[0].material.color.setRGB(scale, scale, scale);
+        this.stars[0].material.color.setRGB(scale, scale, scale);
 
-        for (let i = 0; i < this.spheres.length; i++) {
-          const sphere = this.spheres[i];
+        for (let i = 0; i < this.stars.length; i++) {
+          const sphere = this.stars[i];
           sphere.scale.x = scale;
           sphere.scale.y = scale;
         }
@@ -275,10 +300,10 @@
         const scale = easeOut(1, 0.00001, escapeProgress);
 
         // All spheres use the same material, so we can access from e.g. the 1st sphere
-        this.spheres[0].material.color.setRGB(scale, scale, scale);
+        this.stars[0].material.color.setRGB(scale, scale, scale);
 
-        for (let i = 0; i < this.spheres.length; i++) {
-          const sphere = this.spheres[i];
+        for (let i = 0; i < this.stars.length; i++) {
+          const sphere = this.stars[i];
           sphere.scale.x = scale;
           sphere.scale.y = scale;
         }
@@ -298,7 +323,7 @@
       this.camera.position.z = easeOut(1000, -2252.4, escapeProgress);
 
       this.camera.rotation.x = -0.3;
-      
+
       if (BEAN < 160) {
 
         this.camera.rotation.y = (
@@ -318,7 +343,83 @@
       }
 
       // Star stuff
+      if (BEAN >= 160 && BEAN < 168) {
+        let heartProgress = F(frame, 160, 6);
+        for (let i = 0; i < this.stars.length; i++) {
+          const t = i;
+          let x = Math.sin(t);
+          let star = this.stars[i];
+          star.position.x = smoothstep(this.starPositionsX[i], 3 * 512 * x * x * x, heartProgress);
+          star.position.y = smoothstep(this.starPositionsY[i], 2500 + 3 * (32 * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))), heartProgress);
+        }
+      }
 
+
+      if (BEAN >= 168 && BEAN < 176) {
+        let starProgress = F(frame, 168, 6);
+
+        for (let i = 0; i < this.stars.length; i++) {
+          const t = i;
+
+          let star = this.stars[i];
+          let x = Math.sin(t);
+          const heartX = 3 * 512 * x * x * x;
+          const heartY = 2500 + 3 * (32 * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t)));
+          const starT = 10 * i / this.stars.length;
+          const xy = this.getStarPosition(starT);
+          const starX = -1450 + 1.5 * xy[0];
+          const starY = 3700 - 1.5 * xy[1];
+
+          star.position.x = smoothstep(heartX, starX, starProgress);
+          star.position.y = smoothstep(heartY, starY, starProgress);
+
+        }
+
+
+        let newProgress = F(frame, 160, 4);
+
+
+      }
+
+      const starQuarter = this.stars.length /4;
+      const radius = 800;
+      const offsetY = 2000;
+      if (BEAN >= 176 && BEAN < 184) {
+        let bubbleProgress = F(frame, 176, 6);
+
+        
+        for (let i = 0; i < this.stars.length; i++) {
+          const starT = 10 * i / this.stars.length;
+
+          const xy = this.getStarPosition((starT*97) % 10);
+          const starX = -1450 + 1.5 * xy[0];
+          const starY = 3700 - 1.5 * xy[1];
+
+          let star = this.stars[i];
+          if (i < starQuarter) {
+            let bubbleX = radius + radius * Math.sin(Math.PI/60 * i);
+            let bubbleY = radius + radius * Math.cos(Math.PI/60 * i) + offsetY;
+            star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
+            star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
+          }
+          else if (i < starQuarter * 2) {
+            let bubbleX = -radius + radius * Math.sin(Math.PI/60 * i);
+            let bubbleY = radius + radius * Math.cos(Math.PI/60 * i) + offsetY;
+            star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
+            star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
+          } else if (i < starQuarter * 3) {
+            let bubbleX = radius + radius * Math.sin(Math.PI/60 * i);
+            let bubbleY = -radius + radius * Math.cos(Math.PI/60 * i) + offsetY;
+            star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
+            star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
+          } else if (i < starQuarter * 4) {
+            let bubbleX = -radius + radius * Math.sin(Math.PI/60 * i);
+            let bubbleY = -radius + radius * Math.cos(Math.PI/60 * i) + offsetY;
+            star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
+            star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
+          }
+        }
+      }
 
     }
   }
