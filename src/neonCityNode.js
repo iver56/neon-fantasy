@@ -215,7 +215,6 @@
       );
 
       this.bigSphere.position.y = (2700 +
-        // easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 16 * 0, 4)) +
         easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 1, 4)) +
         easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 2, 4)) +
         easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 3, 4)) +
@@ -224,7 +223,7 @@
         easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 6, 4)) +
         easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * 7, 4))
         );
-        // Update sun end
+      // Update sun end
         
       this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 0, 4));
       this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 8 * 1, 4));

@@ -18,7 +18,8 @@
       "F": "blurryParticleTunnelBlend.render",
       "G": "boxPumperBlend.render",
       "H": "BoxPumper.render",
-      "I": "OutroNode.render"
+      "I": "OutroNode.render",
+      "J": "versePart2.render"
     }
   },
   {
@@ -108,5 +109,9 @@
   {
     "id": "OutroNode",
     "type": "outroNode"
+  },
+  {
+    "id": "versePart2",
+    "type": "versePart2"
   }
 ]
