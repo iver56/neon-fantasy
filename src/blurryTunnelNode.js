@@ -52,12 +52,14 @@
       const scalingFactor = 0.08;
       const rectWidth = 0.2;
 
-      const explodeProgress = F(frame, 312, 8);
-      if (BEAN < 312) {
+      const explodeStartBean = 316;
+      const explodeDuration = 8;
+      const explodeProgress = F(frame, explodeStartBean, explodeDuration);
+      if (BEAN < explodeStartBean) {
         const color = this.colors[(0 | (BEAN / 4) + 5) % this.colors.length];
         this.ctx.strokeStyle = BEAN % 4 < 2 ? color : 'black';
         this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
-      } else if (BEAN < 320) {
+      } else if (BEAN < explodeStartBean + explodeDuration) {
         this.ctx.save();
         this.ctx.globalAlpha = 0.07 - explodeProgress * 0.07;
         this.ctx.strokeStyle = this.colors[4];
@@ -72,7 +74,7 @@
         this.ctx.restore();
       }
 
-      if (BEAN >= 312 && BEAN < 320) {
+      if (BEAN >= explodeStartBean && BEAN < explodeStartBean + explodeDuration) {
         this.ctx.fillStyle = `rgba(255, 255, 255, ${explodeProgress})`;
         const particleSize = 0.03 + 0.05 * explodeProgress;
         const radius = 0.5 + (1.77 * explodeProgress) ** 2;
