@@ -17,7 +17,8 @@
       "E": "BlurryTunnelNode.render",
       "F": "blurryParticleTunnelBlend.render",
       "G": "boxPumperBlend.render",
-      "H": "BoxPumper.render"
+      "H": "BoxPumper.render",
+      "I": "OutroNode.render"
     }
   },
   {
@@ -103,5 +104,9 @@
   {
     "id": "CityTransitionNode",
     "type": "cityTransitionNode"
+  },
+  {
+    "id": "OutroNode",
+    "type": "outroNode"
   }
 ]
