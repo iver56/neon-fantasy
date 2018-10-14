@@ -1,4 +1,8 @@
 (function(global) {
+  const F = (frame, from, delta) => (
+    frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from)
+  );
+
   class afterTunnelNode extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
@@ -129,15 +133,12 @@ this.generateParticleSprite = function() {
         cube.position.x = -900 + 100 * (x) + ((y % 2) * 50);
         cube.position.y = -600 + y * 50;
       }
-
-      this.camera.position.z = 1000;
     }
 
-    update(frame) 
-    {
+    update(frame) {
       super.update(frame);
 
-      if(BEAN % 4 == 0 && BEAT)
+      if(BEAN % 4 === 0 && BEAT)
       {
         this.scaler = 1;
       }
@@ -145,10 +146,19 @@ this.generateParticleSprite = function() {
       this.scaler *= 0.95;
 
       this.angle += this.scaler * 0.15;
-            
-      this.bigSphere.position.x = Math.sin(this.angle * 0.2* Math.PI) * 300;
-      this.bigSphere.position.y = Math.cos(this.angle * 0.2* Math.PI) * 300;
-      
+
+      const enterTransitionProgress = F(frame, 224, 4);
+      this.bigSphere.position.x = easeOut(
+        0,
+        Math.sin(this.angle * 0.2* Math.PI) * 300,
+        enterTransitionProgress
+      );
+      this.bigSphere.position.y = easeOut(
+        0,
+        Math.cos(this.angle * 0.2* Math.PI) * 300,
+        enterTransitionProgress
+      );
+
       const sphereX = this.bigSphere.position.x;
       const sphereY = this.bigSphere.position.y;
       
@@ -164,14 +174,16 @@ this.generateParticleSprite = function() {
 
         var distance = Math.sqrt((distanceX * distanceX)+(distanceY * distanceY));
 
-        cube.position.z = distance -500
-
+        cube.position.z = easeOut(-1000, distance - 500, enterTransitionProgress);
 
         const progress = 1 - this.scaler;
         var targetRotation = Math.PI * 0.5 * (Math.floor(BEAN / 4));
         cube.rotation.x = lerp(targetRotation - Math.PI * 0.5, targetRotation, progress);
         cube.rotation.y = lerp(targetRotation - Math.PI * 0.5, targetRotation, progress);
-      }     
+      }
+
+      this.camera.position.z = easeOut(400, 1000, enterTransitionProgress);
+
     }
   }
 
