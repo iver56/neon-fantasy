@@ -18,7 +18,7 @@
       this.output.minFilter = THREE.LinearFilter;
       this.output.magFilter = THREE.LinearFilter;
 
-      this.outroText = 'Thanks for hosting this demo compo';
+      this.outroText = 'Thanks for hosting this event';
     }
 
     update(frame) {
@@ -35,7 +35,7 @@
       const textProgress = F(frame, 416, 16);
 
       this.ctx.font = '0.5em Courier New';
-      this.ctx.fillText(this.outroText, 16 - textProgress * 16, 6.5);
+      this.ctx.fillText(this.outroText, 16 - textProgress * 42, 6.5);
 
       this.ctx.restore();
     }
