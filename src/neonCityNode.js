@@ -34,9 +34,9 @@
         .5
         );
 
-      this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(500, 32, 32),
+      this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(200, 32, 32),
         this.sunMaterial)
-      var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 4000, 3000);
+      var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 4000, 2500);
       this.bigSphere.add(bigSphereLight);
 
       this.bigSphere.position.y = 3500
