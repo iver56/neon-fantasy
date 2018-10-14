@@ -12,6 +12,8 @@
         }
       });
 
+      this.camera.near = 0.1;
+
       // city columns
       const planeGeometry = new THREE.PlaneGeometry(1, 1, 1);
       this.cityCols = [];
@@ -43,35 +45,37 @@
     update(frame) {
       super.update(frame);
 
-      demo.nm.nodes.bloom.opacity = lerp(0.0, 0.99, F(frame, 352, 4));
+      demo.nm.nodes.bloom.opacity = lerp(0.0, 0.99, F(frame, 354, 4));
 
       const t = frame / 60;
 
       const colorizationProgress = F(frame, 354, 3);
-      const zoomToCityProgress = F(frame, 356, 4);
+      const zoomToCityProgress = F(frame, 354, 8);
 
-      this.camera.position.x = smoothstep(
-        -10.64,
+      this.camera.position.x = easeOut(
+        -10.0,
         0,
         zoomToCityProgress
       );
-      this.camera.position.y = smoothstep(
+      this.camera.position.y = easeOut(
         17.04,
         0,
         zoomToCityProgress
       );
       this.camera.position.z = smoothstep(
-        10.08,
+        0.36,
         100,
-        zoomToCityProgress
+        zoomToCityProgress - 0.08
       );
       this.camera.lookAt(
         new THREE.Vector3(
-          smoothstep(-9.96, 0, zoomToCityProgress),
-          smoothstep(16.96, 0, zoomToCityProgress),
-          smoothstep(0, 0, zoomToCityProgress)
+          easeOut(-10.0, 0, zoomToCityProgress),
+          easeOut(17.04, 0, zoomToCityProgress),
+          easeOut(0, 0, zoomToCityProgress)
         )
       );
+      this.camera.fov = smoothstep(170, 45, zoomToCityProgress);
+      this.camera.updateProjectionMatrix();
 
       for (let i = 0; i < this.cityCols.length; i++) {
         let cityCol = this.cityCols[i];
@@ -85,12 +89,12 @@
         );
         cityCol.scale.y = height;
         cityCol.position.y = cityCol.scale.y / 2 + 9;
-        cityCol.scale.x = 3;
+        cityCol.scale.x = smoothstep(2.66, 3, zoomToCityProgress);
 
         cityCol.material.color.setHSL(
           (.5 + 0.1 * Math.sin(i * 997)) % 1,
           .5,
-          .5
+          smoothstep(1, 0.5, colorizationProgress)
         );
       }
 
@@ -100,7 +104,7 @@
         const depth = (10000 + i - t * 5) % this.roadSegments.length;
 
         roadSeg.position.z = 110 - 40 * depth;
-        roadSeg.position.y = -5;
+        roadSeg.position.y = smoothstep(-40, -5, zoomToCityProgress);
         roadSeg.position.x = 2 * Math.sin(t + Math.PI / 2) * Math.pow(depth, 1.337);
         roadSeg.scale.x = 1000 / (depth + 50);
         roadSeg.scale.y = 25;
