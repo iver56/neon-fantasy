@@ -19,7 +19,6 @@
       this.createStars();
       this.createCylinder();
 
-      // CASTLE PROPERTIES
       const castleTexture = Loader.loadTexture('res/castle.png');
       castleTexture.minFilter = THREE.LinearFilter;
       castleTexture.magFilter = THREE.LinearFilter;
@@ -34,15 +33,21 @@
 
       this.mathThingy = 2 * Math.PI / 10;
 
-      const turretGeometry = new THREE.BoxGeometry(100, 300, 100);
-      const wallGeometry = new THREE.BoxGeometry(200, 100, 50);
-
+      const emblemGeometry = new THREE.PlaneGeometry(200, 200, 1);
+      const emblemTexture = Loader.loadTexture('res/transparentlys.png');
+      emblemTexture.minFilter = THREE.LinearFilter;
+      emblemTexture.magFilter = THREE.LinearFilter;
+      emblemTexture.transparent = true;
+      const emblemMaterial = new THREE.MeshBasicMaterial({
+        side: THREE.DoubleSide,
+        map: emblemTexture
+      });
       this.castles = [];
       this.emblems = [];
       const turretOffset = 150;
+      
+      const turretGeometry = new THREE.BoxGeometry(100, 300, 100);
       const turretHeightFromGround = 150;
-      const wallHeightFromGround = -50;
-
       const createTurret = (offsetX, offsetZ) => {
         var turret = new THREE.Mesh(turretGeometry, castleMaterial);
         turret.position.x = offsetX;
@@ -50,7 +55,9 @@
         turret.position.y = turretHeightFromGround;
         return turret;
       }
-
+      
+      const wallGeometry = new THREE.BoxGeometry(200, 100, 1);
+      const wallHeightFromGround = -50;
       const createWall = (offsetX, offsetZ, rotation) => {
         var wall = new THREE.Mesh(wallGeometry, castleMaterial);
         wall.position.x = offsetX;
@@ -74,6 +81,11 @@
         castle.add(createWall(turretOffset, 0, Math.PI/2));
         castle.add(createWall(-turretOffset, 0, Math.PI/2));
 
+        var emblem = new THREE.Mesh(emblemGeometry, emblemMaterial);
+        emblem.position.y = -200 ;
+        this.emblems.push(emblem);
+        castle.add(emblem);
+
         castle.position.x = i % 2 == 0 ? 300 : -300;
         castle.position.y = 3000 * Math.sin(this.mathThingy * i);
         castle.position.z = 3000 * Math.cos(this.mathThingy * i);
@@ -95,8 +107,10 @@
 
       this.cameraMoveBean = 108;
       this.cameraRotationY = 0.2;
-    }
 
+      this.emblemPositionStart = 0;
+      this.emblemPositionEnd = 500;
+    }
 
     createSun() {
       this.sunTexture = Loader.loadTexture('res/ivertex2.png');
@@ -169,6 +183,12 @@
       this.scene.add(this.cylinderWrapper);
     }
 
+    animateEmblemIn(emblem, bean, frame){
+      let scale = easeOut(0, 1.5, F(frame, bean, 4));
+      emblem.scale.set(scale, scale, scale);
+      emblem.position.y = this.emblemPositionStart + easeOut(0, this.emblemPositionEnd, F(frame, bean, 4));
+    }
+
     update(frame) {
       super.update(frame);
 
@@ -180,7 +200,6 @@
 
       // Update sun
       this.bigSphere.position.x = (2000 +
-        // easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 0, 4)) +
         easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 1, 4)) +
         easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 2, 4)) +
         easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 16 * 3, 4)) +
@@ -216,6 +235,17 @@
       this.castles[1].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 16 * 7, 4));
       this.castles[2].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 16 * 8, 4));
       this.castles[3].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 16 * 9, 4));
+
+      this.animateEmblemIn(this.emblems[4], this.castleSpinBean + 4 + 16 * 0, frame);
+      this.animateEmblemIn(this.emblems[5], this.castleSpinBean + 4 + 16 * 1, frame);
+      this.animateEmblemIn(this.emblems[6], this.castleSpinBean + 4 + 16 * 2, frame);
+      this.animateEmblemIn(this.emblems[7], this.castleSpinBean + 4 + 16 * 3, frame);
+      this.animateEmblemIn(this.emblems[8], this.castleSpinBean + 4 + 16 * 4, frame);
+      this.animateEmblemIn(this.emblems[9], this.castleSpinBean + 4 + 16 * 5, frame);
+      this.animateEmblemIn(this.emblems[0], this.castleSpinBean + 4 + 16 * 6, frame);
+      this.animateEmblemIn(this.emblems[1], this.castleSpinBean + 4 + 16 * 7, frame);
+      this.animateEmblemIn(this.emblems[2], this.castleSpinBean + 4 + 16 * 8, frame);
+      this.animateEmblemIn(this.emblems[3], this.castleSpinBean + 4 + 16 * 9, frame);
 
       // Move world into view in the start of the effect
       this.cylinderWrapper.position.y = easeOut(-3000, 0, F(frame, 96, 4));
