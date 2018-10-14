@@ -2,7 +2,7 @@
 
   const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
   
-  class spinningCube extends NIN.THREENode {
+  class glowingOrbs extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
         camera: options.camera,
@@ -213,5 +213,5 @@
     // end at 96 
   }
 
-  global.spinningCube = spinningCube;
+  global.glowingOrbs = glowingOrbs;
 })(this);

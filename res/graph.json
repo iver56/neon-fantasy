@@ -12,8 +12,8 @@
     "connected": {
       "A": "tunnelNode.render",
       "B": "NeonCityNode.render",
-      "C": "SpinningCube.render",
-      "D": "AfterTunnelNode.render",
+      "C": "GlowingOrbs.render",
+      "D": "GrandSphereNode.render",
       "E": "BlurryTunnelNode.render",
       "F": "blurryParticleTunnelBlend.render",
       "G": "boxPumperBlend.render",
@@ -22,12 +22,12 @@
     }
   },
   {
-    "id": "SpinningCube",
-    "type": "spinningCube"
+    "id": "GlowingOrbs",
+    "type": "glowingOrbs"
   },
   {
-    "id": "AfterTunnelNode",
-    "type": "afterTunnelNode"
+    "id": "GrandSphereNode",
+    "type": "grandSphere"
   },
   {
     "id": "blurX",
