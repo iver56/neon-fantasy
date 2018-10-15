@@ -14,9 +14,13 @@
       this.canvas = document.createElement('canvas');
       this.ctx = this.canvas.getContext('2d');
 
-      this.resize();
+      this.width = 480;
+      this.halfWidth = this.width / 2;
+      this.height = 0 | (this.width * 9 / 16);
+      this.halfHeight = this.height / 2;
 
-      this.ctx.font = '5px s';
+      this.canvas.width = this.width;
+      this.canvas.height = this.height;
 
       this.output = new THREE.VideoTexture(this.canvas);
       this.output.minFilter = THREE.LinearFilter;
@@ -32,11 +36,6 @@
         '#F72871',
         '#F78B1E',
       ];
-
-      this.width = 16;
-      this.halfWidth = this.width / 2;
-      this.height = 0 | (this.width * 9 / 16);
-      this.halfHeight = this.height / 2;
     }
 
     update(frame) {
@@ -45,39 +44,38 @@
       demo.nm.nodes.bloom.opacity = 0.3;
 
       this.ctx.save();
-      this.ctx.scale(GU, GU);
       this.ctx.translate(this.halfWidth, this.halfHeight);
 
       const t = frame / 60;
-      const scalingFactor = 0.08;
-      const rectWidth = 0.2;
+      const scalingFactor = 2.42;
+      const rectWidth = 36;
 
       const explodeStartBean = 316;
       const explodeDuration = 8;
       const explodeProgress = F(frame, explodeStartBean, explodeDuration);
       if (BEAN < explodeStartBean) {
         const color = this.colors[(0 | (BEAN / 4) + 5) % this.colors.length];
-        this.ctx.strokeStyle = BEAN % 4 < 2 ? color : 'black';
-        this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
+        this.ctx.fillStyle = BEAN % 4 < 2 ? color : 'black';
+        this.ctx.fillRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
       } else if (BEAN < explodeStartBean + explodeDuration) {
         this.ctx.save();
         this.ctx.globalAlpha = 0.07 - explodeProgress * 0.07;
-        this.ctx.strokeStyle = this.colors[4];
-        this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
+        this.ctx.fillStyle = this.colors[4];
+        this.ctx.fillRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
         this.ctx.restore();
       } else {
         this.ctx.save();
         const color = this.colors[(0 | (BEAN / 4) + 3) % this.colors.length];
         this.ctx.globalAlpha = 0.05;
-        this.ctx.strokeStyle = color;
-        this.ctx.strokeRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
+        this.ctx.fillStyle = color;
+        this.ctx.fillRect(- rectWidth / 2, - rectWidth / 2, rectWidth, rectWidth);
         this.ctx.restore();
       }
 
       if (BEAN >= explodeStartBean && BEAN < explodeStartBean + explodeDuration) {
         this.ctx.fillStyle = `rgba(255, 255, 255, ${explodeProgress})`;
-        const particleSize = 0.03 + 0.05 * explodeProgress;
-        const radius = 0.5 + (1.77 * explodeProgress) ** 2;
+        const particleSize = (0.03 + 0.05 * explodeProgress) * 24;
+        const radius = 40 * (0.5 + (1.77 * explodeProgress) ** 2);
 
         for (let i = 0; i < explodeProgress * 40; i++) {
           this.ctx.fillRect(
@@ -117,16 +115,21 @@
         );
       } else {
         this.ctx.fillStyle = '#000000';
-        this.ctx.fillRect(-8, -5, 8, easeOut(0, 10, F(frame, 350, 2)));
-        this.ctx.fillRect(0, -5, 8, easeOut(0, 10, F(frame, 352, 2)));
+        this.ctx.fillRect(
+          -this.halfWidth,
+          -this.halfHeight,
+          this.halfWidth,
+          easeOut(0, this.height * 1.1, F(frame, 350, 2))
+        );
+        this.ctx.fillRect(
+          0,
+          -this.halfHeight,
+          this.halfWidth,
+          easeOut(0, this.height * 1.1, F(frame, 352, 2))
+        );
       }
 
       this.ctx.restore();
-    }
-
-    resize() {
-      this.canvas.width = this.width * GU;
-      this.canvas.height = this.height * GU;
     }
 
     render() {
