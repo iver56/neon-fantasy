@@ -41,7 +41,9 @@
     update(frame) {
       super.update(frame);
 
-      demo.nm.nodes.bloom.opacity = 0.3;
+      if (BEAN >= 288) {
+        demo.nm.nodes.bloom.opacity = easeOut(5, 0.3, F(frame, 288, 3));
+      }
 
       this.ctx.save();
       this.ctx.translate(this.halfWidth, this.halfHeight);

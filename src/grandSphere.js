@@ -136,6 +136,29 @@
         this.scene.add(cube);
       }
 
+      this.originalCubeColor = [34 / 255, 34 / 255, 34 / 255];
+      this.targetCubeColors = [
+        [255 / 255, 43 / 255, 255 / 255], [0, 0, 0], [174 / 255, 37 / 255, 255 / 255], [0, 0, 0],
+        [255 / 255, 40 / 255, 255 / 255], [0, 0, 0], [255 / 255, 49 / 255, 146 / 255]
+      ];
+      this.targetCubeScales = [49 / 640, 80 / 640, 131 / 640, 217 / 640, 342 / 640, 585 / 640, 1400 / 640];
+      this.targetRotations = [
+        0,
+        THREE.Math.degToRad(-4.29),
+        THREE.Math.degToRad(-11.15),
+        THREE.Math.degToRad(-16.75),
+        THREE.Math.degToRad(-20.77), THREE.Math.degToRad(-27.61), THREE.Math.degToRad(-33.0)
+      ];
+      this.targetAspectRatios = [
+        16/16,
+        15/16,
+        14/16,
+        13/16,
+        12/16,
+        10/16,
+        9/16
+      ];
+
       this.to1D = (x, y) => {
         return (y * this.cubeGridWidth + x);
       }
@@ -157,7 +180,7 @@
       const z = easeOut(
         easeOut(-1000, distance - 500, this.enterTransitionProgress),
         -20,
-        F(this.frame, 268, 4)
+        F(this.frame, 276, 4)
       );
 
       return {
@@ -186,19 +209,32 @@
       this.angle += this.scaler * 0.15;
 
       this.enterTransitionProgress = F(frame, 224, 4);
-      this.bigSphere.position.x = easeOut(
-        0,
-        Math.sin(this.angle * 0.2 * Math.PI) * 300,
-        this.enterTransitionProgress
-      );
-      this.bigSphere.position.y = easeOut(
-        0,
-        Math.cos(this.angle * 0.2 * Math.PI) * 300,
-        this.enterTransitionProgress
-      );
 
-      const sphereX = this.bigSphere.position.x;
-      const sphereY = this.bigSphere.position.y;
+      const transition1Progress = F(frame, 280, 4);
+
+      if (transition1Progress < 0) {
+        this.bigSphere.position.x = easeOut(
+          0,
+          Math.sin(this.angle * 0.2 * Math.PI) * 300,
+          this.enterTransitionProgress
+        );
+        this.bigSphere.position.y = easeOut(
+          0,
+          Math.cos(this.angle * 0.2 * Math.PI) * 300,
+          this.enterTransitionProgress
+        );
+      } else {
+        this.bigSphere.position.x = easeOut(
+          Math.sin(this.angle * 0.2 * Math.PI) * 300,
+          Math.sin(this.angle * 0.2 * Math.PI) * 1300,
+          transition1Progress
+        );
+        this.bigSphere.position.y = easeOut(
+          Math.cos(this.angle * 0.2 * Math.PI) * 300,
+          Math.cos(this.angle * 0.2 * Math.PI) * 1300,
+          transition1Progress
+        );
+      }
 
       for (let i = 0; i < this.cubes.length; i++) {
         const cube = this.cubes[i];
@@ -215,11 +251,8 @@
 
       this.camera.position.z = easeOut(400, 1000, this.enterTransitionProgress);
 
-      if (BEAN >= 272) {
-        const originalColor = 0x222222;
-        const colors = [0xff2Bff, 0x000000, 0xae25ff, 0x000000, 0xff28ff, 0x000000, 0xff3192];
-        const scales = [49 / 640, 80 / 640, 131 / 640, 217 / 640, 342 / 640, 585 / 640, 1300 / 640];
-        const transition1Progress = F(frame, 272, 4);
+      if (transition1Progress >= 0) {
+        demo.nm.nodes.bloom.opacity = lerp(0.99, 0.3, transition1Progress);
 
         let counter = 0;
         for (let x = 8; x < 11; x++) {
@@ -232,16 +265,20 @@
             cube.position.y = easeOut(cubeOrientation.position.y, 0, transition1Progress);
             cube.position.z = easeOut(
               cubeOrientation.position.z,
-              -0.1 * counter,
-              transition1Progress
+              -0.01 * counter,
+              transition1Progress + 1
             );
             cube.rotation.x = easeOut(cubeOrientation.rotation.x, 0, transition1Progress);
             cube.rotation.y = easeOut(cubeOrientation.rotation.y, 0, transition1Progress);
             if (counter < 7) {
-              cube.scale.x = easeOut(1, scales[counter], transition1Progress);
-              cube.scale.y = cube.scale.x;
-
-              cube.material.emissive.setHex(colors[counter]);
+              cube.scale.x = easeOut(1, this.targetCubeScales[counter], transition1Progress);
+              cube.scale.y = cube.scale.x * this.targetAspectRatios[counter];
+              cube.rotation.z = easeOut(0, this.targetRotations[counter], transition1Progress);
+              cube.material.emissive.setRGB(
+                lerp(this.originalCubeColor[0], this.targetCubeColors[counter][0], transition1Progress),
+                lerp(this.originalCubeColor[1], this.targetCubeColors[counter][1], transition1Progress),
+                lerp(this.originalCubeColor[2], this.targetCubeColors[counter][2], transition1Progress),
+              );
               counter++;
             } else {
               cube.scale.x = easeOut(1, 0, transition1Progress);
@@ -250,7 +287,7 @@
           }
         }
 
-        this.camera.position.z = easeOut(1000, 90, transition1Progress)
+        this.camera.position.z = easeOut(1000, 65, transition1Progress)
       }
 
 
