@@ -419,16 +419,16 @@
         }
       }
 
-      if (BEAN >= 184 && BEAN < 200) {
-        let waveProgress = F(frame, 184, 16);
+      if (BEAN >= 184 && BEAN < 220) {
+        let waveProgress = F(frame, 184, 36);
         let waveTransformProgress = F(frame, 184, 8);
 
         for (let i = 0; i < this.stars.length; i++) {
           // const starT = 10 * i / this.stars.length;         
           let star = this.stars[i];
 
-          let starWaveX = 5000 - i * 10;
-          let starWaveY = 2500 + 1000*Math.sin(i +  waveProgress/10 * 2 * Math.PI);
+          let starWaveY = 5000 - i * 10;
+          let starWaveX = 900 - 900 * waveProgress + 1000*Math.sin(i +  waveProgress/5 * 2 * Math.PI);
 
           // star.position.x = smoothstep(bubbleX, starWaveX, waveProgress);
           // star.position.y = smoothstep(bubbleY, starWaveY, waveProgress);
