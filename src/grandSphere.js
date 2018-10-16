@@ -22,7 +22,7 @@
         .5
       );
 
-      this.ballTexture = Loader.loadTexture('res/ivertex2.png');
+      this.ballTexture = Loader.loadTexture('res/shallow-water.jpg');
       this.ballTexture.minFilter = THREE.LinearFilter;
       this.ballTexture.magFilter = THREE.LinearFilter;
       this.ballMaterial = new THREE.MeshStandardMaterial({
