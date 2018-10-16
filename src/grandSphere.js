@@ -289,13 +289,13 @@
                 cube.material.emissive.setRGB(
                   lerp(this.originalCubeColor[0], this.targetCubeColors[counter][0], transition1Progress),
                   lerp(this.originalCubeColor[1], this.targetCubeColors[counter][1], transition1Progress),
-                  lerp(this.originalCubeColor[2], this.targetCubeColors[counter][2], transition1Progress),
+                  lerp(this.originalCubeColor[2], this.targetCubeColors[counter][2], transition1Progress)
                 );
               } else {
                 cube.material.emissive.setRGB(
                   lerp(this.targetCubeColors[counter][0], this.target2CubeColors[counter][0], transition2Progress),
                   lerp(this.targetCubeColors[counter][1], this.target2CubeColors[counter][1], transition2Progress),
-                  lerp(this.targetCubeColors[counter][2], this.target2CubeColors[counter][2], transition2Progress),
+                  lerp(this.targetCubeColors[counter][2], this.target2CubeColors[counter][2], transition2Progress)
                 );
               }
 

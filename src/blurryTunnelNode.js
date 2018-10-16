@@ -77,7 +77,7 @@
       if (BEAN >= explodeStartBean && BEAN < explodeStartBean + explodeDuration) {
         this.ctx.fillStyle = `rgba(255, 255, 255, ${explodeProgress})`;
         const particleSize = (0.03 + 0.05 * explodeProgress) * 24;
-        const radius = 40 * (0.5 + (1.77 * explodeProgress) ** 2);
+        const radius = 40 * (0.5 + Math.pow(1.77 * explodeProgress, 2));
 
         for (let i = 0; i < explodeProgress * 40; i++) {
           this.ctx.fillRect(
