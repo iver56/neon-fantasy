@@ -53,7 +53,7 @@
 
       const workWorkTransitionProgress = F(frame, 328, 4);
 
-      if(BEAN >= 336 && BEAN % 4 === 0 && BEAT && BEAN < 348) {
+      if (BEAN >= 336 && BEAN % 4 === 0 && BEAT && BEAN < 348) {
         this.scaler = 1;
       }
       this.scaler *= 0.95;
@@ -99,10 +99,12 @@
         sphere.scale.y = sphere.scale.x;
         sphere.scale.z = sphere.scale.x;
       }
+    }
 
-   }
-
-
+    warmup(renderer) {
+      this.update(3646);
+      this.render(renderer);
+    }
 
   }
 
