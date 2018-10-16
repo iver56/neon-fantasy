@@ -62,18 +62,19 @@
     update(frame) {
       super.update(frame);
 
-      let bloomAmount = this.scaler + 0.4;
-      if (BEAN >= 28) {
-        bloomAmount += lerp(2.5, 0, F(frame, 28, 4));
-      }
-      demo.nm.nodes.bloom.opacity = bloomAmount;
 
-      if (BEAN % 4 === 0 && BEAT && BEAN >= 28) {
+      if (BEAN % 4 === 0 && BEAT && BEAN >= 36) {
         this.scaler = 1;
       } else if (BEAT && (BEAN === 19 || BEAN === 20 || BEAN === 23 || BEAN === 25)) {
         this.scaler += 0.4;
       }
+      if (BEAN >= 28 && BEAN < 36) {
+        this.scaler = lerp(1.337, 0, F(frame, 28, 8));
+      }
       this.scaler *= 0.95;
+
+      let bloomAmount = this.scaler + 0.3;
+      demo.nm.nodes.bloom.opacity = bloomAmount;
 
       this.angle += this.scaler * 0.15;
 
@@ -139,9 +140,6 @@
       // Scale up with guitar
       if (BEAN >= 28 && BEAN < 32) {
         let sphereScaleTarget = 1 + (1 - this.scaler) * 2;
-        if (BEAN >= 27 && BEAN <= 29) {
-          sphereScaleTarget += lerp(1, 0, F(frame, 27, 2));
-        }
         for (let i = 0; i < 3; i++) {
           const sphere = this.spheres[i];
           sphere.scale.x = sphereScaleTarget;
@@ -149,7 +147,9 @@
         }
       }
 
+
       // Scale down with guitar
+      /*
       if (BEAN >= 32 && BEAN < 54) {
         var less = 0.01;
         less -= this.scaler * 0.01;
@@ -159,6 +159,7 @@
           sphere.scale.y -= less;
         }
       }
+      */
 
       // Start spinning cubes, moving from center to edge
       if (BEAN >= 32 && BEAN < 48) {
@@ -232,6 +233,11 @@
             cube.position.z -= this.scaler * i % 8;
           }
         }
+      }
+
+      if (BEAN >= 84) {
+        this.camera.position.z -= easeOut(0, 400, F(frame, 84, 4));
+        this.camera.position.z -= easeOut(0, 400, F(frame, 88, 4));
       }
 
       this.camera.fov = easeOut(45, 1, F(frame, 92, 3));
