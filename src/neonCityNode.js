@@ -349,7 +349,7 @@
         ) + Math.PI / 20;
       }
       else {
-        this.camera.rotation.y = smoothstep(this.cameraRotationY, 0, F(frame, 160, 8)) ;
+        this.camera.rotation.y = smoothstep( Math.PI / 20, 0, F(frame, 160, 8)) ;
         // easeOut(0, this.cameraRotationY, F(frame, 160, 8));
 
       }
