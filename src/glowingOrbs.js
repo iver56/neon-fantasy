@@ -62,9 +62,9 @@
     update(frame) {
       super.update(frame);
 
-      let bloomAmount = this.scaler + 0.5;
+      let bloomAmount = this.scaler + 0.4;
       if (BEAN >= 28) {
-        bloomAmount += lerp(3, 0, F(frame, 28, 4));
+        bloomAmount += lerp(2.5, 0, F(frame, 28, 4));
       }
       demo.nm.nodes.bloom.opacity = bloomAmount;
 
