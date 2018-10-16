@@ -89,7 +89,7 @@
         );
         sphere.scale.x = easeOut(
           easeOut(
-            easeOut(0.0001, 0.5 + 0.00004 * i ** 1.95, sizeInProgress - i * 0.004),
+            easeOut(0.0001, 0.5 + Math.pow(0.00004 * i, 1.95), sizeInProgress - i * 0.004),
             0.5,
             workWorkTransitionProgress
           ),

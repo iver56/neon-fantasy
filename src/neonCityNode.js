@@ -144,7 +144,7 @@
     }
 
     createSun() {
-      this.sunTexture = Loader.loadTexture('res/ivertex2.png');
+      this.sunTexture = Loader.loadTexture('res/shallow-water.jpg');
       this.sunTexture.minFilter = THREE.LinearFilter;
       this.sunTexture.magFilter = THREE.LinearFilter;
       this.sunMaterial = new THREE.MeshStandardMaterial({
