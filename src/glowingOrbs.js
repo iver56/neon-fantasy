@@ -65,8 +65,7 @@
       demo.nm.nodes.bloom.opacity = this.scaler;
 
       if (BEAN % 4 === 0 && BEAT
-        && BEAN !== 4
-        && BEAN !== 8) {
+        && BEAN > 16) {
         this.scaler = 1;
 
       }
@@ -75,11 +74,31 @@
 
       this.angle += this.scaler * 0.15;
 
+      const camera1Progress = F(frame, 0, 24);
+      const midCameraProgress = F(frame, 8, 16);
+      const camera2Progress = F(frame, 12, 8);
+
       // Update sphere positions
-      if (BEAN < 20) {
+      const firstSphere = this.spheres[0];
+      firstSphere.position.x = smoothstep(
+        -1000 + 8 * frame,
+        Math.sin(this.angle) * 300,
+        midCameraProgress
+      );
+      firstSphere.position.y = smoothstep(
+        100,
+        Math.cos(this.angle) * 300,
+        midCameraProgress
+      );
 
-      } else {
-
+      const otherOrbsIntroProgress = F(frame, 21, 4);
+      this.spheres[1].visible = BEAN >= 16; // Reveal second sphere
+      this.spheres[2].visible = BEAN >= 20; // Reveal third sphere
+      for (let i = 1; i < 3; i++) {
+        var sphere = this.spheres[i];
+        const radius = smoothstep(1300, 300, otherOrbsIntroProgress - i);
+        sphere.position.x = radius * Math.sin(this.angle + i * (2 / 3) * Math.PI);
+        sphere.position.y = radius * Math.cos(this.angle + i * (2 / 3 * Math.PI));
       }
 
       // Update cube scaling
@@ -95,11 +114,6 @@
         cube.scale.z = cube.scale.x;
       }
 
-      this.spheres[1].visible = BEAN >= 12; // Reveal second sphere
-      this.spheres[2].visible = BEAN >= 16; // Reveal third sphere
-
-      const camera1Progress = F(frame, 0, 24);
-      const camera2Progress = F(frame, 12, 8);
 
       this.camera.position.x = smoothstep(-1207, 0, camera1Progress);
       this.camera.position.y = smoothstep(-707, 0, camera1Progress);
