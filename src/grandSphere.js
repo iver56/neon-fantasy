@@ -309,8 +309,11 @@
 
         this.camera.position.z = easeOut(1000, 64, transition1Progress)
       }
+    }
 
-
+    warmup(renderer) {
+      this.update(2551);
+      this.render(renderer);
     }
   }
 

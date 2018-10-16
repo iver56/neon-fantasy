@@ -37,6 +37,11 @@
         sphere.scale.y = smoothstep(1, 48, scaleProgress);
       }
     }
+
+    warmup(renderer) {
+      this.update(3965);
+      this.render(renderer);
+    }
   }
 
   global.cityTransitionNode = cityTransitionNode;

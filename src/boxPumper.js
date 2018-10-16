@@ -134,6 +134,11 @@
         );
       }
     }
+
+    warmup(renderer) {
+      this.update(4033);
+      this.render(renderer);
+    }
   }
 
   global.boxPumper = boxPumper;

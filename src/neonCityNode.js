@@ -466,6 +466,11 @@
       }
 
     }
+
+    warmup(renderer) {
+      this.update(1093);
+      this.render(renderer);
+    }
   }
 
   global.neonCityNode = neonCityNode;

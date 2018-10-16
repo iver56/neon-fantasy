@@ -210,7 +210,12 @@
       this.camera.fov = easeOut(45, 1, F(frame, 92, 4));
       this.camera.updateProjectionMatrix();
     }
-    // end at 96 
+    // end at 96
+
+    warmup(renderer) {
+      this.update(0);
+      this.render(renderer);
+    }
   }
 
   global.glowingOrbs = glowingOrbs;
