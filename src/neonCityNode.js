@@ -245,8 +245,8 @@
         this.bigSphere.position.x = posX;
         this.bigSphere.position.y = posY;
       } else {
-        this.bigSphere.position.x = 1160 - easeOut(0, 1000, F(frame, 160, 4));
-        this.bigSphere.position.y = 2700 + easeOut(0, -280, F(frame, 160, 4)); // 60
+        this.bigSphere.position.x = 1040 - easeOut(0, 1040, F(frame, 160, 4));
+        this.bigSphere.position.y = 3180 + easeOut(0, -980, F(frame, 160, 4)); // 60
       }
       // Update sun end
 
@@ -349,9 +349,7 @@
         ) + Math.PI / 20;
       }
       else {
-        this.camera.rotation.y = smoothstep( Math.PI / 20, 0, F(frame, 160, 8)) ;
-        // easeOut(0, this.cameraRotationY, F(frame, 160, 8));
-
+        this.camera.rotation.y = smoothstep( Math.PI / 20, 0, F(frame, 160, 4)) ;
       }
 
       //Star stuff
@@ -388,7 +386,7 @@
 
       const starQuarter = this.stars.length / 4;
       const radius = 800;
-      const offsetY = 2000;
+      const offsetY = 2200;
       if (BEAN >= 176 && BEAN < 184) {
         let bubbleProgress = F(frame, 176, 6);
 
@@ -429,7 +427,7 @@
       if (BEAN >= 184 && BEAN < 220) {
         let waveProgress = F(frame, 184, 36);
         let waveTransformProgress = F(frame, 184, 8);
-        let cylinderSqueezeProgress = F(frame, 192, 8);
+        // let cylinderSqueezeProgress = F(frame, 192, 8);
 
         for (let i = 0; i < this.stars.length; i++) {
           // const starT = 10 * i / this.stars.length;         
@@ -437,7 +435,7 @@
 
           let starWaveY = 4000 - i * 5;
           let starWaveX = xOffset 
-            - xOffset * waveProgress 
+            // - xOffset * waveProgress 
             + 1000 * Math.sin(i +  waveProgress/5 * 2 * Math.PI)
             * (1 - 0.5 * Math.sin(i * Math.PI/this.stars.length));
           
