@@ -40,13 +40,20 @@
       this.mathThingy = 2 * Math.PI / 10;
 
       const emblemGeometry = new THREE.PlaneGeometry(200, 200, 1);
-      const emblemTexture = Loader.loadTexture('res/transparentlys.png');
+      const emblemTexture = Loader.loadTexture('res/shieldemblem.png');
       emblemTexture.minFilter = THREE.LinearFilter;
       emblemTexture.magFilter = THREE.LinearFilter;
       emblemTexture.transparent = true;
-      const emblemMaterial = new THREE.MeshBasicMaterial({
+      const emblemMaterial = new THREE.MeshStandardMaterial({
         side: THREE.DoubleSide,
-        map: emblemTexture
+        // map: emblemTexture,
+        emissive: 0x30F5E0,
+        emissiveMap: emblemTexture,
+        emissiveIntensity: 1,
+        transparent: true,
+        // opacity: 0.5,
+        // alphaTest: 0.5,
+        blending: THREE.AdditiveBlending
       });
       this.castles = [];
       this.emblems = [];
@@ -62,8 +69,8 @@
         return turret;
       };
 
-      const wallGeometry = new THREE.BoxGeometry(200, 100, 1);
-      const wallHeightFromGround = -50;
+      const wallGeometry = new THREE.BoxGeometry(200, 150, 40);
+      const wallHeightFromGround = -75;
       const createWall = (offsetX, offsetZ, rotation) => {
         var wall = new THREE.Mesh(wallGeometry, castleMaterial);
         wall.position.x = offsetX;
@@ -208,7 +215,7 @@
     }
 
     animateEmblemIn(emblem, bean, frame) {
-      let scale = easeOut(0, 1.5, F(frame, bean, 4));
+      let scale = easeOut(0, 1, F(frame, bean, 4));
       emblem.scale.set(scale, scale, scale);
       emblem.position.y = this.emblemPositionStart + easeOut(0, this.emblemPositionEnd, F(frame, bean, 4));
     }
