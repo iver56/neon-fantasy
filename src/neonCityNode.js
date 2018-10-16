@@ -1,7 +1,6 @@
 (function (global) {
   const F = (frame, from, delta) => (
-    frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from)
-    );
+    frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
 
   class neonCityNode extends NIN.THREENode {
     constructor(id, options) {
@@ -61,7 +60,7 @@
         turret.position.z = offsetZ;
         turret.position.y = turretHeightFromGround;
         return turret;
-      }
+      };
 
       const wallGeometry = new THREE.BoxGeometry(200, 100, 1);
       const wallHeightFromGround = -50;
@@ -72,7 +71,7 @@
         wall.position.y = -wallHeightFromGround;
         wall.rotation.y = rotation;
         return wall;
-      }
+      };
 
       for (let i = 0; i < 10; i++) {
 
@@ -134,7 +133,7 @@
       const diffX = this.starPoints[nextIndex][0] - position[0];
       const diffY = this.starPoints[nextIndex][1] - position[1];
 
-      return [position[0] + progress * diffX, position[1] + progress * diffY]
+      return [position[0] + progress * diffX, position[1] + progress * diffY];
     }
 
     createSun() {
@@ -158,12 +157,11 @@
         .5
       );
 
-      this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(200, 32, 32),
-        this.sunMaterial)
+      this.bigSphere = new THREE.Mesh(new THREE.SphereGeometry(200, 32, 32), this.sunMaterial);
       var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 4000, 2500);
       this.bigSphere.add(bigSphereLight);
 
-      this.bigSphere.position.y = 3500
+      this.bigSphere.position.y = 3500;
       this.bigSphere.position.z = -3000;
       this.bigSphereOffsetX = 700;
       this.scene.add(this.bigSphere);
@@ -226,7 +224,7 @@
 
       // Update sun
       this.sunMaterial.emissiveIntensity = 1 + this.scaler * 0.15;
-      var sunScale = 1 + this.scaler * 0.05
+      var sunScale = 1 + this.scaler * 0.05;
       this.bigSphere.scale.set(sunScale, sunScale, sunScale);
 
       let posX = 2000;
@@ -372,7 +370,6 @@
 
           star.position.x = smoothstep(heartX, starX, starProgress);
           star.position.y = smoothstep(heartY, starY, starProgress);
-
         }
       }
 
@@ -414,7 +411,6 @@
           }
         }
       }
-
     }
   }
 
