@@ -387,6 +387,7 @@
       const starQuarter = this.stars.length / 4;
       const radius = 800;
       const offsetY = 2200;
+      const smallRingFactor = 0.4;
       if (BEAN >= 176 && BEAN < 184) {
         let bubbleProgress = F(frame, 176, 6);
 
@@ -398,25 +399,27 @@
           const starY = 3700 - 1.5 * xy[1];
 
           let star = this.stars[i];
+          let small = i % 2 == 0  ?1 : smallRingFactor;
           if (i < starQuarter) {
             let bubbleX = radius + radius * Math.sin(Math.PI / 60 * i);
-            let bubbleY = radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            let bubbleY = radius + radius * small * Math.cos(Math.PI / 60 * i) 
+            + offsetY;
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
           }
           else if (i < starQuarter * 2) {
             let bubbleX = -radius + radius * Math.sin(Math.PI / 60 * i);
-            let bubbleY = radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            let bubbleY = radius + radius * small * Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
           } else if (i < starQuarter * 3) {
-            let bubbleX = radius + radius * Math.sin(Math.PI / 60 * i);
-            let bubbleY = -radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            let bubbleX = radius  + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = -radius + radius * small * Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
           } else if (i < starQuarter * 4) {
-            let bubbleX = -radius + radius * Math.sin(Math.PI / 60 * i);
-            let bubbleY = -radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            let bubbleX = -radius  + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = -radius + radius * small * Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
           }
@@ -428,11 +431,12 @@
         let waveProgress = F(frame, 184, 36);
         let waveTransformProgress = F(frame, 184, 8);
         // let cylinderSqueezeProgress = F(frame, 192, 8);
-
+        
         for (let i = 0; i < this.stars.length; i++) {
           // const starT = 10 * i / this.stars.length;         
           let star = this.stars[i];
-
+          
+          let small = i % 2 == 0  ?1 : smallRingFactor;
           let starWaveY = 4000 - i * 5;
           let starWaveX = xOffset 
             // - xOffset * waveProgress 
@@ -444,23 +448,23 @@
 
           if (i < starQuarter) {
             let bubbleX = radius + radius * Math.sin(Math.PI / 60 * i);
-            let bubbleY = radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            let bubbleY = radius + radius * small * Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
             star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
           }
           else if (i < starQuarter * 2) {
             let bubbleX = -radius + radius * Math.sin(Math.PI / 60 * i);
-            let bubbleY = radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            let bubbleY = radius + radius * small* Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
             star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
           } else if (i < starQuarter * 3) {
             let bubbleX = radius + radius * Math.sin(Math.PI / 60 * i);
-            let bubbleY = -radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            let bubbleY = -radius + radius * small* Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
             star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
           } else if (i < starQuarter * 4) {
             let bubbleX = -radius + radius * Math.sin(Math.PI / 60 * i);
-            let bubbleY = -radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            let bubbleY = -radius + radius * small * Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
             star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
           }
