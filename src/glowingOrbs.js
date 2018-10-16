@@ -56,8 +56,6 @@
         cube.position.y = (Math.random() * 1000) - 500;
         cube.position.z = (Math.random() * 100) - 150;
       }
-
-      this.camera.position.z = 1000;
     }
 
 
@@ -78,10 +76,10 @@
       this.angle += this.scaler * 0.15;
 
       // Update sphere positions
-      for (let i = 0; i < 3; i++) {
-        var sphere = this.spheres[i];
-        sphere.position.x = Math.sin(this.angle + i * (2 / 3) * Math.PI) * 300;
-        sphere.position.y = Math.cos(this.angle + i * (2 / 3 * Math.PI)) * 300;
+      if (BEAN < 20) {
+
+      } else {
+
       }
 
       // Update cube scaling
@@ -91,7 +89,7 @@
         cube.scale.x = smoothstep(
           0.0001,
           scaleDelta + Math.atan(0.5 + this.scaler),
-          F(0 | (frame - i / 3), 0, 8)
+          F(0 | (frame - i / 3), 0, 4)
         );
         cube.scale.y = cube.scale.x;
         cube.scale.z = cube.scale.x;
@@ -99,6 +97,27 @@
 
       this.spheres[1].visible = BEAN >= 12; // Reveal second sphere
       this.spheres[2].visible = BEAN >= 16; // Reveal third sphere
+
+      const camera1Progress = F(frame, 0, 24);
+      const camera2Progress = F(frame, 12, 8);
+
+      this.camera.position.x = smoothstep(-1207, 0, camera1Progress);
+      this.camera.position.y = smoothstep(-707, 0, camera1Progress);
+      this.camera.position.z = smoothstep(0, 1000, camera2Progress - 0.1);
+
+      /*this.camera.lookAt(
+        new THREE.Vector3(
+          475.59,
+          219.78,
+          -143.64
+        )
+      );*/
+      this.camera.rotation.y = smoothstep(-1, 0, camera2Progress);
+      this.camera.rotation.x = smoothstep(Math.PI / 2, 0, camera2Progress + 0.2);
+      //this.camera.rotation.z =
+
+      //-407.91,-327.22,-97.19
+      //475.59,219.78,-143.64
 
       // Scale up with guitar
       if (BEAN >= 28 && BEAN < 32) {
