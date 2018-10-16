@@ -347,7 +347,7 @@
 
       }
 
-      // Star stuff
+      //Star stuff
       if (BEAN >= 160 && BEAN < 168) {
         let heartProgress = F(frame, 160, 6);
         for (let i = 0; i < this.stars.length; i++) {
@@ -380,7 +380,7 @@
         }
       }
 
-      const starQuarter = this.stars.length /4;
+      const starQuarter = this.stars.length / 4;
       const radius = 800;
       const offsetY = 2000;
       if (BEAN >= 176 && BEAN < 184) {
@@ -389,35 +389,82 @@
         for (let i = 0; i < this.stars.length; i++) {
           const starT = 10 * i / this.stars.length;
 
-          const xy = this.getStarPosition((starT*97) % 10);
+          const xy = this.getStarPosition((starT * 97) % 10);
           const starX = -1450 + 1.5 * xy[0];
           const starY = 3700 - 1.5 * xy[1];
 
           let star = this.stars[i];
           if (i < starQuarter) {
-            let bubbleX = radius + radius * Math.sin(Math.PI/60 * i);
-            let bubbleY = radius + radius * Math.cos(Math.PI/60 * i) + offsetY;
+            let bubbleX = radius + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
           }
           else if (i < starQuarter * 2) {
-            let bubbleX = -radius + radius * Math.sin(Math.PI/60 * i);
-            let bubbleY = radius + radius * Math.cos(Math.PI/60 * i) + offsetY;
+            let bubbleX = -radius + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
           } else if (i < starQuarter * 3) {
-            let bubbleX = radius + radius * Math.sin(Math.PI/60 * i);
-            let bubbleY = -radius + radius * Math.cos(Math.PI/60 * i) + offsetY;
+            let bubbleX = radius + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = -radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
           } else if (i < starQuarter * 4) {
-            let bubbleX = -radius + radius * Math.sin(Math.PI/60 * i);
-            let bubbleY = -radius + radius * Math.cos(Math.PI/60 * i) + offsetY;
+            let bubbleX = -radius + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = -radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
           }
         }
       }
+
+      if (BEAN >= 184 && BEAN < 200) {
+        let waveProgress = F(frame, 184, 16);
+        let waveTransformProgress = F(frame, 184, 8);
+
+        for (let i = 0; i < this.stars.length; i++) {
+          // const starT = 10 * i / this.stars.length;         
+          let star = this.stars[i];
+
+          let starWaveX = 5000 - i * 10;
+          let starWaveY = 2500 + 1000*Math.sin(i +  waveProgress/10 * 2 * Math.PI);
+
+          // star.position.x = smoothstep(bubbleX, starWaveX, waveProgress);
+          // star.position.y = smoothstep(bubbleY, starWaveY, waveProgress);
+
+          if (i < starQuarter) {
+            let bubbleX = radius + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
+            star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
+          }
+          else if (i < starQuarter * 2) {
+            let bubbleX = -radius + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
+            star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
+          } else if (i < starQuarter * 3) {
+            let bubbleX = radius + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = -radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
+            star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
+          } else if (i < starQuarter * 4) {
+            let bubbleX = -radius + radius * Math.sin(Math.PI / 60 * i);
+            let bubbleY = -radius + radius * Math.cos(Math.PI / 60 * i) + offsetY;
+            star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
+            star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
+          }
+
+          // if(i > this.stars.length/2){
+
+          // }
+          // else {
+
+          // }
+        }
+      }
+
     }
   }
 
