@@ -321,14 +321,9 @@
       }
 
       // CAMERA
-      this.camera.position.x = easeOut(
-        0,
-        60.27,
-        escapeProgress
-      );
       this.camera.position.y = easeOut(
         3500,
-        3893.14,
+        2430.14,
         escapeProgress
       );
       this.camera.position.z = easeOut(1000, -2252.4, escapeProgress);
