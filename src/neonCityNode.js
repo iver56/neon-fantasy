@@ -234,14 +234,20 @@
       var sunScale = 1 + this.scaler * 0.05;
       this.bigSphere.scale.set(sunScale, sunScale, sunScale);
 
-      let posX = 2000;
-      let posY = 2700;
-      for (let i = 0; i <= 17; i++) {
-        posX += easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * i, 4));
-        posY += easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * i, 4));
+      if(BEAN < 160){
+        let posX = 2000;
+        let posY = 2700;
+        for (let i = 0; i <= 7; i++) {
+          posX += easeOut(0, -this.sunMoveX, F(frame, this.sunMoveBean + 8 * i, 4));
+          posY += easeOut(0, this.sunMoveY, F(frame, this.sunMoveBean + 8 * i, 4));
+        }
+  
+        this.bigSphere.position.x = posX;
+        this.bigSphere.position.y = posY;
+      } else {
+        this.bigSphere.position.x = 1160 - easeOut(0, 1000, F(frame, 160, 4));
+        this.bigSphere.position.y = 2700 + easeOut(0, -280, F(frame, 160, 4)); // 60
       }
-      this.bigSphere.position.x = posX;
-      this.bigSphere.position.y = posY;
       // Update sun end
 
       this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 0, 4));
@@ -343,7 +349,8 @@
         ) + Math.PI / 20;
       }
       else {
-        this.camera.rotation.y = easeOut(this.cameraRotationY, 0, F(frame, 160, 8));
+        this.camera.rotation.y = smoothstep(this.cameraRotationY, 0, F(frame, 160, 8)) ;
+        // easeOut(0, this.cameraRotationY, F(frame, 160, 8));
 
       }
 
@@ -358,7 +365,6 @@
           star.position.y = smoothstep(this.starPositionsY[i], 2500 + 3 * (32 * (13 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t))), heartProgress);
         }
       }
-
 
       if (BEAN >= 168 && BEAN < 176) {
         let starProgress = F(frame, 168, 6);
@@ -419,17 +425,22 @@
         }
       }
 
+      const xOffset = 900;
       if (BEAN >= 184 && BEAN < 220) {
         let waveProgress = F(frame, 184, 36);
         let waveTransformProgress = F(frame, 184, 8);
+        let cylinderSqueezeProgress = F(frame, 192, 8);
 
         for (let i = 0; i < this.stars.length; i++) {
           // const starT = 10 * i / this.stars.length;         
           let star = this.stars[i];
 
-          let starWaveY = 5000 - i * 10;
-          let starWaveX = 900 - 900 * waveProgress + 1000*Math.sin(i +  waveProgress/5 * 2 * Math.PI);
-
+          let starWaveY = 4000 - i * 5;
+          let starWaveX = xOffset 
+            - xOffset * waveProgress 
+            + 1000 * Math.sin(i +  waveProgress/5 * 2 * Math.PI)
+            * (1 - 0.5 * Math.sin(i * Math.PI/this.stars.length));
+          
           // star.position.x = smoothstep(bubbleX, starWaveX, waveProgress);
           // star.position.y = smoothstep(bubbleY, starWaveY, waveProgress);
 
