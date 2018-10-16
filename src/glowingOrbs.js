@@ -62,20 +62,23 @@
     update(frame) {
       super.update(frame);
 
-      demo.nm.nodes.bloom.opacity = this.scaler;
-
-      if (BEAN % 4 === 0 && BEAT
-        && BEAN > 16) {
-        this.scaler = 1;
-
+      let bloomAmount = this.scaler + 0.5;
+      if (BEAN >= 28) {
+        bloomAmount += lerp(3, 0, F(frame, 28, 4));
       }
+      demo.nm.nodes.bloom.opacity = bloomAmount;
 
+      if (BEAN % 4 === 0 && BEAT && BEAN >= 28) {
+        this.scaler = 1;
+      } else if (BEAT && (BEAN === 19 || BEAN === 20 || BEAN === 23 || BEAN === 25)) {
+        this.scaler += 0.4;
+      }
       this.scaler *= 0.95;
 
       this.angle += this.scaler * 0.15;
 
       const camera1Progress = F(frame, 0, 24);
-      const midCameraProgress = F(frame, 8, 16);
+      const orbPathTransitionProgress = F(frame, 8, 16);
       const camera2Progress = F(frame, 12, 8);
 
       // Update sphere positions
@@ -83,12 +86,12 @@
       firstSphere.position.x = smoothstep(
         -1000 + 8 * frame,
         Math.sin(this.angle) * 300,
-        midCameraProgress
+        orbPathTransitionProgress
       );
       firstSphere.position.y = smoothstep(
         100,
         Math.cos(this.angle) * 300,
-        midCameraProgress
+        orbPathTransitionProgress
       );
 
       const otherOrbsIntroProgress = F(frame, 21, 4);
@@ -135,10 +138,14 @@
 
       // Scale up with guitar
       if (BEAN >= 28 && BEAN < 32) {
+        let sphereScaleTarget = 1 + (1 - this.scaler) * 2;
+        if (BEAN >= 27 && BEAN <= 29) {
+          sphereScaleTarget += lerp(1, 0, F(frame, 27, 2));
+        }
         for (let i = 0; i < 3; i++) {
-          var sphere = this.spheres[i];
-          sphere.scale.x = 1 + (1 - this.scaler) * 2;
-          sphere.scale.y = 1 + (1 - this.scaler) * 2;
+          const sphere = this.spheres[i];
+          sphere.scale.x = sphereScaleTarget;
+          sphere.scale.y = sphereScaleTarget;
         }
       }
 
@@ -227,7 +234,7 @@
         }
       }
 
-      this.camera.fov = easeOut(45, 1, F(frame, 92, 4));
+      this.camera.fov = easeOut(45, 1, F(frame, 92, 3));
       this.camera.updateProjectionMatrix();
     }
 
