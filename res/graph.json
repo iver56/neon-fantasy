@@ -18,7 +18,8 @@
       "F": "blurryParticleTunnelBlend.render",
       "G": "boxPumperBlend.render",
       "H": "BoxPumper.render",
-      "I": "OutroNode.render"
+      "I": "MirrorDistortionNode.render",
+      "J": "OutroNode.render"
     }
   },
   {
@@ -108,5 +109,15 @@
   {
     "id": "OutroNode",
     "type": "outroNode"
+  },
+  {
+    "id": "MirrorDistortionNode",
+    "type": "mirrorDistortionNode",
+    "connected": {
+      "tDiffuse": "BoxPumper.render"
+    },
+    "options": {
+      "shader": "MirrorDistortion"
+    }
   }
 ]
