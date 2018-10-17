@@ -38,6 +38,8 @@
     update(frame) {
       super.update(frame);
 
+      demo.nm.nodes.bloom.opacity = 0.99;
+
       // This clears the canvas
       this.canvas.width += 0;
 

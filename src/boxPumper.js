@@ -47,7 +47,7 @@
     update(frame) {
       super.update(frame);
 
-      demo.nm.nodes.bloom.opacity = lerp(0.0, 0.99, F(frame, 354, 4));
+      demo.nm.nodes.bloom.opacity = lerp(0.0, 0.99, F(frame, 354, 4)) + lerp(0.0, 1.2, F(frame, 396, 10));
 
       const t = frame / 60;
 
@@ -120,6 +120,7 @@
 
         roadSeg.position.z = 110 - 40 * depth;
         roadSeg.position.y = smoothstep(-40, -5, zoomToCityProgress);
+
         roadSeg.position.x = 2 * Math.sin(t + Math.PI / 2) * Math.pow(depth, 1.337);
         roadSeg.scale.x = 1000 / (depth + 50);
         roadSeg.scale.y = 25;
@@ -132,6 +133,18 @@
           .5 + 0.1 * Math.sin(i * 16),
           .5
         );
+      }
+
+      if (BEAN >= 412) {
+        const outProgress = F(frame, 412, 4);
+        for (let i = 0; i < this.roadSegments.length; i++) {
+          let roadSeg = this.roadSegments[i];
+          roadSeg.position.y += lerp(0, -60, outProgress);
+        }
+        for (let i = 0; i < this.cityCols.length; i++) {
+          let cityCol = this.cityCols[i];
+          cityCol.position.x -= easeOut(0, 110, outProgress);
+        }
       }
     }
 
