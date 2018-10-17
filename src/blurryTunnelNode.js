@@ -41,7 +41,7 @@
     update(frame) {
       super.update(frame);
 
-      if (BEAN >= 288) {
+      if (BEAN >= 288 && BEAN < 348) {
         demo.nm.nodes.bloom.opacity = easeOut(5, 0.3, F(frame, 288, 3));
       }
 
@@ -119,8 +119,8 @@
         this.ctx.fillStyle = '#000000';
         this.ctx.fillRect(
           -this.halfWidth,
-          -this.halfHeight,
-          this.halfWidth,
+          -1.05 * this.halfHeight,
+          0.836 * this.halfWidth,
           easeOut(0, this.height * 1.1, F(frame, 350, 2))
         );
         this.ctx.fillRect(
