@@ -124,7 +124,7 @@
           easeOut(0, this.height * 1.1, F(frame, 350, 2))
         );
         this.ctx.fillRect(
-          0,
+          39,
           -this.halfHeight,
           this.halfWidth,
           easeOut(0, this.height * 1.1, F(frame, 352, 2))
