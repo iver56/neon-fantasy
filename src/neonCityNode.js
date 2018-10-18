@@ -409,16 +409,18 @@
       const bubbleRadius = 800;
       const offsetY = 2200;
       const smallRingFactor = 0.4;
+      
+      let bubbleProgress = F(frame, 176, 4);
 
       const bubblePosX = (offset, i) => {
-        return offset + bubbleRadius * Math.sin(Math.PI / 60 * i);
+        return offset + 0.5 * bubbleRadius * Math.sin(Math.PI / 60 * i)
+        + 0.5 * bubbleRadius* Math.sin(i % starQuarter * 0.10 *bubbleProgress);
       }
       const bubblePosY = (offset, i, small) => {
         return offset + bubbleRadius * small * Math.cos(Math.PI / 60 * i) + offsetY;
       }
 
       if (BEAN >= 176 && BEAN < 184) {
-        let bubbleProgress = F(frame, 176, 4);
 
         for (let i = 0; i < this.stars.length; i++) {
           const starT = 10 * i / this.stars.length;
