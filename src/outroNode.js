@@ -27,7 +27,7 @@
       this.strings = [
         {text:'You have been watching', start: 416, duration: 16, position: {x: 170, y: 180}},
         {text:'a demo called', start: 428, duration: 18, position: {x: 250, y: 280}},
-        {text:'"Neon Fantasy"', start: 432, duration: 14, position: {x: 360, y: 380}},
+        {text:'Neon Fantasy', start: 432, duration: 14, position: {x: 360, y: 380}},
         {text:'Written in JavaScript', start: 444, duration: 18, position: {x: 180, y: 100}},
         {text:'by iverjo & fawds', start: 448, duration: 14, position: {x: 300, y: 200}},
         {text:'Presented at Work-Work', start: 460, duration: 24, position: {x: 200, y: 330}},
@@ -38,7 +38,7 @@
     update(frame) {
       super.update(frame);
 
-      demo.nm.nodes.bloom.opacity = 0.99;
+      demo.nm.nodes.bloom.opacity = 1;
 
       // This clears the canvas
       this.canvas.width += 0;
@@ -46,7 +46,7 @@
       this.ctx.fillStyle = 'black';
       this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
-      this.ctx.font = '5em Courier New';
+      this.ctx.font = '5.5em zekton-rg';
 
       for (let thatString of this.strings) {
         if (BEAN >= thatString.start - this.fadeInTime && BEAN < thatString.start + thatString.duration + this.fadeOutTime) {
@@ -54,7 +54,7 @@
           const fadeOutProgress = F(frame, thatString.start + thatString.duration - this.fadeOutTime, this.fadeOutTime);
           const textProgress = F(frame, thatString.start, 12);
           this.ctx.save();
-          this.ctx.fillStyle = `rgba(247, 40, 113, ${easeIn(0, easeOut(1, 0, fadeOutProgress), fadeInProgress)})`;
+          this.ctx.fillStyle = `rgba(255, 60, 133, ${easeIn(0, easeOut(1, 0, fadeOutProgress), fadeInProgress)})`;
           this.ctx.fillText(
             thatString.text,
             thatString.position.x - textProgress * 50,
