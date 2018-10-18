@@ -349,7 +349,7 @@
 
       //Star stuff
       if (BEAN >= 160 && BEAN < 168) {
-        let heartProgress = F(frame, 160, 6);
+        let heartProgress = F(frame, 160, 4);
         for (let i = 0; i < this.stars.length; i++) {
           const t = i;
           let x = Math.sin(t);
@@ -360,7 +360,7 @@
       }
 
       if (BEAN >= 168 && BEAN < 176) {
-        let starProgress = F(frame, 168, 6);
+        let starProgress = F(frame, 168, 4);
 
         for (let i = 0; i < this.stars.length; i++) {
           const t = i;
@@ -384,7 +384,7 @@
       const offsetY = 2200;
       const smallRingFactor = 0.4;
       if (BEAN >= 176 && BEAN < 184) {
-        let bubbleProgress = F(frame, 176, 6);
+        let bubbleProgress = F(frame, 176, 4);
 
         for (let i = 0; i < this.stars.length; i++) {
           const starT = 10 * i / this.stars.length;
@@ -424,7 +424,7 @@
       const xOffset = 900;
       if (BEAN >= 184 && BEAN < 220) {
         let waveProgress = F(frame, 184, 36);
-        let waveTransformProgress = F(frame, 184, 8);
+        let waveTransformProgress = F(frame, 184, 4);
         // let cylinderSqueezeProgress = F(frame, 192, 8);
         
         for (let i = 0; i < this.stars.length; i++) {
