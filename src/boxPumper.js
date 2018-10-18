@@ -154,8 +154,8 @@
       // Background
       this.background.material.opacity = lerp(0.0, 1.0, F(frame, 360, 8));
 
-      if (BEAN >= 412) {
-        const outProgress = F(frame, 412, 4);
+      if (BEAN >= 410) {
+        const outProgress = F(frame, 410, 4);
 
         this.background.material.opacity = easeOut(1.0, 0.0, outProgress);
 

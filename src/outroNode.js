@@ -45,12 +45,12 @@
 
       const t = frame / 150;
       this.ctx.fillStyle = 'white';
-      const bottom = 0 | easeOut(70, 400, F(frame, 488, 4));
+      const bottom = 0 | easeOut(easeOut(400, 70, F(frame, 414, 2)), 400, F(frame, 488, 4));
       for (let i = bottom; i < 400; i++) {
         const s = 149 / (i * 30 + 699);
         const q = s * 99;
         this.ctx.fillRect(
-          960 * (9999 + Math.tan(i / 9) - s * t) % 1000 - q,
+          960 * (9999 + Math.tan(i / 9) - s * t) % 980 - q,
           270 + 270 * Math.sin(s * 2e3),
           q,
           q

@@ -50,7 +50,7 @@
         selectedScene = this.inputs.G;
       } else if (BEAN < 384) {
         selectedScene = this.inputs.H;
-      } else if (BEAN < 416) {
+      } else if (BEAN < 414) {
         selectedScene = this.inputs.I;
       } else {
         selectedScene = this.inputs.J;
