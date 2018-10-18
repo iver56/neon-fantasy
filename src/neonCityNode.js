@@ -15,6 +15,8 @@
 
       demo.nm.nodes.bloom.opacity = 0.99;
 
+      this.createBackground();
+
       this.createSun();
 
       this.stars = [];
@@ -143,6 +145,22 @@
       return [position[0] + progress * diffX, position[1] + progress * diffY];
     }
 
+    createBackground() {
+      const backgroundTexture = Loader.loadTexture('res/bg.png');
+      backgroundTexture.minFilter = THREE.LinearFilter;
+      backgroundTexture.magFilter = THREE.LinearFilter;
+      const backgroundMaterial = new THREE.MeshBasicMaterial({
+        map: backgroundTexture,
+        transparent: true
+      });
+      const backgroundGeometry = new THREE.PlaneGeometry(16 * 660, 9 * 660, 1);
+      this.background = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+      this.background.rotation.x = -0.3;
+      this.background.position.y = 2200;
+      this.background.position.z = -4000;
+      this.scene.add(this.background);
+    }
+
     createSun() {
       this.sunTexture = Loader.loadTexture('res/shallow-water.jpg');
       this.sunTexture.minFilter = THREE.LinearFilter;
@@ -170,6 +188,7 @@
 
       this.bigSphere.position.y = 3500;
       this.bigSphere.position.z = -3000;
+      this.bigSphere.rotation.x = -0.3;
       this.bigSphereOffsetX = 700;
       this.scene.add(this.bigSphere);
     }
@@ -327,11 +346,9 @@
         escapeProgress
       );
       this.camera.position.z = easeOut(1000, -2252.4, escapeProgress);
-
       this.camera.rotation.x = -0.3;
 
       if (BEAN < 160) {
-
         this.camera.rotation.y = (
           easeOut(0, -this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 0, 4)) +
           easeOut(0, this.cameraRotationY, F(frame, this.cylinderSpinBean + 8 * 1, 4)) +
@@ -347,7 +364,14 @@
         this.camera.rotation.y = smoothstep( Math.PI / 20, 0, F(frame, 160, 4)) ;
       }
 
-      //Star stuff
+      // Background
+      if (BEAN <= 100) {
+        this.background.material.opacity = lerp(0.0, 1.0, enterProgress);
+      } else if (BEAN >= 220) {
+        this.background.material.opacity = lerp(1.0, 0.0, escapeProgress);
+      }
+
+      // Star stuff
       if (BEAN >= 160 && BEAN < 168) {
         let heartProgress = F(frame, 160, 4);
         for (let i = 0; i < this.stars.length; i++) {
