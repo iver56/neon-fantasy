@@ -153,7 +153,7 @@
         map: backgroundTexture,
         transparent: true
       });
-      const backgroundGeometry = new THREE.PlaneGeometry(16 * 650, 9 * 650, 1);
+      const backgroundGeometry = new THREE.PlaneGeometry(16 * 660, 9 * 660, 1);
       this.background = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
       this.background.rotation.x = -0.3;
       this.background.position.y = 2200;

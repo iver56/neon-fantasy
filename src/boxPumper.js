@@ -41,13 +41,29 @@
         this.scene.add(plane);
       }
 
+      this.createBackground();
+
       this.camera.position.z = 100;
+    }
+
+    createBackground() {
+      const backgroundTexture = Loader.loadTexture('res/bg_stripy.png');
+      backgroundTexture.minFilter = THREE.LinearFilter;
+      backgroundTexture.magFilter = THREE.LinearFilter;
+      const backgroundMaterial = new THREE.MeshBasicMaterial({
+        map: backgroundTexture,
+        transparent: true
+      });
+      const backgroundGeometry = new THREE.PlaneGeometry(16 * 90, 9 * 90, 1);
+      this.background = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
+      this.background.position.z = -800;
+      this.scene.add(this.background);
     }
 
     update(frame) {
       super.update(frame);
 
-      demo.nm.nodes.bloom.opacity = lerp(0.0, 0.99, F(frame, 354, 4)) + lerp(0.0, 1.2, F(frame, 396, 10));
+      demo.nm.nodes.bloom.opacity = lerp(0.0, 0.99, F(frame, 354, 4)) + lerp(0.0, 1.2, F(frame, 390, 10));
 
       const t = frame / 60;
 
@@ -135,8 +151,14 @@
         );
       }
 
+      // Background
+      this.background.material.opacity = lerp(0.0, 1.0, F(frame, 360, 8));
+
       if (BEAN >= 412) {
         const outProgress = F(frame, 412, 4);
+
+        this.background.material.opacity = easeOut(1.0, 0.0, outProgress);
+
         for (let i = 0; i < this.roadSegments.length; i++) {
           let roadSeg = this.roadSegments[i];
           roadSeg.position.y += lerp(0, -60, outProgress);
