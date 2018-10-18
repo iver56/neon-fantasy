@@ -25,14 +25,16 @@
       this.fadeOutTime = 4;
 
       this.strings = [
-        {text:'You have been watching', start: 416, duration: 16, position: {x: 170, y: 180}},
-        {text:'a demo called', start: 428, duration: 18, position: {x: 250, y: 280}},
-        {text:'Neon Fantasy', start: 432, duration: 14, position: {x: 360, y: 380}},
-        {text:'Written in JavaScript', start: 444, duration: 18, position: {x: 180, y: 100}},
-        {text:'by iverjo & fawds', start: 448, duration: 14, position: {x: 300, y: 200}},
-        {text:'Presented at Work-Work', start: 460, duration: 24, position: {x: 200, y: 330}},
-        {text:'2018-10-25', start: 464, duration: 20, position: {x: 360, y: 430}}
+        {text:'You have been watching', start: 416, duration: 16, position: {x: 190, y: 180}},
+        {text:'a demo called', start: 428, duration: 18, position: {x: 270, y: 280}},
+        {text:'Neon Fantasy', start: 432, duration: 14, position: {x: 380, y: 380}},
+        {text:'Written in JavaScript', start: 444, duration: 18, position: {x: 220, y: 100}},
+        {text:'by iverjo & fawds', start: 448, duration: 14, position: {x: 340, y: 200}},
+        {text:'Presented at Work-Work', start: 460, duration: 24, position: {x: 205, y: 330}},
+        {text:'2018-10-25', start: 464, duration: 20, position: {x: 365, y: 430}}
       ];
+
+      this.backgroundTexture = Loader.loadTexture('res/bg.png');
     }
 
     update(frame) {
@@ -40,8 +42,9 @@
 
       demo.nm.nodes.bloom.opacity = 1;
 
-      this.ctx.fillStyle = 'black';
-      this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      this.ctx.drawImage(
+        this.backgroundTexture.image, 0, 0, this.canvas.width, this.canvas.height
+      );
 
       const t = frame / 150;
       this.ctx.fillStyle = 'white';

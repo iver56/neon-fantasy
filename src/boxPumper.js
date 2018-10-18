@@ -63,7 +63,15 @@
     update(frame) {
       super.update(frame);
 
-      demo.nm.nodes.bloom.opacity = lerp(0.0, 0.99, F(frame, 354, 4)) + lerp(0.0, 1.2, F(frame, 390, 10));
+      demo.nm.nodes.bloom.opacity = lerp(
+        0.0,
+        1.0,
+        F(frame, 354, 4)
+      ) + lerp(
+        0.0,
+        1.2,
+        F(frame, 390, 10)
+      );
 
       const t = frame / 60;
 
@@ -157,7 +165,7 @@
       if (BEAN >= 410) {
         const outProgress = F(frame, 410, 4);
 
-        this.background.material.opacity = easeOut(1.0, 0.0, outProgress);
+        demo.nm.nodes.bloom.opacity = lerp(2.2, 1.0, outProgress);
 
         for (let i = 0; i < this.roadSegments.length; i++) {
           let roadSeg = this.roadSegments[i];
