@@ -301,7 +301,7 @@
 
               counter++;
             } else {
-              cube.scale.x = easeOut(1, 0, transition1Progress);
+              cube.scale.x = easeOut(1, 0.000000001, transition1Progress);
               cube.scale.y = cube.scale.x;
             }
           }

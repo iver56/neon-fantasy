@@ -19,7 +19,6 @@
       this.lights = [];
       this.spheres = [];
 
-
       for (let i = 0; i < 3; i++) {
         var color = new THREE.Color();
         color.setHSL(
@@ -58,10 +57,8 @@
       }
     }
 
-
     update(frame) {
       super.update(frame);
-
 
       if (BEAN % 4 === 0 && BEAT && BEAN >= 36) {
         this.scaler = 1;
@@ -118,48 +115,22 @@
         cube.scale.z = cube.scale.x;
       }
 
-
       this.camera.position.x = smoothstep(-1207, 0, camera1Progress);
       this.camera.position.y = smoothstep(-707, 0, camera1Progress);
       this.camera.position.z = smoothstep(0, 1000, camera2Progress - 0.1);
 
-      /*this.camera.lookAt(
-        new THREE.Vector3(
-          475.59,
-          219.78,
-          -143.64
-        )
-      );*/
       this.camera.rotation.y = smoothstep(-1, 0, camera2Progress);
       this.camera.rotation.x = smoothstep(Math.PI / 2, 0, camera2Progress + 0.2);
-      //this.camera.rotation.z =
-
-      //-407.91,-327.22,-97.19
-      //475.59,219.78,-143.64
 
       // Scale up with guitar
       if (BEAN >= 28 && BEAN < 32) {
-        let sphereScaleTarget = 1 + (1 - this.scaler) * 2;
+        let sphereScaleTarget = 0.000001 + 1 + (1 - this.scaler) * 2;
         for (let i = 0; i < 3; i++) {
           const sphere = this.spheres[i];
           sphere.scale.x = sphereScaleTarget;
           sphere.scale.y = sphereScaleTarget;
         }
       }
-
-
-      // Scale down with guitar
-      /*
-      if (BEAN >= 32 && BEAN < 54) {
-        var less = 0.01;
-        less -= this.scaler * 0.01;
-        for (let i = 0; i < 3; i++) {
-          var sphere = this.spheres[i];
-          sphere.scale.x -= less;
-          sphere.scale.y -= less;
-        }
-      }
-      */
 
       // Start spinning cubes, moving from center to edge
       if (BEAN >= 32 && BEAN < 48) {
@@ -210,8 +181,8 @@
         less += this.scaler * 0.03;
         for (let i = 0; i < 3; i++) {
           let sphere = this.spheres[i];
-          sphere.scale.x = Math.max(0, sphere.scale.x - less);
-          sphere.scale.y = Math.max(0, sphere.scale.y - less);
+          sphere.scale.x = Math.max(0.0000001, sphere.scale.x - less);
+          sphere.scale.y = Math.max(0.0000001, sphere.scale.y - less);
         }
 
         for (let i = 0; i < this.cubes.length; i++) {

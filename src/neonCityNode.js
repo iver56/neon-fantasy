@@ -266,7 +266,7 @@
     }
 
     animateEmblemIn(emblem, bean, frame) {
-      let scale = easeOut(0, 1, F(frame, bean, 4));
+      let scale = easeOut(0.0000001, 1, F(frame, bean, 4));
       emblem.scale.set(scale, scale, scale);
       emblem.position.y = this.emblemPositionStart + easeOut(0, this.emblemPositionEnd, F(frame, bean, 4));
     }
