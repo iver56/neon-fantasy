@@ -73,6 +73,10 @@
         F(frame, 390, 10)
       );
 
+      if (BEAN >= 384 && BEAN < 388) {
+        demo.nm.nodes.bloom.opacity += lerp(3.5, 0.0, F(frame, 384, 3));
+      }
+
       const t = frame / 60;
 
       if((BEAN + 4) % 8 === 0 && BEAT) {
