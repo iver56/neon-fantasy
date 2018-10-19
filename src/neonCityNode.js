@@ -279,7 +279,7 @@
         this.shoutoutPlane.visible = true;
       }
 
-      const shouldRedraw = BEAT && (BEAN - 2) % 8 === 0;
+      const shouldRedraw = (BEAN < 99) || (BEAT && (BEAN - 2) % 8 === 0);
       const stringIndex = 0 | ((BEAN - 96) / 8);
       const twoFour = (0 | (BEAN / 4)) % 2 === 1;
       const fromLeft = stringIndex % 2 === 0;
