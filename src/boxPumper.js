@@ -169,7 +169,7 @@
       if (BEAN >= 410) {
         const outProgress = F(frame, 410, 4);
 
-        demo.nm.nodes.bloom.opacity = lerp(2.2, 1.0, outProgress);
+        demo.nm.nodes.bloom.opacity = lerp(2.2, 1.1, outProgress);
 
         for (let i = 0; i < this.roadSegments.length; i++) {
           let roadSeg = this.roadSegments[i];

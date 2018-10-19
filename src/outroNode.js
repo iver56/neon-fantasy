@@ -40,7 +40,7 @@
     update(frame) {
       super.update(frame);
 
-      demo.nm.nodes.bloom.opacity = 1;
+      demo.nm.nodes.bloom.opacity = 1.1;
 
       this.ctx.drawImage(
         this.backgroundTexture.image, 0, 0, this.canvas.width, this.canvas.height
@@ -68,7 +68,7 @@
           const fadeOutProgress = F(frame, thatString.start + thatString.duration - this.fadeOutTime, this.fadeOutTime);
           const textProgress = F(frame, thatString.start, 12);
           this.ctx.save();
-          this.ctx.fillStyle = `rgba(255, 60, 133, ${easeIn(0, easeOut(1, 0, fadeOutProgress), fadeInProgress)})`;
+          this.ctx.fillStyle = `rgba(255, 66, 139, ${easeIn(0, easeOut(1, 0, fadeOutProgress), fadeInProgress)})`;
           this.ctx.fillText(
             thatString.text,
             thatString.position.x - textProgress * 50,
