@@ -335,7 +335,7 @@
 
         this.shoutoutPlane.position.y = easeOut(
           3150,
-          3270,
+          BEAN >= 160 ? 2500 : 3370,
           oneThreeProgress
         );
         if (fromLeft) {
