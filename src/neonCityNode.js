@@ -275,14 +275,14 @@
       if (BEAN > 160) {
         this.shoutoutPlane.visible = false;
         return;
+      } else {
+        this.shoutoutPlane.visible = true;
       }
 
-      const shouldRedraw = BEAT && (BEAN - 1) % 8 === 0;
+      const shouldRedraw = BEAT && (BEAN - 2) % 8 === 0;
       const stringIndex = 0 | ((BEAN - 96) / 8);
       const twoFour = (0 | (BEAN / 4)) % 2 === 1;
       const fromLeft = stringIndex % 2 === 0;
-
-      this.shoutoutPlane.visible = twoFour;
 
       if (shouldRedraw) {
         this.shoutoutCtx.clearRect(0, 0, this.shoutoutCanvas.width, this.shoutoutCanvas.height);
@@ -293,7 +293,6 @@
         this.shoutoutCtx.font = '6.5em zekton-rg';
         this.shoutoutCtx.fillStyle = '#30F5E0';
 
-
         this.shoutoutCtx.fillText(
           this.shoutoutStrings[stringIndex],
           fromLeft ? this.shoutoutCanvas.width : 0,
@@ -301,22 +300,57 @@
         );
       }
 
-      this.shoutoutPlane.position.y = 3150;
       this.shoutoutPlane.position.z = -500;
 
       const startBean = this.castleSpinBean + 8 * stringIndex;
-      if (fromLeft) {
-        this.shoutoutPlane.position.x = easeOut(
-          -1400,
-          -530,
-          F(frame, startBean, 4)
-        );
+      if (twoFour) {
+        this.shoutoutPlane.material.opacity = 1.0;
+        this.shoutoutPlane.rotation.x = 0;
+
+        this.shoutoutPlane.position.y = 3150;
+
+        if (fromLeft) {
+          this.shoutoutPlane.position.x = easeOut(
+            -1400,
+            -530,
+            F(frame, startBean, 4)
+          );
+        } else {
+          this.shoutoutPlane.position.x = easeOut(
+            1400,
+            530,
+            F(frame, startBean, 4)
+          );
+        }
       } else {
-        this.shoutoutPlane.position.x = easeOut(
-          1400,
-          530,
-          F(frame, startBean, 4)
+        // one three
+        const oneThreeProgress = F(frame, startBean - 4, 4);
+        this.shoutoutPlane.material.opacity = easeOut(
+          1.0, 0.0, F(frame, startBean - 4, 2)
         );
+
+        this.shoutoutPlane.rotation.x = easeOut(
+          0, Math.PI / 2, oneThreeProgress * 3
+        );
+
+        this.shoutoutPlane.position.y = easeOut(
+          3150,
+          3270,
+          oneThreeProgress
+        );
+        if (fromLeft) {
+          this.shoutoutPlane.position.x = easeOut(
+            530,
+            830,
+            oneThreeProgress
+          );
+        } else {
+          this.shoutoutPlane.position.x = easeOut(
+            -530,
+            -830,
+            oneThreeProgress
+          );
+        }
       }
     }
 
