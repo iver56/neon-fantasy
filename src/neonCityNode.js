@@ -221,12 +221,11 @@
       this.bigSphere.position.y = 3500;
       this.bigSphere.position.z = -3000;
       this.bigSphere.rotation.x = -0.3;
-      this.bigSphereOffsetX = 700;
       this.scene.add(this.bigSphere);
     }
 
     createStars() {
-      const starGeometry = new THREE.SphereGeometry(10, 10, 10);
+      const starGeometry = new THREE.SphereGeometry(10, 10, 1);
       var starMaterial = new THREE.MeshBasicMaterial();
 
       for (let i = 0; i < 800; i++) {
@@ -235,6 +234,7 @@
         sphere.position.y = this.random() * 4000;
         sphere.position.x = -5000 + this.random() * 10000;
         sphere.position.z = -3000;
+        sphere.rotation.x = Math.PI / 2;
         this.stars.push(sphere);
         this.starPositionsX.push(sphere.position.x);
         this.starPositionsY.push(sphere.position.y);
@@ -441,7 +441,7 @@
         for (let i = 0; i < this.stars.length; i++) {
           const sphere = this.stars[i];
           sphere.scale.x = scale;
-          sphere.scale.y = scale;
+          sphere.scale.z = scale;
         }
       } else if (BEAN >= 220) {
         const scale = easeOut(1, 0.00001, escapeProgress);
@@ -452,7 +452,7 @@
         for (let i = 0; i < this.stars.length; i++) {
           const sphere = this.stars[i];
           sphere.scale.x = scale;
-          sphere.scale.y = scale;
+          sphere.scale.z = scale;
         }
       }
 
