@@ -114,9 +114,9 @@
           new THREE.SphereGeometry(50, 32, 32),
           sphereMaterial
         );
-        sphere.scale.x = 0;
-        sphere.scale.y = 0;
-        sphere.scale.z = 0;
+        sphere.scale.x = 0.000001;
+        sphere.scale.y = 0.000001;
+        sphere.scale.z = 0.000001;
 
 
         sphere.add(light);
@@ -153,7 +153,9 @@
         THREE.Math.degToRad(-4.29),
         THREE.Math.degToRad(-11.15),
         THREE.Math.degToRad(-16.75),
-        THREE.Math.degToRad(-20.77), THREE.Math.degToRad(-27.61), THREE.Math.degToRad(-33.0)
+        THREE.Math.degToRad(-20.77),
+        THREE.Math.degToRad(-27.61),
+        THREE.Math.degToRad(-33.0)
       ];
       this.targetAspectRatios = [
         16/16,
@@ -223,12 +225,12 @@
       const transition2Progress = F(frame, 284, 4);
 
       if (transition1Progress < 0) {
-        this.bigSphere.position.x = easeOut(
+        this.bigSphere.position.x = easeIn(
           0,
           Math.sin(this.angle * 0.2 * Math.PI) * 300,
           this.enterTransitionProgress
         );
-        this.bigSphere.position.y = easeOut(
+        this.bigSphere.position.y = easeIn(
           0,
           Math.cos(this.angle * 0.2 * Math.PI) * 300,
           this.enterTransitionProgress
@@ -259,7 +261,7 @@
         cube.scale.y = 1;
       }
 
-      this.camera.position.z = easeOut(400, 1000, this.enterTransitionProgress);
+      this.camera.position.z = easeIn(400, 1000, this.enterTransitionProgress);
 
       if (transition1Progress >= 0) {
         demo.nm.nodes.bloom.opacity = lerp(3, 0.6, transition1Progress);
