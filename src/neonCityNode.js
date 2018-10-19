@@ -27,6 +27,8 @@
 
       this.createCylinder();
 
+      this.createShoutoutText();
+
       const castleTexture = Loader.loadTexture('res/castle.png');
       castleTexture.minFilter = THREE.LinearFilter;
       castleTexture.magFilter = THREE.LinearFilter;
@@ -101,7 +103,7 @@
         this.emblems.push(emblem);
         castle.add(emblem);
 
-        castle.position.x = i % 2 == 0 ? 300 : -300;
+        castle.position.x = i % 2 == 0 ? 380 : -380;
         castle.position.y = 3000 * Math.sin(this.mathThingy * i);
         castle.position.z = 3000 * Math.cos(this.mathThingy * i);
 
@@ -159,6 +161,36 @@
       this.background.position.y = 2200;
       this.background.position.z = -4000;
       this.scene.add(this.background);
+    }
+
+    createShoutoutText() {
+      this.shoutoutCanvas = document.createElement('canvas');
+      this.shoutoutCtx = this.shoutoutCanvas.getContext('2d');
+      this.shoutoutCanvas.width = 512;
+      this.shoutoutCanvas.height = 512;
+
+      this.shoutoutTexture = new THREE.Texture(this.shoutoutCanvas);
+      this.shoutoutTexture.minFilter = THREE.LinearFilter;
+      this.shoutoutTexture.magFilter = THREE.LinearFilter;
+      this.shoutoutPlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(1200, 1200, 1),
+        new THREE.MeshBasicMaterial({
+          map: this.shoutoutTexture,
+          transparent: true,
+        })
+      );
+      this.scene.add(this.shoutoutPlane);
+
+      this.shoutoutStrings = [
+        'Hackheim',
+        'Arm',
+        'Work-Work',
+        'Altair',
+        'Still',
+        'Ninjadev',
+        'Hoffman',
+        'Solskogen',
+      ]
     }
 
     createSun() {
@@ -239,6 +271,55 @@
       emblem.position.y = this.emblemPositionStart + easeOut(0, this.emblemPositionEnd, F(frame, bean, 4));
     }
 
+    updateShoutoutText(frame) {
+      if (BEAN > 160) {
+        this.shoutoutPlane.visible = false;
+        return;
+      }
+
+      const shouldRedraw = BEAT && (BEAN - 1) % 8 === 0;
+      const stringIndex = 0 | ((BEAN - 96) / 8);
+      const twoFour = (0 | (BEAN / 4)) % 2 === 1;
+      const fromLeft = stringIndex % 2 === 0;
+
+      this.shoutoutPlane.visible = twoFour;
+
+      if (shouldRedraw) {
+        this.shoutoutCtx.clearRect(0, 0, this.shoutoutCanvas.width, this.shoutoutCanvas.height);
+        this.shoutoutTexture.needsUpdate = true;
+
+        this.shoutoutCtx.textAlign = fromLeft ? 'right' : 'left';
+        this.shoutoutCtx.textBaseline = 'middle';
+        this.shoutoutCtx.font = '6.5em zekton-rg';
+        this.shoutoutCtx.fillStyle = '#30F5E0';
+
+
+        this.shoutoutCtx.fillText(
+          this.shoutoutStrings[stringIndex],
+          fromLeft ? this.shoutoutCanvas.width : 0,
+          this.shoutoutCanvas.height / 2
+        );
+      }
+
+      this.shoutoutPlane.position.y = 3150;
+      this.shoutoutPlane.position.z = -500;
+
+      const startBean = this.castleSpinBean + 8 * stringIndex;
+      if (fromLeft) {
+        this.shoutoutPlane.position.x = easeOut(
+          -1400,
+          -530,
+          F(frame, startBean, 4)
+        );
+      } else {
+        this.shoutoutPlane.position.x = easeOut(
+          1400,
+          530,
+          F(frame, startBean, 4)
+        );
+      }
+    }
+
     update(frame) {
       super.update(frame);
 
@@ -268,6 +349,8 @@
         this.bigSphere.position.y = 3180 + easeOut(0, -980, F(frame, 160, 4)); // 60
       }
       // Update sun end
+
+      this.updateShoutoutText(frame);
 
       this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 0, 4));
       this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 8 * 1, 4));
