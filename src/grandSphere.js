@@ -209,7 +209,7 @@
       super.update(frame);
 
       const glooooowProgress = F(frame, 256, 8);
-      demo.nm.nodes.bloom.opacity = lerp(0.5, 3, glooooowProgress);
+      demo.nm.nodes.bloom.opacity = lerp(0.5, 1.5 + 3 * this.scaler, glooooowProgress);
 
       if (BEAN % 4 === 0 && BEAT) {
         this.scaler = 1;
@@ -235,17 +235,6 @@
           Math.cos(this.angle * 0.2 * Math.PI) * 300,
           this.enterTransitionProgress
         );
-      } else {
-        this.bigSphere.position.x = easeOut(
-          Math.sin(this.angle * 0.2 * Math.PI) * 300,
-          Math.sin(this.angle * 0.2 * Math.PI) * 1300,
-          transition1Progress
-        );
-        this.bigSphere.position.y = easeOut(
-          Math.cos(this.angle * 0.2 * Math.PI) * 300,
-          Math.cos(this.angle * 0.2 * Math.PI) * 1300,
-          transition1Progress
-        );
       }
 
       for (let i = 0; i < this.cubes.length; i++) {
@@ -263,8 +252,17 @@
 
       this.camera.position.z = easeIn(400, 1000, this.enterTransitionProgress);
 
+      const cameraRotationProgress = F(frame, 272, 8);
+      if (cameraRotationProgress >= 0) {
+        this.camera.position.z = 400;
+        this.camera.rotation.z = ((0 | (BEAN / 4)) % 2 === 0 ? this.scaler : -this.scaler);
+        this.bigSphere.visible = false;
+      } else {
+        this.bigSphere.visible = true;
+      }
+
       if (transition1Progress >= 0) {
-        demo.nm.nodes.bloom.opacity = lerp(3, 0.6, transition1Progress);
+        demo.nm.nodes.bloom.opacity = easeIn(1.5 + 3 * this.scaler, 1.1, transition1Progress);
 
         let counter = 0;
         for (let x = 8; x < 11; x++) {
@@ -309,7 +307,12 @@
           }
         }
 
-        this.camera.position.z = easeOut(1000, 64, transition1Progress)
+        this.camera.rotation.z = lerp(
+          this.scaler,
+          0,
+          transition1Progress
+        );
+        this.camera.position.z = easeOut(400, 64, transition1Progress)
       }
     }
 
