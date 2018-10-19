@@ -298,6 +298,8 @@
           fromLeft ? this.shoutoutCanvas.width : 0,
           this.shoutoutCanvas.height / 2
         );
+      } else {
+        this.shoutoutTexture.needsUpdate = false;
       }
 
       this.shoutoutPlane.position.z = -500;
@@ -602,7 +604,7 @@
     }
 
     warmup(renderer) {
-      this.update(1093);
+      this.update(1115);
       this.render(renderer);
     }
   }
