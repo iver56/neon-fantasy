@@ -11,6 +11,7 @@
         }
       });
       this.scaler = 1;
+      this.scalerIntegrated = 0;
       this.random = new global.Random(666);
 
       demo.nm.nodes.bloom.opacity = 0.99;
@@ -364,6 +365,7 @@
       }
 
       this.scaler *= 0.95;
+      this.scalerIntegrated += this.scaler;
 
       // Update sun
       this.sunMaterial.emissiveIntensity = 1 + this.scaler * 0.15;
@@ -496,11 +498,11 @@
       };
       const calculateHeartPositionY = (i) => {
         return 2500 + 3 * (32 * (13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i)));
-      }
+      };
 
       // Animate heart
       if (BEAN >= 160 && BEAN < 168) {
-        let heartProgress = F(frame, 160, 4);
+        let heartProgress = F(frame, 160, 5);
         for (let i = 0; i < this.stars.length; i++) {
           let star = this.stars[i];
           star.position.x = smoothstep(this.starPositionsX[i], calculateHeartPositionX(i), heartProgress);
@@ -510,7 +512,7 @@
 
       // Star
       if (BEAN >= 168 && BEAN < 176) {
-        let starProgress = F(frame, 168, 4);
+        const starProgress = F(frame, 168, 5);
 
         for (let i = 0; i < this.stars.length; i++) {
           let star = this.stars[i];
@@ -530,17 +532,15 @@
       const smallRingFactor = 0.4;
       
       let bubbleProgress = F(frame, 176, 4);
-
       const bubblePosX = (offset, i) => {
         return offset + 0.5 * bubbleRadius * Math.sin(Math.PI / 60 * i)
-        + 0.5 * bubbleRadius* Math.sin(i % starQuarter * 0.10 *bubbleProgress);
-      }
+          + 0.5 * bubbleRadius * Math.sin((i % starQuarter) * 0.1 * bubbleProgress);
+      };
       const bubblePosY = (offset, i, small) => {
         return offset + bubbleRadius * small * Math.cos(Math.PI / 60 * i) + offsetY;
-      }
+      };
 
       if (BEAN >= 176 && BEAN < 184) {
-
         for (let i = 0; i < this.stars.length; i++) {
           const starT = 10 * i / this.stars.length;
           const xy = this.getStarPosition((starT * 97) % 10);
@@ -555,7 +555,7 @@
             let bubbleY = bubblePosY(y * bubbleRadius, i, small);
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
-          }
+          };
 
           if (i < starQuarter) {
             updateBubblePositions(1, 1);
@@ -572,23 +572,27 @@
       const xOffset = 900;
       if (BEAN >= 184 && BEAN < 220) {
         let waveProgress = F(frame, 184, 36);
-        let waveTransformProgress = F(frame, 184, 4);
+        let waveTransformProgress = F(frame, 184, 5);
 
         for (let i = 0; i < this.stars.length; i++) {
           let star = this.stars[i];
 
           let small = i % 2 == 0 ? 1 : smallRingFactor;
           let starWaveY = 4000 - i * 5;
-          let starWaveX = xOffset
-            + 1000 * Math.sin(i + waveProgress / 5 * 2 * Math.PI)
-            * (1 - 0.5 * Math.sin(i * Math.PI / this.stars.length));
+          let starWaveX = (
+            xOffset +
+            1000 * Math.sin(i + waveProgress / 5 * 2 * Math.PI) * (
+              1 - 0.5 * Math.sin(i * Math.PI / this.stars.length)
+            ) +
+            lerp(0, Math.pow(this.scaler, 0.3) * 120 * Math.sin(this.scalerIntegrated / 3 - i / 90), F(frame, 192, 1))
+          );
 
           const updateCylinderPositions = (x, y) => {
             let bubbleX = bubblePosX(x * bubbleRadius, i);
             let bubbleY = bubblePosY(y * bubbleRadius, i, small);
             star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
             star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
-          }
+          };
 
           if (i < starQuarter) {
             updateCylinderPositions(-1, -1);
