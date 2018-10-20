@@ -188,7 +188,7 @@
         'Altair',
         'Still',
         'Ninjadev',
-        'Hoffman',
+        'Holon',
         'Solskogen',
       ]
     }
