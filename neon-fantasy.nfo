@@ -1,0 +1,69 @@
+ .=================================================================================.
+/|                                                                                 |\
+||   Neon Fantasy is a contribution to the ARM DemoCompo at Work-Work 2018-10-25   ||
+||                                                                                 ||
+|| @@@@#:+@@@@@@@@++@@@@@@@@@#++@@@@@@@@++@@@@@@@=:=@@@@@@@*:#@@@@@@@@#:*@@@@@@@@= ||
+|| WWWW@::==@WWWW@++@WWWWWWWW@:+@WWWW@**:+@WWWWW@=:-+@WWWW@+:#WWWWWWWW#:*@WWWWW@@= ||
+|| WWWW@::+:@WWWW@++@WWWWWWW@@:+@WWWW#:+:+@WWWWW@=:-+@WWWW@+:#@#@WWWWW#-*@WWWW#:** ||
+|| WWWW@::+:@WWWW@++#:*@WW@+:#:+@WWWW#:+:+@WWWWW@=:-+@WWWW@+:#*:#@WW#:+-*@WWWW#:** ||
+|| WWWW@::+:@WWW@:::=:*@WW@+:#::+@WWW#:+:+@WWWWW@=:-+@WWW@=+:#*:#@WW#::--:@WWW#:** ||
+|| @@**#::+:@WWW#:-:=:*@WW@+:#:-:@WWW#:+::#==@#=@=:-+@WWW=--:#*:#@WW#::--:@WWW#:** ||
+|| **::#::+-:=#=#:-:=:*#==#+:#:-:#=#*:-+::#+:=+-==:-::*@=*--:#*-+*=##::--:##=*::** ||
+|| :--:#::+-:**-*:-:=:+*--*+:#:-:*-**:-+::#:--:-==:-:-*#:---:#*-:-:*#::--:#+-+-:** ||
+|| :-::#::+-:**-*:-:=:+*--*+:#:-:*-**:-+::#:--:-==:-:-*#:---:#*-:-:*#::--:#+-+-:** ||
+|| @@@WW@@W@@WW@W@@WWWWW@@WWWWW@WW@WW@@WWWWW@@@@WW@@@@WWW@@@WWW@@@@WWW@@@WWW@W@@WW ||
+|| WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW ||
+|| WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW@@@@WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW ||
+|| WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW@@#=*****=@@WWWWWWWWWWWWWWWWWWWWWWWWWWWWW ||
+|| WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW@=*************==#@WWWWWWWWWWWWWWWWWWWWWWWWWW ||
+|| WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW#=*********************#@WWWWWWWWWWWWWWWWWWWWWW ||
+|| WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW ||
+|| WWWWWWWWWWWWWWWWWWWW@@=::::::::::::::::::::::::::::::::::::::+=@@WWWWWWWWWWWWWW ||
+|| WWWWWWWWWWWWWWWWW@#+::::::::::::::::::::::::::::::::::::::::::::::*@@WWWWWWWWWW ||
+|| WWWWWWWWWWWWW@@*::::::::::::::::::::::::::::::::::::::::::::::::::::::*#@WWWWWW ||
+|| WWWWWWWWWW@=+:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::+=@@W ||
+|| WWWWWW@#*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ||
+|| WW@@=:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ||
+|| #*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ||
+||                                                                                 ||
+|| ================================== TECHNOLOGY ================================= ||
+||                                                                                 ||
+|| We used Three.js, canvas and shaders (GLSL).                                    ||
+|| The demo was made with the help of the open source demo tool "nin", written in  ||
+|| JavaScript.                                                                     ||
+||                                                                                 ||
+|| We tried to keep the demo lightweight, so it would run smoothly on a modern     ||
+|| mobile device. We tested it on a Sony Xperia XZ, where it ran smoothly, and a   ||
+|| Samsung Galaxy A3, where the FPS was below par.                                 ||
+||                                                                                 ||
+|| Note: Please run the demo in Chrome, not in Firefox. In Firefox, there seems to ||
+|| be something wrong with the synchronization between audio and visuals.          ||
+||                                                                                 ||
+||                                                                                 ||
+|| =================================== EFFECTS =================================== ||
+||                                                                                 ||
+|| Glowing Orbs: fawds                                                             ||
+|| Castles with shoutouts and animated stars: fawds                                ||
+|| Grand Sphere with cube grid: fawds                                              ||
+|| Blurry tunnel: iverjo                                                           ||
+|| WW logo: iverjo                                                                 ||
+|| Neon city race: iverjo                                                          ||
+|| Outro: iverjo                                                                   ||
+||                                                                                 ||
+||                                                                                 ||
+|| ==================================== MUSIC ==================================== ||
+||                                                                                 ||
+|| Made in FL Studio 12 by iverjo, heavily inspired by The Midnight                ||
+|| Lyrics: iverjo, with a little help from poem-generator.org.uk and rhymezone.com ||
+|| Talking: fawds                                                                  ||
+|| Singing: iverjo                                                                 ||
+|| Microphone: Zoom H2n                                                            ||
+||                                                                                 ||
+||                                                                                 ||
+|| ================================= MISC ASSETS ================================= ||
+||                                                                                 ||
+|| Textures: One photograph of sunbeams on shallow water (by iverjo) and four      ||
+|| other textures, primarily made in Paint.NET.                                    ||
+|| Font: Zekton, a free font by Typodermic Fonts. Thanks for the tip, stiaje!      ||
+\|                                                                                 |/
+ `=================================================================================´
