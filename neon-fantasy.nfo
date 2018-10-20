@@ -29,9 +29,9 @@
 ||                                                                                 ||
 || ================================== TECHNOLOGY ================================= ||
 ||                                                                                 ||
-|| We used Three.js, canvas and shaders (GLSL).                                    ||
-|| The demo was made with the help of the open source demo tool "nin", written in  ||
-|| JavaScript.                                                                     ||
+|| We used Three.js, canvas and shaders (GLSL). The demo was made with the help of ||
+|| the open source demo tool "nin", written in JavaScript:                         ||
+|| https://github.com/ninjadev/nin/                                                ||
 ||                                                                                 ||
 || We tried to keep the demo lightweight, so it would run smoothly on a modern     ||
 || mobile device. We tested it on a Sony Xperia XZ, where it ran smoothly, and a   ||
@@ -71,4 +71,4 @@
 || Font: Zekton, a free font by Typodermic Fonts. Thanks for the tip, stiaje!      ||
 ||                                                                                 ||
 \\                                                                                 //
- `=================================================================================´
+ `================================================================================='
