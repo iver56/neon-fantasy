@@ -39,6 +39,8 @@
 || Note: Please run the demo in Chrome, not in Firefox. In Firefox, there seems to ||
 || be something wrong with the synchronization between audio and visuals.          ||
 ||                                                                                 ||
+|| When you press the start button, the demo will try to put the browser in full   ||
+|| screen mode.                                                                    ||
 ||                                                                                 ||
 || =================================== EFFECTS =================================== ||
 ||                                                                                 ||

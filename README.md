@@ -16,6 +16,8 @@ Samsung Galaxy A3, where the FPS was below par.
 Note: Please run the demo in Chrome, not in Firefox. In Firefox, there seems to
 be something wrong with the synchronization between audio and visuals.
 
+When you press the start button, the demo will try to put the browser in full screen mode.
+
 # Effects
 
 1. Glowing Orbs: fawds
