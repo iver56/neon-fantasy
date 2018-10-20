@@ -6,7 +6,7 @@ Neon Fantasy is a contribution to the ARM DemoCompo at Work-Work 2018-10-25
 # Technology
 
 We used Three.js, canvas and shaders (GLSL).
-The demo was made with the help of the open source demo tool "nin", written in
+The demo was made with the help of the open source demo tool [nin](https://github.com/ninjadev/nin/), written in
 JavaScript.
 
 We tried to keep the demo lightweight, so it would run smoothly on a modern
