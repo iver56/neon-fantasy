@@ -273,7 +273,7 @@
     }
 
     updateShoutoutText(frame) {
-      if (BEAN > 160) {
+      if (BEAN < 97 || BEAN > 160) {
         this.shoutoutPlane.visible = false;
         return;
       } else {
