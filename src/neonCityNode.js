@@ -497,7 +497,9 @@
         return 3 * 512 * x * x * x;
       };
       const calculateHeartPositionY = (i) => {
-        return 2500 + 3 * (32 * (13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i)));
+        return 2500 + 96 * (
+          13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i)
+        );
       };
 
       // Animate heart
@@ -505,8 +507,12 @@
         let heartProgress = F(frame, 160, 5);
         for (let i = 0; i < this.stars.length; i++) {
           let star = this.stars[i];
-          star.position.x = smoothstep(this.starPositionsX[i], calculateHeartPositionX(i), heartProgress);
-          star.position.y = smoothstep(this.starPositionsY[i], calculateHeartPositionY(i), heartProgress);
+          star.position.x = smoothstep(
+            this.starPositionsX[i], calculateHeartPositionX(i), heartProgress
+          );
+          star.position.y = smoothstep(
+            this.starPositionsY[i], calculateHeartPositionY(i), heartProgress
+          );
         }
       }
 
@@ -569,29 +575,65 @@
         }
       }
 
+      // Cylinder wormhole
       const xOffset = 900;
       if (BEAN >= 184 && BEAN < 220) {
-        let waveProgress = F(frame, 184, 36);
-        let waveTransformProgress = F(frame, 184, 5);
+        let wormholeProgress = F(frame, 184, 36);
+        let wormholeTransitionProgress = F(frame, 184, 5);
+        let doubleCrownTransformProgress = F(frame, 204, 5);
+        const t = (frame - 1600) / 80;
 
         for (let i = 0; i < this.stars.length; i++) {
           let star = this.stars[i];
 
-          let small = i % 2 == 0 ? 1 : smallRingFactor;
-          let starWaveY = 4000 - i * 5;
+          let small = i % 2 === 0 ? 1 : smallRingFactor;
+          let starWaveY = i * 5;
           let starWaveX = (
             xOffset +
-            1000 * Math.sin(i + waveProgress / 5 * 2 * Math.PI) * (
+            1000 * Math.sin(i + wormholeProgress / 3 * 2 * Math.PI) * (
               1 - 0.5 * Math.sin(i * Math.PI / this.stars.length)
             ) +
-            lerp(0, Math.pow(this.scaler, 0.3) * 120 * Math.sin(this.scalerIntegrated / 3 - i / 90), F(frame, 192, 1))
+            lerp(
+              0,
+              Math.pow(this.scaler, 0.3) * 120 * Math.sin(this.scalerIntegrated / 3 - i / 90),
+              F(frame, 192, 1)
+            )
           );
 
           const updateCylinderPositions = (x, y) => {
             let bubbleX = bubblePosX(x * bubbleRadius, i);
             let bubbleY = bubblePosY(y * bubbleRadius, i, small);
-            star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
-            star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
+
+            if (BEAN < 204) {
+              star.position.x = smoothstep(bubbleX, starWaveX, wormholeTransitionProgress);
+              star.position.y = smoothstep(bubbleY, starWaveY, wormholeTransitionProgress);
+              star.position.z = -3000;
+            } else {
+              const d = i / 42;
+              const b = 2 * 2.79 * i + t;
+              const s = 7 / (Math.sin(d) * Math.cos(b) + 2);
+              star.position.y = smoothstep(
+                starWaveY,
+                2500 + 660 * (Math.cos(d) + Math.tan(t / 12 + d)),
+                doubleCrownTransformProgress
+              );
+              star.position.x = smoothstep(
+                starWaveX,
+                1860 * Math.sin(d) * Math.sin(b) *
+                lerp(
+                  1,
+                  1 + 0.08 * Math.pow(this.scaler, 0.3) * Math.sin(this.scalerIntegrated / 3 - star.position.y / 290),
+                  F(frame, 212, 1)
+                )
+                ,
+                doubleCrownTransformProgress
+              );
+              star.position.z = smoothstep(
+                -3000,
+                -3000 + 350 * s,
+                doubleCrownTransformProgress
+              );
+            }
           };
 
           if (i < starQuarter) {
