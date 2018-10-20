@@ -26,6 +26,7 @@
 || WW@@=:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ||
 || #*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: ||
 ||                                                                                 ||
+||                                                                                 ||
 || ================================== TECHNOLOGY ================================= ||
 ||                                                                                 ||
 || We used Three.js, canvas and shaders (GLSL).                                    ||
@@ -41,6 +42,7 @@
 ||                                                                                 ||
 || When you press the start button, the demo will try to put the browser in full   ||
 || screen mode.                                                                    ||
+||                                                                                 ||
 ||                                                                                 ||
 || =================================== EFFECTS =================================== ||
 ||                                                                                 ||
@@ -67,5 +69,6 @@
 || Textures: One photograph of sunbeams on shallow water (by iverjo) and four      ||
 || other textures, primarily made in Paint.NET.                                    ||
 || Font: Zekton, a free font by Typodermic Fonts. Thanks for the tip, stiaje!      ||
+||                                                                                 ||
 \|                                                                                 |/
  `=================================================================================´
