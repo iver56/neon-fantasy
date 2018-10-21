@@ -507,11 +507,11 @@
       }
 
       const calculateHeartPositionX = (i) => {
-        let x = Math.sin(i);
+        let x = Math.sin(i) * (1 + 0.05 * this.scaler);
         return 3 * 512 * x * x * x;
       };
       const calculateHeartPositionY = (i) => {
-        return 2400 + 96 * (
+        return 2400 + 100 * this.scaler + 96 * (
           13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i)
         );
       };
