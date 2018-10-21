@@ -11,6 +11,7 @@
         }
       });
       this.scaler = 1;
+      this.scalerIntegrated = 0;
       this.random = new global.Random(666);
 
       demo.nm.nodes.bloom.opacity = 0.99;
@@ -26,6 +27,8 @@
       this.createStars();
 
       this.createCylinder();
+
+      this.createShoutoutText();
 
       const castleTexture = Loader.loadTexture('res/castle.png');
       castleTexture.minFilter = THREE.LinearFilter;
@@ -101,7 +104,7 @@
         this.emblems.push(emblem);
         castle.add(emblem);
 
-        castle.position.x = i % 2 == 0 ? 300 : -300;
+        castle.position.x = i % 2 == 0 ? 380 : -380;
         castle.position.y = 3000 * Math.sin(this.mathThingy * i);
         castle.position.z = 3000 * Math.cos(this.mathThingy * i);
 
@@ -126,10 +129,21 @@
       this.emblemPositionStart = 0;
       this.emblemPositionEnd = 500;
 
-      this.starPoints = [
-        [977, 41], [1217, 698], [1915, 700], [1377, 1130],
-        [1565, 1779], [975, 1409], [398, 1784], [581, 1135],
-        [48, 702], [738, 690], [977, 41]
+      this.starPoints = [];
+      for (let i = 0; i < 11; i++) {
+        this.starPoints.push(neonCityNode.getStarPoint(i));
+      }
+    }
+
+    static getStarPoint(i) {
+      const t = i / 10;
+      const radius = 500 + 500 * 2 * Math.abs(
+        (t * 5) - Math.floor(t * 5 + 0.5)
+      ) - 1;
+      const phi = t * Math.PI * 2;
+      return [
+        radius * Math.cos(phi),
+        radius * Math.sin(phi)
       ];
     }
 
@@ -142,7 +156,10 @@
       const diffX = this.starPoints[nextIndex][0] - position[0];
       const diffY = this.starPoints[nextIndex][1] - position[1];
 
-      return [position[0] + progress * diffX, position[1] + progress * diffY];
+      return [
+        position[0] + progress * diffX,
+        position[1] + progress * diffY
+      ];
     }
 
     createBackground() {
@@ -159,6 +176,36 @@
       this.background.position.y = 2200;
       this.background.position.z = -4000;
       this.scene.add(this.background);
+    }
+
+    createShoutoutText() {
+      this.shoutoutCanvas = document.createElement('canvas');
+      this.shoutoutCtx = this.shoutoutCanvas.getContext('2d');
+      this.shoutoutCanvas.width = 512;
+      this.shoutoutCanvas.height = 512;
+
+      this.shoutoutTexture = new THREE.Texture(this.shoutoutCanvas);
+      this.shoutoutTexture.minFilter = THREE.LinearFilter;
+      this.shoutoutTexture.magFilter = THREE.LinearFilter;
+      this.shoutoutPlane = new THREE.Mesh(
+        new THREE.PlaneGeometry(1200, 1200, 1),
+        new THREE.MeshBasicMaterial({
+          map: this.shoutoutTexture,
+          transparent: true,
+        })
+      );
+      this.scene.add(this.shoutoutPlane);
+
+      this.shoutoutStrings = [
+        'Hackheim',
+        'Arm',
+        'Work-Work',
+        'Altair',
+        'Still',
+        'Ninjadev',
+        'Holon',
+        'Solskogen',
+      ]
     }
 
     createSun() {
@@ -189,12 +236,11 @@
       this.bigSphere.position.y = 3500;
       this.bigSphere.position.z = -3000;
       this.bigSphere.rotation.x = -0.3;
-      this.bigSphereOffsetX = 700;
       this.scene.add(this.bigSphere);
     }
 
     createStars() {
-      const starGeometry = new THREE.SphereGeometry(10, 10, 10);
+      const starGeometry = new THREE.SphereGeometry(10, 10, 1);
       var starMaterial = new THREE.MeshBasicMaterial();
 
       for (let i = 0; i < 800; i++) {
@@ -203,6 +249,7 @@
         sphere.position.y = this.random() * 4000;
         sphere.position.x = -5000 + this.random() * 10000;
         sphere.position.z = -3000;
+        sphere.rotation.x = Math.PI / 2;
         this.stars.push(sphere);
         this.starPositionsX.push(sphere.position.x);
         this.starPositionsY.push(sphere.position.y);
@@ -234,9 +281,94 @@
     }
 
     animateEmblemIn(emblem, bean, frame) {
-      let scale = easeOut(0, 1, F(frame, bean, 4));
+      let scale = easeOut(0.0000001, 1, F(frame, bean, 4));
       emblem.scale.set(scale, scale, scale);
       emblem.position.y = this.emblemPositionStart + easeOut(0, this.emblemPositionEnd, F(frame, bean, 4));
+    }
+
+    updateShoutoutText(frame) {
+      if (BEAN < 97 || BEAN > 160) {
+        this.shoutoutPlane.visible = false;
+        return;
+      } else {
+        this.shoutoutPlane.visible = true;
+      }
+
+      const shouldRedraw = (BEAN < 99) || (BEAT && (BEAN - 2) % 8 === 0);
+      const stringIndex = 0 | ((BEAN - 96) / 8);
+      const twoFour = (0 | (BEAN / 4)) % 2 === 1;
+      const fromLeft = stringIndex % 2 === 0;
+
+      if (shouldRedraw) {
+        this.shoutoutCtx.clearRect(0, 0, this.shoutoutCanvas.width, this.shoutoutCanvas.height);
+        this.shoutoutTexture.needsUpdate = true;
+
+        this.shoutoutCtx.textAlign = fromLeft ? 'right' : 'left';
+        this.shoutoutCtx.textBaseline = 'middle';
+        this.shoutoutCtx.font = '6.5em zekton-rg';
+        this.shoutoutCtx.fillStyle = '#30F5E0';
+
+        this.shoutoutCtx.fillText(
+          this.shoutoutStrings[stringIndex],
+          fromLeft ? this.shoutoutCanvas.width : 0,
+          this.shoutoutCanvas.height / 2
+        );
+      } else {
+        this.shoutoutTexture.needsUpdate = false;
+      }
+
+      this.shoutoutPlane.position.z = -500;
+
+      const startBean = this.castleSpinBean + 8 * stringIndex;
+      if (twoFour) {
+        this.shoutoutPlane.material.opacity = 1.0;
+        this.shoutoutPlane.rotation.x = 0;
+
+        this.shoutoutPlane.position.y = 3150;
+
+        if (fromLeft) {
+          this.shoutoutPlane.position.x = easeOut(
+            -1400,
+            -530,
+            F(frame, startBean, 4)
+          );
+        } else {
+          this.shoutoutPlane.position.x = easeOut(
+            1400,
+            530,
+            F(frame, startBean, 4)
+          );
+        }
+      } else {
+        // one three
+        const oneThreeProgress = F(frame, startBean - 4, 4);
+        this.shoutoutPlane.material.opacity = easeOut(
+          1.0, 0.0, F(frame, startBean - 4, 2)
+        );
+
+        this.shoutoutPlane.rotation.x = easeOut(
+          0, Math.PI / 2, oneThreeProgress * 3
+        );
+
+        this.shoutoutPlane.position.y = easeOut(
+          3150,
+          BEAN >= 160 ? 2500 : 3370,
+          oneThreeProgress
+        );
+        if (fromLeft) {
+          this.shoutoutPlane.position.x = easeOut(
+            530,
+            830,
+            oneThreeProgress
+          );
+        } else {
+          this.shoutoutPlane.position.x = easeOut(
+            -530,
+            -830,
+            oneThreeProgress
+          );
+        }
+      }
     }
 
     update(frame) {
@@ -247,6 +379,7 @@
       }
 
       this.scaler *= 0.95;
+      this.scalerIntegrated += this.scaler;
 
       // Update sun
       this.sunMaterial.emissiveIntensity = 1 + this.scaler * 0.15;
@@ -268,6 +401,8 @@
         this.bigSphere.position.y = 3180 + easeOut(0, -980, F(frame, 160, 4)); // 60
       }
       // Update sun end
+
+      this.updateShoutoutText(frame);
 
       this.castles[4].rotation.y = easeOut(0, -Math.PI, F(frame, this.castleSpinBean + 8 * 0, 4));
       this.castles[5].rotation.y = easeOut(0, Math.PI, F(frame, this.castleSpinBean + 8 * 1, 4));
@@ -324,7 +459,7 @@
         for (let i = 0; i < this.stars.length; i++) {
           const sphere = this.stars[i];
           sphere.scale.x = scale;
-          sphere.scale.y = scale;
+          sphere.scale.z = scale;
         }
       } else if (BEAN >= 220) {
         const scale = easeOut(1, 0.00001, escapeProgress);
@@ -335,7 +470,7 @@
         for (let i = 0; i < this.stars.length; i++) {
           const sphere = this.stars[i];
           sphere.scale.x = scale;
-          sphere.scale.y = scale;
+          sphere.scale.z = scale;
         }
       }
 
@@ -371,36 +506,41 @@
         this.background.material.opacity = lerp(1.0, 0.0, escapeProgress);
       }
 
-
-      let heartProgress = F(frame, 160, 4);
-
       const calculateHeartPositionX = (i) => {
-        let x = Math.sin(i) * (1 + 0.05 * this.scaler);
+        let x = Math.sin(i);
         return 3 * 512 * x * x * x;
       };
       const calculateHeartPositionY = (i) => {
-        return 2500 + 100 * this.scaler + 3 * (32 * (13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i)));
-      }
+        return 2400 + 96 * (
+          13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i)
+        );
+      };
 
       // Animate heart
       if (BEAN >= 160 && BEAN < 168) {
+        let heartProgress = F(frame, 160, 5);
         for (let i = 0; i < this.stars.length; i++) {
           let star = this.stars[i];
-          star.position.x = smoothstep(this.starPositionsX[i], calculateHeartPositionX(i), heartProgress);
-          star.position.y = smoothstep(this.starPositionsY[i], calculateHeartPositionY(i), heartProgress);
+          star.position.x = smoothstep(
+            this.starPositionsX[i], calculateHeartPositionX(i), heartProgress
+          );
+          star.position.y = smoothstep(
+            this.starPositionsY[i], calculateHeartPositionY(i), heartProgress
+          );
         }
       }
 
       // Star
       if (BEAN >= 168 && BEAN < 176) {
-        let starProgress = F(frame, 168, 4);
+        const starProgress = F(frame, 168, 5);
 
         for (let i = 0; i < this.stars.length; i++) {
           let star = this.stars[i];
           const starT = 10 * i / this.stars.length;
           const xy = this.getStarPosition(starT);
-          const starX = -1450 + 1.5 * xy[0];
-          const starY = 3700 - 1.5 * xy[1];
+          const phi = i % 2 === 0 ? 0 : smoothstep(0, -Math.PI, F(frame, 172, 5));
+          const starX = 1.5 * (xy[0] * Math.cos(phi) - xy[1] * Math.sin(phi));
+          const starY = 2200 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
 
           star.position.x = smoothstep(calculateHeartPositionX(i), starX, starProgress);
           star.position.y = smoothstep(calculateHeartPositionY(i), starY, starProgress);
@@ -413,32 +553,31 @@
       const smallRingFactor = 0.4;
       
       let bubbleProgress = F(frame, 176, 4);
-
       const bubblePosX = (offset, i) => {
         return offset + 0.5 * bubbleRadius * Math.sin(Math.PI / 60 * i)
-        + 0.5 * bubbleRadius* Math.sin(i % starQuarter * 0.10 *bubbleProgress);
-      }
+          + 0.5 * bubbleRadius * Math.sin((i % starQuarter) * 0.1 * bubbleProgress);
+      };
       const bubblePosY = (offset, i, small) => {
         return offset + bubbleRadius * small * Math.cos(Math.PI / 60 * i) + offsetY;
-      }
+      };
 
       if (BEAN >= 176 && BEAN < 184) {
-
         for (let i = 0; i < this.stars.length; i++) {
           const starT = 10 * i / this.stars.length;
           const xy = this.getStarPosition((starT * 97) % 10);
-          const starX = -1450 + 1.5 * xy[0];
-          const starY = 3700 - 1.5 * xy[1];
+          const phi = i % 2 === 0 ? 0 : smoothstep(0, -Math.PI, F(frame, 172, 5));
+          const starX = 1.5 * (xy[0] * Math.cos(phi) - xy[1] * Math.sin(phi));
+          const starY = 2200 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
           
           let star = this.stars[i];
-          let small = i % 2 == 0 ? 1 : smallRingFactor;
+          let small = i % 2 === 0 ? 1 : smallRingFactor;
 
           const updateBubblePositions = (x, y) => {
             let bubbleX = bubblePosX(x * bubbleRadius, i);
             let bubbleY = bubblePosY(y * bubbleRadius, i, small);
             star.position.x = smoothstep(starX, bubbleX, bubbleProgress);
             star.position.y = smoothstep(starY, bubbleY, bubbleProgress);
-          }
+          };
 
           if (i < starQuarter) {
             updateBubblePositions(1, 1);
@@ -452,26 +591,63 @@
         }
       }
 
+      // Cylinder wormhole
       const xOffset = 900;
       if (BEAN >= 184 && BEAN < 220) {
-        let waveProgress = F(frame, 184, 36);
-        let waveTransformProgress = F(frame, 184, 4);
+        let wormholeProgress = F(frame, 184, 36);
+        let wormholeTransitionProgress = F(frame, 184, 5);
+        let bigBallTransformProgress = F(frame, 204, 5);
+        const t = (frame - 1600) / 80;
 
         for (let i = 0; i < this.stars.length; i++) {
           let star = this.stars[i];
 
-          let small = i % 2 == 0 ? 1 : smallRingFactor;
-          let starWaveY = 4000 - i * 5;
-          let starWaveX = xOffset
-            + 1000 * Math.sin(i + waveProgress / 5 * 2 * Math.PI)
-            * (1 - 0.5 * Math.sin(i * Math.PI / this.stars.length));
+          let small = i % 2 === 0 ? 1 : smallRingFactor;
+          let starWaveY = 3850 - i * 3.55;
+          let starWaveX = (
+            xOffset +
+            1000 * Math.sin(i + wormholeProgress / 3 * 2 * Math.PI) * (
+              1 - 0.5 * Math.sin(i * Math.PI / this.stars.length)
+            ) +
+            lerp(
+              0,
+              Math.pow(this.scaler, 0.3) * 120 * Math.sin(this.scalerIntegrated / 3 - i / 90),
+              F(frame, 192, 1)
+            )
+          );
 
           const updateCylinderPositions = (x, y) => {
-            let bubbleX = bubblePosX(x * bubbleRadius, i);
-            let bubbleY = bubblePosY(y * bubbleRadius, i, small);
-            star.position.x = smoothstep(bubbleX, starWaveX, waveTransformProgress);
-            star.position.y = smoothstep(bubbleY, starWaveY, waveTransformProgress);
-          }
+            if (BEAN < 204) {
+              let bubbleX = bubblePosX(x * bubbleRadius, i);
+              let bubbleY = bubblePosY(y * bubbleRadius, i, small);
+              star.position.x = smoothstep(bubbleX, starWaveX, wormholeTransitionProgress);
+              star.position.y = smoothstep(bubbleY, starWaveY, wormholeTransitionProgress);
+              star.position.z = smoothstep(-3000, -2000, wormholeTransitionProgress);
+            } else {
+              // Big ball with bands
+              const d = i / 42;
+              const b = 63 * i + t;
+              star.position.y = smoothstep(
+                starWaveY,
+                2810 + 830 * Math.cos(d),
+                bigBallTransformProgress
+              );
+              star.position.x = smoothstep(
+                starWaveX,
+                860 * Math.sin(d) * Math.sin(b) * lerp(
+                  1,
+                  1 + 0.08 * Math.pow(this.scaler, 0.3) * Math.sin(this.scalerIntegrated / 3 - star.position.y / 290),
+                  F(frame, 212, 1)
+                ),
+                bigBallTransformProgress
+              );
+              star.position.z = smoothstep(
+                -2000,
+                -1900 / (Math.sin(d) * Math.cos(b) + 1.9),
+                bigBallTransformProgress
+              )
+            }
+          };
 
           if (i < starQuarter) {
             updateCylinderPositions(-1, -1);
