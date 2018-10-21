@@ -22,10 +22,6 @@
         this.scene.add(sphere);
       }
 
-      let light = new THREE.PointLight(0xffffff, 1, 100);
-      light.position.set(50, 50, 50);
-      this.scene.add(light);
-
       this.workWorkPoints = [
         [25, 25], [250, 25], [135, 207], [25, 25],
         [135, 25], [355, 25], [244, 207], [135, 25],
