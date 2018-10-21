@@ -603,7 +603,7 @@
           let star = this.stars[i];
 
           let small = i % 2 === 0 ? 1 : smallRingFactor;
-          let starWaveY = 4000 - i * 5;
+          let starWaveY = 3850 - i * 3.55;
           let starWaveX = (
             xOffset +
             1000 * Math.sin(i + wormholeProgress / 3 * 2 * Math.PI) * (
@@ -622,7 +622,7 @@
               let bubbleY = bubblePosY(y * bubbleRadius, i, small);
               star.position.x = smoothstep(bubbleX, starWaveX, wormholeTransitionProgress);
               star.position.y = smoothstep(bubbleY, starWaveY, wormholeTransitionProgress);
-              star.position.z = -3000;
+              star.position.z = smoothstep(-3000, -2000, wormholeTransitionProgress);
             } else {
               // Big ball with bands
               const d = i / 42;
@@ -642,7 +642,7 @@
                 bigBallTransformProgress
               );
               star.position.z = smoothstep(
-                -3000,
+                -2000,
                 -1900 / (Math.sin(d) * Math.cos(b) + 1.9),
                 bigBallTransformProgress
               )
