@@ -538,7 +538,7 @@
           let star = this.stars[i];
           const starT = 10 * i / this.stars.length;
           const xy = this.getStarPosition(starT);
-          const phi = i % 2 === 0 ? 0 : smoothstep(0, -Math.PI, F(frame, 172, 5));
+          const phi = -Math.PI / 10 + (i % 2 === 0 ? 0 : smoothstep(0, -Math.PI / 5, F(frame, 172, 5)));
           const starX = 1.5 * (xy[0] * Math.cos(phi) - xy[1] * Math.sin(phi));
           const starY = 2200 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
 
@@ -565,7 +565,7 @@
         for (let i = 0; i < this.stars.length; i++) {
           const starT = 10 * i / this.stars.length;
           const xy = this.getStarPosition((starT * 97) % 10);
-          const phi = i % 2 === 0 ? 0 : smoothstep(0, -Math.PI, F(frame, 172, 5));
+          const phi = -Math.PI / 10 + (i % 2 === 0 ? 0 : smoothstep(0, -Math.PI / 5, F(frame, 172, 5)));
           const starX = 1.5 * (xy[0] * Math.cos(phi) - xy[1] * Math.sin(phi));
           const starY = 2200 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
           
