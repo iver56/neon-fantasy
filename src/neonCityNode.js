@@ -134,6 +134,8 @@
         [1565, 1779], [975, 1409], [398, 1784], [581, 1135],
         [48, 702], [738, 690], [977, 41]
       ];
+      this.starMidpointX = 1005;
+      this.starMidpointY = 1119;
     }
 
     getStarPosition(t) {
@@ -145,7 +147,10 @@
       const diffX = this.starPoints[nextIndex][0] - position[0];
       const diffY = this.starPoints[nextIndex][1] - position[1];
 
-      return [position[0] + progress * diffX, position[1] + progress * diffY];
+      return [
+        position[0] + progress * diffX - this.starMidpointX,
+        position[1] + progress * diffY - this.starMidpointY
+      ];
     }
 
     createBackground() {
@@ -524,8 +529,9 @@
           let star = this.stars[i];
           const starT = 10 * i / this.stars.length;
           const xy = this.getStarPosition(starT);
-          const starX = -1450 + 1.5 * xy[0];
-          const starY = 3700 - 1.5 * xy[1];
+          const phi = i % 2 === 0 ? 0 : smoothstep(0, Math.PI / 5, F(frame, 172, 2));
+          const starX = 1.5 * (xy[0] * Math.cos(phi) - xy[1] * Math.sin(phi));
+          const starY = 2300 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
 
           star.position.x = smoothstep(calculateHeartPositionX(i), starX, starProgress);
           star.position.y = smoothstep(calculateHeartPositionY(i), starY, starProgress);
