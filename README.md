@@ -25,7 +25,7 @@ When you press the start button, the demo will try to put the browser in full sc
 3. Grand Sphere with cube grid: fawds
 4. Blurry tunnel: iverjo
 5. WW logo: iverjo
-6. Neon city race: iverjo
+6. Neon city race: iverjo, inspired by jylikangas
 7. Outro: iverjo
 
 # Music
