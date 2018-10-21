@@ -76,7 +76,7 @@
           );
           const textProgress = F(frame, thatString.start, 12);
           this.ctx.save();
-          this.ctx.fillStyle = `rgba(255, 66, 139, ${easeIn(0, easeOut(1, 0, fadeOutProgress), fadeInProgress)})`;
+          this.ctx.fillStyle = `rgba(255, 76, 149, ${easeIn(0, easeOut(1, 0, fadeOutProgress), fadeInProgress)})`;
           this.ctx.fillText(
             thatString.text,
             thatString.position.x - textProgress * 50,
