@@ -28,9 +28,9 @@
         {text:'Thanks for watching', start: 416, duration: 16, position: {x: 190, y: 180}},
         {text:'Neon Fantasy', start: 428, duration: 18, position: {x: 270, y: 280}},
         {text:'by iverjo & fawds', start: 432, duration: 14, position: {x: 380, y: 380}},
-        {text:'Written in JavaScript', start: 444, duration: 18, position: {x: 220, y: 100}},
-        {text:'For ARM DemoCompo', start: 448, duration: 14, position: {x: 340, y: 200}},
-        {text:'At Work-Work', start: 460, duration: 24, position: {x: 205, y: 330}},
+        {text:'Written in JavaScript', start: 444, duration: 18, position: {x: 200, y: 100}},
+        {text:'for ARM DemoCompo', start: 448, duration: 14, position: {x: 300, y: 200}},
+        {text:'Presented at Work-Work', start: 460, duration: 24, position: {x: 205, y: 330}},
         {text:'25-10-2018', start: 464, duration: 20, position: {x: 365, y: 430}}
       ];
 
