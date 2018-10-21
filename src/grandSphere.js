@@ -45,7 +45,6 @@
       );
       var bigSphereLight = new THREE.PointLight(ballColor.getHex(), 1, 850);
       this.bigSphere.add(bigSphereLight);
-      // // this.bigSphere.position.z = -75;
 
       this.scene.add(this.bigSphere);
       // Orbs

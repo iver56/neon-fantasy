@@ -570,7 +570,7 @@
           const starY = 2200 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
           
           let star = this.stars[i];
-          let small = i % 2 == 0 ? 1 : smallRingFactor;
+          let small = i % 2 === 0 ? 1 : smallRingFactor;
 
           const updateBubblePositions = (x, y) => {
             let bubbleX = bubblePosX(x * bubbleRadius, i);

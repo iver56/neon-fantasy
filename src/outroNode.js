@@ -64,8 +64,16 @@
 
       for (let thatString of this.strings) {
         if (BEAN >= thatString.start - this.fadeInTime && BEAN < thatString.start + thatString.duration + this.fadeOutTime) {
-          const fadeInProgress = F(frame, thatString.start - this.fadeInTime, this.fadeInTime);
-          const fadeOutProgress = F(frame, thatString.start + thatString.duration - this.fadeOutTime, this.fadeOutTime);
+          const fadeInProgress = F(
+            frame,
+            thatString.start - this.fadeInTime,
+            this.fadeInTime
+          );
+          const fadeOutProgress = F(
+            frame,
+            thatString.start + thatString.duration - this.fadeOutTime,
+            this.fadeOutTime
+          );
           const textProgress = F(frame, thatString.start, 12);
           this.ctx.save();
           this.ctx.fillStyle = `rgba(255, 66, 139, ${easeIn(0, easeOut(1, 0, fadeOutProgress), fadeInProgress)})`;

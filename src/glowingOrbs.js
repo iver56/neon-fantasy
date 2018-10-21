@@ -1,6 +1,8 @@
 (function(global) {
 
-  const F = (frame, from, delta) => (frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from));
+  const F = (frame, from, delta) => (
+    frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from)
+  );
 
   class glowingOrbs extends NIN.THREENode {
     constructor(id, options) {
@@ -70,8 +72,7 @@
       }
       this.scaler *= 0.95;
 
-      let bloomAmount = this.scaler + 0.3;
-      demo.nm.nodes.bloom.opacity = bloomAmount;
+      demo.nm.nodes.bloom.opacity = this.scaler + 0.3;
 
       this.angle += this.scaler * 0.15;
 
