@@ -39,50 +39,6 @@
 
       this.enterTransitionProgress = 0;
 
-      // PARTICLES
-      /*
-
-      this.generateParticleSprite = function() {
-        const canvas = document.createElement('canvas');
-        canvas.width = 16;
-        canvas.height = 16;
-        const ctx = canvas.getContext('2d');
-        ctx.fillStyle = 'white';
-
-        // https://programmingthomas.wordpress.com/2012/05/16/drawing-stars-with-html5-canvas/
-        function star(ctx, x, y, r, p, m) {
-          ctx.save();
-          ctx.beginPath();
-          ctx.translate(x, y);
-          ctx.moveTo(0, 0 - r);
-          for (let i = 0; i < p; i++) {
-            ctx.rotate(Math.PI / p);
-            ctx.lineTo(0, 0 - (r * m));
-            ctx.rotate(Math.PI / p);
-            ctx.lineTo(0, 0 - r);
-          }
-          ctx.fill();
-          ctx.restore();
-        }
-
-        star(ctx, 8, 8, 7, 5, 0.5);
-
-        return canvas;
-      };
-      this.ps = new global.ParticleSystem({
-        color: new THREE.Color(0xffffff),
-        amount: 3000,
-        decayFactor: 0.98,
-        gravity: 0,
-        generateSprite: this.generateParticleSprite
-      });
-      this.ps.particles.position.x = 0;
-      this.ps.particles.position.y = 0;
-      this.ps.particles.position.z = 0;
-      this.ps.particles.visible = true;
-      this.scene.add(this.ps.particles);
-      */
-
       this.bigSphere = new THREE.Mesh(
         new THREE.SphereGeometry(100, 32, 32),
         this.ballMaterial
