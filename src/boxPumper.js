@@ -16,13 +16,53 @@
 
       this.snarePumper = 0;
 
+      this.avgBarPower = [
+        0.03995973130127326,
+        0.035914819653420064,
+        0.024812822856103721,
+        0.019965229302449377,
+        0.01641718101126138,
+        0.01219577227582823,
+        0.0084967362081906855,
+        0.0066816180336877395,
+        0.005603657589574872,
+        0.0050808975377011345,
+        0.005250259812406025,
+        0.004825915962458144,
+        0.0047933078972314325,
+        0.00462622379986742,
+        0.003489999386804935,
+        0.0034550347460631645,
+        0.0023198680798594074,
+        0.00225343069341784,
+        0.002260510422985606,
+        0.002196416854241614,
+        0.002183600742469756,
+        0.002164816721345884,
+        0.002161796941345131,
+        0.001976902960733933,
+        0.001975547782917297,
+      ];
+      this.sampleFreq = 44100;  // fallback in case of incompatible nin
+      if (demo.music && demo.music.audioContext && demo.music.audioContext.sampleRate) {
+        this.sampleFreq = demo.music.audioContext.sampleRate;
+      }
+      this.nyquistFreq = this.sampleFreq / 2;
+      this.maxMel = 2595 * Math.log10(1 + this.nyquistFreq / 700);
+      this.numBins = 1024;  // fallback in case of incompatible nin
+      if (demo.music && demo.music.getFftSize) {
+        this.numBins = demo.music.getFftSize() / 2;
+      }
+      this.freqPerBin = this.nyquistFreq / this.numBins;
+      this.numBars = 25;
+
       // city columns
       const planeGeometry = new THREE.PlaneGeometry(1, 1, 1);
       this.cityCols = [];
       for (let i = 0; i < 50; i++) {
         const planeMaterial = new THREE.MeshBasicMaterial({
           color: 0xEA21F7,
-          side: THREE.DoubleSide
+          side: THREE.FrontSide
         });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         this.cityCols.push(plane);
@@ -31,10 +71,10 @@
 
       // road segments
       this.roadSegments = [];
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < this.numBars * 2; i++) {
         const planeMaterial = new THREE.MeshBasicMaterial({
           color: 0xEA21F7,
-          side: THREE.DoubleSide
+          side: THREE.BackSide
         });
         const plane = new THREE.Mesh(planeGeometry, planeMaterial);
         this.roadSegments.push(plane);
@@ -58,6 +98,21 @@
       this.background = new THREE.Mesh(backgroundGeometry, backgroundMaterial);
       this.background.position.z = -800;
       this.scene.add(this.background);
+    }
+
+    getBinAmplitude(fft, i) {
+      const fraction = i / this.numBars;
+      const mel = this.maxMel * fraction;
+      const nextMel = mel + this.maxMel / this.numBars;
+      const lowerFreqBound = 700 * (Math.pow(10, mel / 2595) - 1);
+      const upperFreqBound = 700 * (Math.pow(10, nextMel / 2595) - 1);
+      const lowerBin = 0 | Math.round(lowerFreqBound / this.freqPerBin);
+      const upperBin = 0 | Math.round(upperFreqBound / this.freqPerBin);
+      const numBins = upperBin - lowerBin;
+      const fftSlice = fft.slice(lowerBin, upperBin);
+      const fftAvgDb = fftSlice.reduce((a, b) => a + b, 0) / numBins;
+      const linearAvg = Math.pow(10, fftAvgDb / 20);  // ranges from 0 to 1
+      return clamp(0.01, Math.pow(linearAvg / this.avgBarPower[i], 2), 3);
     }
 
     update(frame) {
@@ -112,8 +167,13 @@
       this.camera.fov = smoothstep(170, 45, zoomToCityProgress);
       this.camera.updateProjectionMatrix();
 
+      const fft = demo.music ? demo.music.getFFT() : [];
+
       for (let i = 0; i < this.cityCols.length; i++) {
         let cityCol = this.cityCols[i];
+
+        let distFromMiddle = Math.min(Math.abs(this.numBars - i), this.numBars - 1);
+        let fftOffset = this.getBinAmplitude(fft, distFromMiddle);
 
         const bassPumper = easeOut(
           1,
@@ -121,9 +181,9 @@
           F(frame, 8 * (0 | (BEAN / 8)), 5)
         );
 
-        const height = 9 + (0.9 + 0.2 * bassPumper) * (
-          30 * Math.pow(0.5 + 0.5 * Math.sin(i * 1337), 2)
-        ) + 2 * bassPumper;
+        const height = 5 + (0.9 + 0.1 * bassPumper) * (
+          15 * Math.pow(0.5 + 0.5 * Math.sin(i * 1337), 2)
+        ) + bassPumper + 88 * fftOffset;
 
         cityCol.position.x = smoothstep(
           -100 + i * 5,
