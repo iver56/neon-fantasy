@@ -3,7 +3,7 @@
     frame - FRAME_FOR_BEAN(from)) / (FRAME_FOR_BEAN(from + delta) - FRAME_FOR_BEAN(from)
   );
 
-  class tunnelNode extends NIN.THREENode {
+  class wwNode extends NIN.THREENode {
     constructor(id, options) {
       super(id, {
         camera: options.camera,
@@ -108,5 +108,5 @@
 
   }
 
-  global.tunnelNode = tunnelNode;
+  global.wwNode = wwNode;
 })(this);

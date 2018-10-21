@@ -10,7 +10,7 @@
     "id": "sceneSwitcherNode",
     "type": "SceneSwitcherNode",
     "connected": {
-      "A": "tunnelNode.render",
+      "A": "wwNode.render",
       "B": "NeonCityNode.render",
       "C": "GlowingOrbs.render",
       "D": "GrandSphereNode.render",
@@ -79,12 +79,12 @@
     },
     "connected": {
       "A": "BlurryTunnelNode.render",
-      "B": "tunnelNode.render"
+      "B": "wwNode.render"
     }
   },
   {
-    "id": "tunnelNode",
-    "type": "tunnelNode"
+    "id": "wwNode",
+    "type": "wwNode"
   },
   {
     "id": "boxPumperBlend",
