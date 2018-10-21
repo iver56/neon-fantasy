@@ -148,7 +148,7 @@
     }
 
     getStarPosition(t) {
-      // i between 0 and this.starPoints.length - 1
+      // t between 0 and this.starPoints.length - 1
       const segmentIndex = t | 0;
       const progress = t % 1;
       const nextIndex = segmentIndex + 1;
@@ -511,7 +511,7 @@
         return 3 * 512 * x * x * x;
       };
       const calculateHeartPositionY = (i) => {
-        return 2500 + 96 * (
+        return 2400 + 96 * (
           13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i)
         );
       };
@@ -567,7 +567,7 @@
           const xy = this.getStarPosition((starT * 97) % 10);
           const phi = smoothstep(0, -Math.PI, F(frame, 172, 5));
           const starX = 1.5 * (xy[0] * Math.cos(phi) - xy[1] * Math.sin(phi));
-          const starY = 2300 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
+          const starY = 2200 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
           
           let star = this.stars[i];
           let small = i % 2 == 0 ? 1 : smallRingFactor;
