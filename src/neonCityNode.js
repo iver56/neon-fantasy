@@ -129,10 +129,21 @@
       this.emblemPositionStart = 0;
       this.emblemPositionEnd = 500;
 
-      this.starPoints = [
-        [977, 41], [1217, 698], [1915, 700], [1377, 1130],
-        [1565, 1779], [975, 1409], [398, 1784], [581, 1135],
-        [48, 702], [738, 690], [977, 41]
+      this.starPoints = [];
+      for (let i = 0; i < 11; i++) {
+        this.starPoints.push(neonCityNode.getStarPoint(i));
+      }
+    }
+
+    static getStarPoint(i) {
+      const t = i / 10;
+      const radius = 500 + 500 * 2 * Math.abs(
+        (t * 5) - Math.floor(t * 5 + 0.5)
+      ) - 1;
+      const phi = t * Math.PI * 2;
+      return [
+        radius * Math.cos(phi),
+        radius * Math.sin(phi)
       ];
     }
 
@@ -145,7 +156,10 @@
       const diffX = this.starPoints[nextIndex][0] - position[0];
       const diffY = this.starPoints[nextIndex][1] - position[1];
 
-      return [position[0] + progress * diffX, position[1] + progress * diffY];
+      return [
+        position[0] + progress * diffX,
+        position[1] + progress * diffY
+      ];
     }
 
     createBackground() {
@@ -497,7 +511,7 @@
         return 3 * 512 * x * x * x;
       };
       const calculateHeartPositionY = (i) => {
-        return 2500 + 96 * (
+        return 2400 + 96 * (
           13 * Math.cos(i) - 5 * Math.cos(2 * i) - 2 * Math.cos(3 * i) - Math.cos(4 * i)
         );
       };
@@ -524,8 +538,9 @@
           let star = this.stars[i];
           const starT = 10 * i / this.stars.length;
           const xy = this.getStarPosition(starT);
-          const starX = -1450 + 1.5 * xy[0];
-          const starY = 3700 - 1.5 * xy[1];
+          const phi = smoothstep(0, -Math.PI, F(frame, 172, 5));
+          const starX = 1.5 * (xy[0] * Math.cos(phi) - xy[1] * Math.sin(phi));
+          const starY = 2200 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
 
           star.position.x = smoothstep(calculateHeartPositionX(i), starX, starProgress);
           star.position.y = smoothstep(calculateHeartPositionY(i), starY, starProgress);
@@ -550,8 +565,9 @@
         for (let i = 0; i < this.stars.length; i++) {
           const starT = 10 * i / this.stars.length;
           const xy = this.getStarPosition((starT * 97) % 10);
-          const starX = -1450 + 1.5 * xy[0];
-          const starY = 3700 - 1.5 * xy[1];
+          const phi = smoothstep(0, -Math.PI, F(frame, 172, 5));
+          const starX = 1.5 * (xy[0] * Math.cos(phi) - xy[1] * Math.sin(phi));
+          const starY = 2200 + 1.5 * (xy[0] * Math.sin(phi) + xy[1] * Math.cos(phi));
           
           let star = this.stars[i];
           let small = i % 2 == 0 ? 1 : smallRingFactor;
