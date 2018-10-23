@@ -20,7 +20,7 @@
       });
     }
 
-    update() {
+    beforeUpdate() {
       this.inputs.A.enabled = false;
       this.inputs.B.enabled = false;
       this.inputs.C.enabled = false;
