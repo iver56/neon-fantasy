@@ -39,7 +39,7 @@
     }
 
     warmup(renderer) {
-      this.update(3965);
+      this.update(3964);
       this.render(renderer);
     }
   }
