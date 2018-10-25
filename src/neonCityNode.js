@@ -14,8 +14,6 @@
       this.scalerIntegrated = 0;
       this.random = new global.Random(666);
 
-      demo.nm.nodes.bloom.opacity = 0.99;
-
       this.createBackground();
 
       this.createSun();
@@ -448,6 +446,8 @@
 
       const enterProgress = F(frame, 96, 4);
       const escapeProgress = F(frame, 220, 4);
+
+      demo.nm.nodes.bloom.opacity = lerp(0.99, 0.5, escapeProgress);
 
       // STARS
       if (BEAN <= 100) {
